@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MAD</string>
+    <string name="check">/efs/device/serial</string>
+    <string name="date">/system/bin/svc</string>
+    <string name="kingrootsu">/data/data/com.kingroot.kinguser/applib/su</string>
+    <string name="mysucm">/efs/device/serial</string>
+</resources>

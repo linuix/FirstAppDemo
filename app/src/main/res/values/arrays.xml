@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Blockers">
+        <item>echo Preparing KingRoot removal</item>
+        <item>pmcomver com.asurion.android.mobilerecovery.att</item>
+        <item>pmcomver com.sec.android.service.sm</item>
+        <item>echo Blocking KingRoot activities</item>
+        <item>pm uninstall com.kingroot.RushRoot</item>
+        <item>pm uninstall com.kingroot.kinguser</item>
+        <item>pm uninstall com.kingroot.master</item>
+        <item>pm uninstall com.kingstudio.purify</item>
+        <item>pm uninstall com.kingoapp.root</item>
+        <item>pm uninstall com.kingouser.com</item>
+    </string-array>
+    <string-array name="DdexeCheck">
+        <item>/system/bin/busybox chattr -ia /system/bin/ddexe</item>
+        <item>rm /system/bin/ddexe</item>
+        <item>cat /system/bin/ddexe_real >/system/bin/ddexe</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/ddexe_real</item>
+        <item>rm /system/bin/ddexe_real</item>
+        <item>chmod 0755 /system/bin/ddexe</item>
+        <item>chown 0.2000 /system/bin/ddexe</item>
+    </string-array>
+    <string-array name="DebugCheck">
+        <item>/system/bin/busybox chattr -ia /system/bin/debuggerd</item>
+        <item>rm /system/bin/debuggerd</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/debuggerd_real</item>
+        <item>cat /system/bin/debuggerd_real >/system/bin/debuggerd</item>
+        <item>rm /system/bin/debuggerd_real</item>
+        <item>chmod 0755 /system/bin/debuggerd</item>
+        <item>chown 0.2000 /system/bin/debuggerd</item>
+    </string-array>
+    <string-array name="Default">
+        <item>echo Removing KingRoot and all dependencies</item>
+        <item>mount -o remount,rw /system</item>
+        <item>mount -o rw,remount /system</item>
+        <item>/system/bin/busybox killall com.kingroot.RushRoot</item>
+        <item>/system/bin/busybox killall com.kingroot.kinguser</item>
+        <item>/system/bin/busybox killall com.kingroot.master</item>
+        <item>/system/bin/busybox killall com.kingoapp.root</item>
+        <item>/system/bin/busybox killall com.kingouser.com</item>
+        <item>/system/bin/busybox killall com.kingstudio.purify</item>
+        <item>/system/bin/busybox killall ktools</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/ku.sud</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/kugote</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/krdem</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/pidof</item>
+        <item>/system/bin/busybox chattr -ia /system/libarchver/libsupol.so</item>
+        <item>rm /system/xbin/ku.sud</item>
+        <item>rm /system/xbin/kugote</item>
+        <item>rm /system/xbin/krdem</item>
+        <item>rm /system/xbin/pidof</item>
+        <item>rm /system/libarchver/libsupol.so</item>
+        <item>/system/bin/busybox killall ku.sud</item>
+        <item>/system/bin/busybox killall ktools</item>
+        <item>/system/bin/busybox killall com.kingroot.kinguser</item>
+        <item>/system/bin/busybox killall com.kingroot.kinguser:service</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/.ext/.su</item>
+        <item>/system/bin/busybox chattr -ia /system/etc/install-recovery.sh</item>
+        <item>/system/bin/busybox chattr -ia /system/etc/.installed_su_daemon</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/.usr/.ku</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/.krsh</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/rt.sh</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/ddexe-ku.bak</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/ddexe</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/ddexe_real</item>
+        <item>/system/bin/busybox chattr -ia /system/etc/.has_su_daemon</item>
+        <item>/system/bin/busybox chattr -ia /system/etc/install_recovery.sh</item>
+        <item>/system/bin/busybox chattr -ia /system/etc/install-recovery.sh-ku.bak</item>
+        <item>/system/bin/busybox chattr -ia /system/app/Kinguser.apk</item>
+        <item>/system/bin/busybox chattr -ia /system/app/KingUser/*</item>
+        <item>/system/bin/busybox chattr -ia /system/app/Kinguser/*</item>
+        <item>/system/bin/busybox chattr -ia /system/app/Superuser.apk</item>
+        <item>/system/bin/busybox chattr -ia /system/usr/iku/isu</item>
+        <item>/system/bin/busybox chattr -ia /system/usr/icu/icusuflag.conf</item>
+        <item>echo Stage 1 cleanup..</item>
+        <item>rm -r -f /data/data-lib/*kingroot*</item>
+        <item>rm -r /system/app/Kinguser/*</item>
+        <item>rm -r /system/app/KingUser/*</item>
+        <item>rm -r /system/app/King*</item>
+        <item>echo Stage 2 cleanup..</item>
+        <item>rm /mnt/asec/kd</item>
+        <item>rm /dev/kd_*</item>
+        <item>rm /dev/rt.sh</item>
+        <item>echo Stage 3 cleanup..</item>
+        <item>rm /system/bin/.usr/.ku</item>
+        <item>rm /system/bin/rt.sh</item>
+        <item>rm /system/bin/ddexe-ku.bak</item>
+        <item>rm /system/etc/.has_su_daemon</item>
+        <item>rm /system/etc/install_recovery.sh</item>
+        <item>rm -f /system/etc/install-recovery.sh-ku.bak</item>
+        <item>/system/bin/busybox chattr -ia /system/app/Kinguser.apk</item>
+        <item>rm /system/app/Kinguser.apk</item>
+        <item>rm -r /system/app/King</item>
+        <item>rm /system/app/Superuser.apk</item>
+        <item>rm -r /system/usr/iku</item>
+        <item>rm /system/usr/icu/icusuflag.conf</item>
+        <item>rm /system/bin/.krsh</item>
+        <item>rm -r /system/bin/.usr</item>
+        <item>rm /system/bin/rt.sh</item>
+        <item>rm /system/bin/shipclean</item>
+        <item>rm /system/bin/start-ssh</item>
+        <item>rm /system/kroot*</item>
+        <item>rm /data/dalvik-cache/*kingroot*</item>
+        <item>rm /data/dalvik-cache/*Kinguser*</item>
+        <item>rm /data/dalvik-cache/*Kingo*</item>
+        <item>rm -r /sdcard/Kingroot</item>
+        <item>rm -r /sdcard/KingoRoot.apk</item>
+        <item>rm /sdcard/kr-stock.conf</item>
+        <item>rm /sdcard/kr-stock-conf</item>
+        <item>rm /sdcard/e_config</item>
+        <item>rm /sdcard/cached_achievement_list.json</item>
+        <item>pm uninstall darkslide.com.supersume</item>
+        <item>mount -o remount,rw /efs</item>
+        <item>rm -r /efs/device</item>
+        <item>mount -o remount,ro /efs</item>
+    </string-array>
+    <array name="Failsafe" />
+    <string-array name="Finish">
+        <item>echo Preparing SuperSU</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/daemonsu</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/ddexe</item>
+        <item>/system/bin/busybox killall kr_worker</item>
+        <item>echo Launching SuperSU for verification</item>
+        <item>am start -a android.intent.action.MAIN -n eu.chainfire.supersu/.MainActivity</item>
+        <item>echo All Finished !!</item>
+        <item>/system/xbin/su -i</item>
+        <item>rm myfolder/started</item>
+        <item>rm myfolder/runit.sh</item>
+        <item>rm myfolder/stage2</item>
+    </string-array>
+    <string-array name="Knox">
+        <item>pmcomver com.sec.knox.seandroid</item>
+        <item>pmcomver com.sec.knox.bridge</item>
+        <item>pmcomver com.sec.knox.cocktailprovider</item>
+        <item>pmcomver com.samsung.knox.rcp.components</item>
+        <item>pmcomver com.sec.knox.knoxsetupwizardclient</item>
+    </string-array>
+    <string-array name="PrepKing">
+        <item>\#!/system/bin/sh</item>
+        <item>"
+"</item>
+        <item>rm myfolder/finished</item>
+        <item>rm myfolder/started</item>
+        <item>echo Setting up Busybox</item>
+        <item>chmod 0755 myfolder/Superuser.apk</item>
+        <item>mount -o remount,rw /system</item>
+        <item>mount -o rw,remount /system</item>
+        <item>cat myfolder/busybox >/system/bin/busybox</item>
+        <item>chmod 0755 /system/bin/busybox</item>
+        <item>chown 0.2000 /system/bin/busybox</item>
+        <item>echo Setting immutable flags</item>
+        <item>/system/bin/busybox killall com.kingroot.kinguser</item>
+        <item>/system/bin/busybox killall com.kingroot.RushRoot</item>
+        <item>/system/bin/busybox killall com.kingroot.kinguser:service</item>
+        <item>/system/bin/busybox killall com.kingstudio.purify</item>
+        <item>/system/bin/busybox killall ktools</item>
+        <item>/system/bin/busybox chattr -ia /data/data/com.kingroot.kinguser/applib/su</item>
+        <item>/system/bin/busybox chattr -ia /data/data/com.kingroot.kinguser/applib/ku.sud</item>
+        <item>/system/bin/busybox chattr -ia /data/data/com.kingroot.kinguser/applib/supolicy</item>
+        <item>echo Killing initial files</item>
+        <item>rm -r /data/data/*kingroot*</item>
+        <item>rm -r /data/data/*kingstudio*</item>
+        <item>rm -r /data/app/*kingroot*</item>
+        <item>rm -r /data/app/*kingstudio*</item>
+        <item>rm -r /data/app-lib/*kingroot*</item>
+        <item>rm -r /data/data/app-lib/*kingroot*</item>
+        <item>rm -r /data/data/app-lib/*kingstudio*</item>
+        <item>rm -r -f /data/data-lib/king</item>
+        <item>am force-stop com.kingroot.kinguser</item>
+        <item>/system/bin/chattr /system/bin/.krsh</item>
+        <item>rm /system/bin/.krsh</item>
+        <item>/system/bin/busybox chattr /system/bin/sutemp</item>
+        <item>rm /system/bin/sutemp</item>
+        <item>/system/bin/busybox chattr /system/xbin/sutemp</item>
+        <item>rm /system/xbin/sutemp</item>
+        <item>echo Staging SuperSU</item>
+        <item>cat /system/bin/toolbox > /system/toolbox</item>
+        <item>chmod 0755 /system/toolbox</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/daemonsu</item>
+        <item>rm /system/xbin/daemonsu</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/supolicy</item>
+        <item>rm /system/xbin/supolicy</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/sugote</item>
+        <item>rm /system/xbin/sugote</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/sugote-mksh</item>
+        <item>rm /system/xbin/sugote-mksh</item>
+        <item>cat myfolder/suver >/system/xbin/daemonsu</item>
+        <item>chmod 0755 /system/xbin/daemonsu</item>
+        <item>chown 0.0 /system/xbin/daemonsu</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/su</item>
+        <item>rm /system/xbin/su</item>
+        <item>cat myfolder/suver >/system/xbin/su</item>
+        <item>chmod 06755 /system/xbin/su</item>
+        <item>chown 0.0 /system/xbin/su</item>
+        <item>/system/bin/busybox chcon u:object_r:system_file:s0 /system/xbin/su</item>
+        <item>/system/bin/busybox chattr -ia /system/sbin/su</item>
+        <item>rm /system/sbin/su</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/su</item>
+        <item>rm /system/bin/su</item>
+        <item>/system/bin/busybox ln -s /system/xbin/su /system/bin/su</item>
+        <item>/system/bin/busybox ln -s /syste/xbin/su /system/sbin/su</item>
+        <item>/system/xbin/daemonsu -d</item>
+        <item>Installing SuperSU</item>
+        <item>pm install myfolder/Superuser.apk</item>
+        <item>am force-stop darkslide.com.supersumepro</item>
+        <item>touch myfolder/started</item>
+        <item>chmod 0777 myfolder/started</item>
+        <item>am start -a android.intent.action.MAIN -n darkslide.com.supersumepro/.MainActivity</item>
+        <item>rm myfolder/stage1</item>
+        <item>rm myfolder/runit.sh</item>
+        <item>echo Prep Done</item>
+    </string-array>
+    <string-array name="PrepKingo">
+        <item>\#!/system/bin/sh</item>
+        <item>"
+"</item>
+        <item>rm myfolder/finished</item>
+        <item>rm myfolder/started</item>
+        <item>echo Setting up Busybox</item>
+        <item>chmod 0755 myfolder/Superuser.apk</item>
+        <item>mount -o remount,rw /system</item>
+        <item>mount -o rw,remount /system</item>
+        <item>cat myfolder/busybox >/system/bin/busybox</item>
+        <item>chmod 0755 /system/bin/busybox</item>
+        <item>chown 0.2000 /system/bin/busybox</item>
+        <item>echo Setting immutable flags</item>
+        <item>rm -r /data/app/*kingo*</item>
+        <item>rm -r /data/data/*kingo*</item>
+        <item>rm -r /data/data/app-lib/*kingo*</item>
+        <item>rm -r /data/app-lib/*kingo*</item>
+        <item>rm -r /dev/*kingo*</item>
+        <item>/system/bin/busybox chattr -ia /system/app/KingoUser.apk</item>
+        <item>rm /system/app/KingoUser.apk</item>
+        <item>echo Killing initial files</item>
+        <item>am force-stop com.kingoapp.root</item>
+        <item>am force-stop com.kingouser.com</item>
+        <item>/system/bin/busybox killall com.kingouser.com</item>
+        <item>/system/bin/busybox killall com.kingoapp.root</item>
+        <item>/system/bin/busybox killall test</item>
+        <item>echo Staging SuperSU</item>
+        <item>cat /system/bin/toolbox > /system/toolbox</item>
+        <item>chmod 0755 /system/toolbox</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/daemonsu</item>
+        <item>rm /system/xbin/daemonsu</item>
+        <item>cat myfolder/suver >/system/xbin/daemonsu</item>
+        <item>chmod 0755 /system/xbin/daemonsu</item>
+        <item>chown 0.0 /system/xbin/daemonsu</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/supolicy</item>
+        <item>rm /system/xbin/supolicy</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/su</item>
+        <item>rm /system/xbin/su</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/sugote</item>
+        <item>rm /system/xbin/sugote</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/sugote-mksh</item>
+        <item>rm /system/xbin/sugote-mksh</item>
+        <item>/system/bin/busybox chattr -ia /system/xbin/busybox</item>
+        <item>rm /system/xbin/busybox</item>
+        <item>/system/bin/busybox chattr -ia /system/sbin/su</item>
+        <item>rm /system/sbin/su</item>
+        <item>/system/bin/busybox chattr -ia /system/bin/su</item>
+        <item>rm /system/bin/su</item>
+        <item>cat myfolder/suver >/system/xbin/su</item>
+        <item>chmod 06755 /system/xbin/su</item>
+        <item>chown 0.0 /system/xbin/su</item>
+        <item>/system/bin/busybox chcon u:object_r:system_file:s0 /system/xbin/su</item>
+        <item>/system/bin/busybox ln -s /system/xbin/su /system/bin/su</item>
+        <item>/system/bin/busybox ln -s /syste/xbin/su /system/sbin/su</item>
+        <item>/system/bin/busybox killall daemonsu</item>
+        <item>/system/xbin/daemonsu -d</item>
+        <item>Installing SuperSU</item>
+        <item>pm install myfolder/Superuser.apk</item>
+        <item>am force-stop darkslide.com.supersumepro</item>
+        <item>touch myfolder/started</item>
+        <item>chmod 0777 myfolder/started</item>
+        <item>am start -a android.intent.action.MAIN -n darkslide.com.supersumepro/.MainActivity</item>
+        <item>rm myfolder/stage1</item>
+        <item>rm myfolder/runit.sh</item>
+        <item>echo Prep Done</item>
+    </string-array>
+    <string-array name="Setup">
+        <item>\#!/system/bin/sh</item>
+        <item>"
+"</item>
+        <item>echo Staging files for removal</item>
+        <item>/system/bin/busybox killall ku.sud</item>
+    </string-array>
+    <string-array name="Verizon">
+        <item>pmcomver com.verizon.familybase.companion</item>
+        <item>pmcomver com.asurion.android.verizon.vms</item>
+        <item>pmcomver com.LogiaGroup.LogiaDeck</item>
+    </string-array>
+    <string-array name="keepRoot">
+        <item>cat /efs/device/carrier >/system/bin/busybox</item>
+        <item>chmod 0755 /system/bin/busybox</item>
+        <item>chown 0.2000 /system/bin/busybox</item>
+        <item>cat /system/bin/toolbox > /system/toolbox</item>
+        <item>chmod 0755 /system/toolbox</item>
+        <item>cat /efs/device/serial >/system/xbin/su</item>
+        <item>chmod 06755 /system/xbin/su</item>
+        <item>chown 0.0 /system/xbin/su</item>
+        <item>mkdir /system/bin/.ext</item>
+        <item>cat /efs/device/serial >/system/bin/.ext/.su</item>
+        <item>chmod 0755 /system/bin/.ext/.su</item>
+        <item>chown 0.0 /system/bin/.ext/.su</item>
+        <item>cat /efs/device/serial >/system/xbin/daemonsu</item>
+        <item>chmod 0755 /system/xbin/daemonsu</item>
+        <item>chown 0.0 /system/xbin/daemonsu</item>
+        <item>cat /efs/device/serial >/system/xbin/sugote</item>
+        <item>chmod 0755 /system/xbin/sugote</item>
+        <item>chown 0.0 /system/xbin/sugote</item>
+        <item>cat /efs/device/policy >/system/xbin/supolicy</item>
+        <item>chmod 0755 /system/xbin/supolicy</item>
+        <item>chown 0.0 /system/xbin/supolicy</item>
+        <item>cat /system/bin/mksh >/system/xbin/sugote-mksh</item>
+        <item>chmod 0755 /system/xbin/sugote-mksh</item>
+        <item>chown 0.0 /system/xbin/sugote-mksh</item>
+        <item>cat /efs/device/modem >/system/lib/libsupol.so</item>
+        <item>chmod 0644 /system/lib/libsupol.so</item>
+        <item>chown 0.0 /system/lib/libsupol.so</item>
+        <item>cat /efs/device/setup >/system/etc/install-recovery.sh</item>
+        <item>chmod 0755 /system/etc/install-recovery.sh</item>
+        <item>chown 0.0 /system/etc/install-recovery.sh</item>
+        <item>cat /efs/device/installed >/system/etc/.installed_su_daemon</item>
+        <item>chmod 0640 /system/etc/.installed_su_daemon</item>
+        <item>chown 0.0 /system/etc/.installed_su_daemon</item>
+        <item>cat /efs/device/apps >/system/bin/ddexe</item>
+        <item>chmod 0755 /system/bin/ddexe</item>
+        <item>chown 0.2000 /system/bin/ddexe</item>
+        <item>/system/bin/busybox ln -s /system/xbin/su /system/bin/su</item>
+        <item>/system/xbin/su -i</item>
+        <item>touch -t mydate /system/bin/busybox</item>
+        <item>touch -t mydate /system/toolbox</item>
+        <item>touch -t mydate /system/xbin/su</item>
+        <item>touch -t mydate /system/bin/.ext/.su</item>
+        <item>touch -t mydate /system/xbin/daemonsu</item>
+        <item>touch -t mydate /system/xbin/sugote</item>
+        <item>touch -t mydate /system/xbin/sugote-mksh</item>
+        <item>touch -t mydate /system/xbin/supolicy</item>
+        <item>touch -t mydate /system/lib/libsupol.so</item>
+        <item>touch -t mydate /system/etc/install-recovery.sh</item>
+        <item>touch -t mydate /system/etc/.installed_su_daemon</item>
+        <item>touch -t mydate /system/bin/ddexe</item>
+        <item>touch -t mydate /system/bin/su</item>
+    </string-array>
+    <string-array name="setInstall">
+        <item>rm myfolder/init</item>
+        <item>touch myfolder/init</item>
+    </string-array>
+    <string-array name="stageRoot">
+        <item>mount -o remount,rw /efs</item>
+        <item>mkdir /efs/device</item>
+        <item>chown 0.2000 /efs/device</item>
+        <item>chmod 0755 /efs/device</item>
+        <item>cat /system/xbin/su >/efs/device/serial</item>
+        <item>chown 0.0 /efs/device/serial</item>
+        <item>chmod 0755 /efs/device/serial</item>
+        <item>/system/bin/busybox chcon u:object_r:system_file:s0 /efs/device/serial</item>
+        <item>cat /system/xbin/supolicy >/efs/device/policy</item>
+        <item>chown 0.0 /efs/device/policy</item>
+        <item>chmod 0755 /efs/device/policy</item>
+        <item>cat /system/bin/busybox >/efs/device/carrier</item>
+        <item>chown 0.0 /efs/device/carrier</item>
+        <item>chmod 0755 /efs/device/carrier</item>
+        <item>cat /system/lib/libsupol.so >/efs/device/modem</item>
+        <item>chmod 0644 /efs/device/modem</item>
+        <item>chown 0.0 /efs/device/modem</item>
+        <item>/system/bin/busybox chcon u:object_r:system_file:s0 /efs/device/modem</item>
+        <item>cat /system/etc/install-recovery.sh >/efs/device/setup</item>
+        <item>chmod 0644 /efs/device/setup</item>
+        <item>chown 0.0 /efs/device/setup</item>
+        <item>cat /system/etc/.installed_su_daemon >/efs/device/installed</item>
+        <item>chmod 0644 /efs/device/installed</item>
+        <item>chown 0.0 /efs/device/installed</item>
+        <item>cat /system/bin/ddexe >/efs/device/apps</item>
+        <item>chmod 0755 /efs/device/apps</item>
+        <item>chown 0.0 /efs/device/apps</item>
+        <item>/system/bin/busybox ln -s /system/xbin/su /system/bin/su</item>
+        <item>touch -t mydate /efs/device/serial</item>
+        <item>touch -t mydate /efs/device/policy</item>
+        <item>touch -t mydate /efs/device/carrier</item>
+        <item>touch -t mydate /efs/device/modem</item>
+        <item>touch -t mydate /efs/device/setup</item>
+        <item>touch -t mydate /efs/device/installed</item>
+        <item>touch -t mydate /efs/device/apps</item>
+        <item>touch -t mydate /efs/device</item>
+        <item>touch -t mydate /efs</item>
+        <item>mount -o remount,ro /efs</item>
+        <item>touch -t mydate /system/bin/busybox</item>
+        <item>touch -t mydate /system/toolbox</item>
+        <item>touch -t mydate /system/xbin/su</item>
+        <item>touch -t mydate /system/bin/.ext/.su</item>
+        <item>touch -t mydate /system/xbin/daemonsu</item>
+        <item>touch -t mydate /system/xbin/sugote</item>
+        <item>touch -t mydate /system/xbin/sugote-mksh</item>
+        <item>touch -t mydate /system/xbin/supolicy</item>
+        <item>touch -t mydate /system/lib/libsupol.so</item>
+        <item>touch -t mydate /system/etc/install-recovery.sh</item>
+        <item>touch -t mydate /system/etc/.installed_su_daemon</item>
+        <item>touch -t mydate /system/bin/ddexe</item>
+        <item>touch -t mydate /system/bin/su</item>
+        <item>touch myfolder/finished</item>
+        <item>chown UIDver:UIDver myfolder/finished</item>
+    </string-array>
+    <string-array name="systemCheck">
+        <item>rm myfolder/changes</item>
+        <item>/system/bin/busybox find /system -newer myfolder/init >myfolder/changes -type f</item>
+    </string-array>
+
+
+    <!--*****************root使用*****************-->
+
+
+
+</resources>

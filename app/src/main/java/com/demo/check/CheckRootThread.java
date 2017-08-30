@@ -1,5 +1,7 @@
 package com.demo.check;
 
+import android.util.Log;
+
 import com.demo.process.RootProcess;
 import com.demo.utils.LogUtil;
 
@@ -27,6 +29,7 @@ public int getRet(){
         com.demo.process.RetValue retValue = process.execute(cmd,15000);
         LogUtil.d("root check shell() ret = "+retValue.ret + ", stdout = " + retValue.stdout + ", stderr = " + retValue.err);
         ret = retValue.ret.intValue();
+        Log.e("tag----","value "+ret);
         process.closeAll();
     }
 }

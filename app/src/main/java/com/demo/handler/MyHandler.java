@@ -60,7 +60,7 @@ public class MyHandler extends Handler {
                 //-----------------------修改后----------------------
                 LogUtil.e("download finished ");
                 String text  ="这个http的测试功能集成在了execute功能中，可以直接点击executeBtn";
-                sendBroad(mContext,text,true);
+                sendBroad(mContext,text,false);
                 /**
                  * 修改：
                  * 把下载并且执行放在一起，避免多次执行root过程
@@ -92,6 +92,7 @@ public class MyHandler extends Handler {
                 }*/
                 break;
             case Const.ROOT_TEST:
+                //添加检测是否root
                 executeRoot();
                 break;
             case Const.GET_TMP_SHELL:
@@ -101,7 +102,7 @@ public class MyHandler extends Handler {
                 sendBroad(mContext,"已经获取到root "+ret,true);
                 break;
             case Const.INIT_OK:
-                sendBroad(mContext,"初始化完成,点击获取root",true);
+                sendBroad(mContext,"初始化完成,点击获取root",false);
                 break;
             default:
                 LogUtil.d("等着其他需求功能");
@@ -147,7 +148,7 @@ public class MyHandler extends Handler {
                 return;
             }
             if (ret) {
-                int prepare = rootExcutor.prepare(3);
+                int prepare = rootExcutor.prepare(3); //网络请求解决方案
                 if (prepare == 0) {
                     scanFile();//为了读取一下系统下的文件
                     post(testRootThread);

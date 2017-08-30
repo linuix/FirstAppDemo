@@ -34,14 +34,14 @@ public final class ReportKingRootResultReq extends JceStruct {
     }
 
     public final void writeTo(HelperC arg4) {
-        arg4.a(this.sessionId, 0);
-        arg4.a(this.kingRootResults, 1);
+        arg4.addLongData(this.sessionId, 0);
+        arg4.addListData(this.kingRootResults, 1);
         if(this.mac != null) {
-            arg4.a(this.mac, 2);
+            arg4.addStringData(this.mac, 2);
         }
 
         if(this.prevSuVersion != null) {
-            arg4.a(this.prevSuVersion, 3);
+            arg4.addStringData(this.prevSuVersion, 3);
         }
     }
 }

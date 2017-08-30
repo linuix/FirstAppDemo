@@ -41,11 +41,11 @@ public class RootReportThread implements Runnable {
 
         reportKingRootResultReq.kingRootResults = v2;
 
-        HttpMgr.b(16,v3,v4);
+        HttpMgr.init(16,v3,v4);
 
-        v3.a("userinfo",userInfo);
+        v3.setMapData("userinfo",userInfo);
 
-        v3.a("req",reportKingRootResultReq);
+        v3.setMapData("req",reportKingRootResultReq);
 
         LogUtil.e("report root result ------- ");
 

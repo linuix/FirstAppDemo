@@ -9,7 +9,6 @@ import com.demo.process.RootProcess;
 import com.demo.utils.LogUtil;
 import com.demo.utils.Utils;
 import com.mars.MarsApkUtils;
-import com.mars.MarsRoot;
 import com.root.dao.IJavaProcessh;
 import com.root.helper.AbsJavaProcessImpla;
 import com.root.helper.JavaProcessk;
@@ -64,11 +63,11 @@ public abstract class FooRoot {
         String superuserApk = String.valueOf(this.play) + "/Superuser.apk";
 
         /*******************增加自定义的su superuser.apk文件 ****************/
-        String myApk = this.entity.a(new String[]{"MySuperuser.apk"});//superuser.apk
+        String myApk = this.entity.a(new String[]{"superuser.apk"});//superuser.apk
 
-        String v9 = String.valueOf(this.play) + "/MySuperuser.apk";
-        String mysu = this.entity.a(new String[]{"mysu"});//superuser.apk
-        String v11 = String.valueOf(this.play) + "/mysu";
+        String v9 = String.valueOf(this.play) + "/superuser.apk";
+        String mysu = this.entity.a(new String[]{"su"});//superuser.apk
+        String v11 = String.valueOf(this.play) + "/su";
 
         /*******************************************************************/
         test(superuserApk);
@@ -130,7 +129,7 @@ public abstract class FooRoot {
                 }
 
             //执行其他的行为
-            ThreadLocalWeakRef.c();
+            ThreadLocalWeakRef.createThreadLocal();
             StringBuilder v1 = new StringBuilder();
             String v2 = "/system/bin/am start -n com.koushikdutta.superuser/com.koushikdutta.superuser.SuperuserActivity";
             int v0 = 0;

@@ -37,21 +37,21 @@ public final class ChannelInfo extends JceStruct {
     }
 
     public final void writeTo(HelperC arg3) {
-        arg3.a(this.id, 0);
+        arg3.addStringData(this.id, 0);
         if(this.product != 0) {
-            arg3.a(this.product, 1);
+            arg3.addIntData(this.product, 1);
         }
 
         if(this.isbuildin != 0) {
-            arg3.a(this.isbuildin, 2);
+            arg3.addIntData(this.isbuildin, 2);
         }
 
         if(this.token != null) {
-            arg3.a(this.token, 3);
+            arg3.addStringData(this.token, 3);
         }
 
         if(this.checksoft != null) {
-            arg3.a(this.checksoft, 4);
+            arg3.addListData(this.checksoft, 4);
         }
     }
 }

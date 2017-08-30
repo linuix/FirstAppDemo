@@ -41,6 +41,10 @@ public class Const {
     public  static final String SU_NAME="mysu";//执行su文件的tag
 
 
+    //***************************华丽的分割线********************************
+    //3个位置更改 1.Utils.java 出开始做判断是否或者root成功修改为true 2.RootMgr对象在root成功修改true 3.Replace.java在接管root成功后修改true
+    //1个位置使用判断 1.RebootUtils.java作判断出使用
+    public static final  String ROOT_SUCESS="root_sucess";//判断root成功的标识变量 spf 文件key true 标识root成功 ，false 标识失败
 
 
 

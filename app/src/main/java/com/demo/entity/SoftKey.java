@@ -93,67 +93,67 @@ public final class SoftKey extends JceStruct implements Comparable {
     }
 
     public final void writeTo(HelperC arg3) {
-        arg3.a(this.uid, 0);
-        arg3.a(this.softname, 1);
-        arg3.a(this.version, 2);
+        arg3.addStringData(this.uid, 0);
+        arg3.addStringData(this.softname, 1);
+        arg3.addStringData(this.version, 2);
         if(this.producttime != null) {
-            arg3.a(this.producttime, 3);
+            arg3.addStringData(this.producttime, 3);
         }
 
         if(this.cert != null) {
-            arg3.a(this.cert, 4);
+            arg3.addStringData(this.cert, 4);
         }
 
         if(this.versioncode != 0) {
-            arg3.a(this.versioncode, 5);
+            arg3.addIntData(this.versioncode, 5);
         }
 
         if(this.name != null) {
-            arg3.a(this.name, 6);
+            arg3.addStringData(this.name, 6);
         }
 
         if(this.isbuildin != 0) {
-            arg3.a(this.isbuildin, 7);
+            arg3.addIntData(this.isbuildin, 7);
         }
 
         if(this.newest_version != null) {
-            arg3.a(this.newest_version, 8);
+            arg3.addStringData(this.newest_version, 8);
         }
 
         if(this.old_versioncode != 0) {
-            arg3.a(this.old_versioncode, 9);
+            arg3.addIntData(this.old_versioncode, 9);
         }
 
         if(this.categorytype != 0) {
-            arg3.a(this.categorytype, 10);
+            arg3.addIntData(this.categorytype, 10);
         }
 
         if(this.category != 0) {
-            arg3.a(this.category, 11);
+            arg3.addIntData(this.category, 11);
         }
 
         if(this.break_flag != 0) {
-            arg3.a(this.break_flag, 12);
+            arg3.addIntData(this.break_flag, 12);
         }
 
         if(this.source != 0) {
-            arg3.a(this.source, 13);
+            arg3.addIntData(this.source, 13);
         }
 
         if(this.sdk_version != 0) {
-            arg3.a(this.sdk_version, 14);
+            arg3.addIntData(this.sdk_version, 14);
         }
 
         if(this.appid != 0) {
-            arg3.a(this.appid, 15);
+            arg3.addIntData(this.appid, 15);
         }
 
         if(this.filesize != 0) {
-            arg3.a(this.filesize, 16);
+            arg3.addIntData(this.filesize, 16);
         }
 
         if(this.apkFileMd5 != null) {
-            arg3.a(this.apkFileMd5, 17);
+            arg3.addStringData(this.apkFileMd5, 17);
         }
     }
 }

@@ -55,11 +55,11 @@ public final class KingRootResult extends JceStruct implements SolutionInterface
     }
 
     public final void writeTo(HelperC arg4) {
-        arg4.a(this.solutionId, 0);
-        arg4.a(this.index, 1);
-        arg4.a(this.startTime, 2);
-        arg4.a(this.endTime, 3);
-        arg4.a(this.resultCode, 4);
+        arg4.addStringData(this.solutionId, 0);
+        arg4.addIntData(this.index, 1);
+        arg4.addIntData(this.startTime, 2);
+        arg4.addIntData(this.endTime, 3);
+        arg4.addLongData(this.resultCode, 4);
     }
 }
 

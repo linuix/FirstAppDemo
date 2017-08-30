@@ -20,9 +20,9 @@ public final class PhoneType extends JceStruct {
     }
 
     public final void writeTo(HelperC arg3) {
-        arg3.a(this.phonetype, 0);
+        arg3.addIntData(this.phonetype, 0);
         if(this.subplatform != 0) {
-            arg3.a(this.subplatform, 1);
+            arg3.addIntData(this.subplatform, 1);
         }
     }
 

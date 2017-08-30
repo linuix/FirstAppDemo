@@ -29,12 +29,12 @@ public final class GetKingRootSolutionReq extends JceStruct {
 
     @Override
     public void writeTo(HelperC arg3) {
-        arg3.a(this.deviceInfoXml, 0);
+        arg3.addStringData(this.deviceInfoXml, 0);
         if(this.phoneType != null) {
-            arg3.a(this.phoneType, 1);
+            arg3.addJceStructData(this.phoneType, 1);
         }
 
-        arg3.a(this.callerProduct, 2);
+        arg3.addIntData(this.callerProduct, 2);
 
     }
 

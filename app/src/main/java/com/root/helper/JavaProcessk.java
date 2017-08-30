@@ -43,9 +43,9 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
     static int v1 = 0;
      static JavaProcessk retobj = null;
     public static JavaProcessk a(String path, int arg) {
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         Context context = InitConfig.mContext;
-        String real_kd_path = SpfUtils.b(context, "REAL_KD_PATH");
+        String real_kd_path = SpfUtils.getMarsrootSharePreferences(context, "REAL_KD_PATH");
         int v3_4 = 1;
         if (real_kd_path != null)
         {
@@ -66,9 +66,9 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
         {
             LogUtil.d("没获取到系统内部的kd文件" +real_kd_path);
             LogUtil.d("真实的kd的路径： " + real_kd_path + " ,默认的kd路径：" + path);
-            SpfUtils.a(context, "REAL_KD_PATH");//删除掉该字段
+            SpfUtils.removeMarsRootSharedPreferences(context, "REAL_KD_PATH");//删除掉该字段
             //使用本地的kd文件执行
-           retobj= linkedKdFile(path, arg, real_kd_path,  v3_4);
+           retobj = linkedKdFile(path, arg, real_kd_path,  v3_4);
         }
         return retobj;
 
@@ -233,9 +233,9 @@ private static  void mars()
             LogUtil.e("getKDRootShell() javaprocessk processing realPath ret = " + ret.ret + ", stdout = " + ret.stdout + ", stderr = " + ret.err);
             if (ret != null)
             {
-               if( AbsJavaProcessImpla.b(ret.stdout))
+               if( AbsJavaProcessImpla.b(ret.stdout))//判断临时root
                {
-                   mars();//在这里调用这个进程
+                   mars();//在这里调用这个进程 接管
                }
                 return ret;
             }
@@ -252,7 +252,7 @@ private static  void mars()
     }
     public static boolean a(String arg4, AbsJavaProcessImpla arg5) {
         boolean v0_1 ;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         arg5.a("chmod 6755 " + arg4);
         arg5.a("chown 0.0 " + arg4);
         JavaSolutionHelpers javaSolutionHelpers = arg5.a(String.valueOf(arg4) + " -d");

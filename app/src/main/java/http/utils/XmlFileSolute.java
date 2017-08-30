@@ -100,7 +100,7 @@ public class XmlFileSolute {
         LogUtil.loge("Build.CPU_ABI = " + Build.CPU_ABI);
         //<ro.product.cpu.abi>armeabi-v7a</ro.product.cpu.abi>
         // <ro.product.cpu.abi2>armeabi</ro.product.cpu.abi2>
-        v1.append(/*"armeabi-v7a"*/getProp("ro.product.cpu.abi"));//这里读取的是系统内的数据，使用processUtils读取
+        v1.append(/*"armeabi-v7a"*/getProp("ro.product.cpu.abi"));//这里读取的是系统内的数据，使用processUtils读取---读取设备的cpu信息
         v1.append("</ro.product.cpu.abi>");
         v1.append("<ro.product.cpu.abi2>");
         LogUtil.loge("Build.CPU_ABI2 = " + Build.CPU_ABI2);
@@ -166,6 +166,11 @@ public class XmlFileSolute {
         return deviceXmlInfo;
     }
 
+    /**
+     * 执行getprop命令
+     * @param arg
+     * @return
+     */
     private static String getProp(String arg) {
         LogUtil.loge("getprop == arg  = " + arg);
         String stdout = "";

@@ -27,9 +27,9 @@ public final class ProductVersion extends JceStruct {
 
     @Override
     public void writeTo(HelperC arg3) {
-        arg3.a(this.pversion, 1);
-        arg3.a(this.cversion, 2);
-        arg3.a(this.hotfix, 3);
+        arg3.addIntData(this.pversion, 1);
+        arg3.addIntData(this.cversion, 2);
+        arg3.addIntData(this.hotfix, 3);
     }
 
     public final int compareVersion(ProductVersion arg5) {

@@ -67,7 +67,6 @@ public class YunRootExcutor {
         solutionMgr = RecordRootSolution.prepareXmlAndJarsDir(this.context, this.mEntity, arg17);
 
         if (this.solutionMgr != null && this.solutionMgr.a == 0 && this.solutionMgr.mobileRootInfo != null) {
-
             v2 = 200043;
             String v4 = "";
             String v5 = "";
@@ -149,7 +148,6 @@ public class YunRootExcutor {
     /**
      * 这里把solutionMgr.executorSolutionHelpers赋值，在执行的时候，直接启用
      */
-
     public boolean downloadSolution() {
         boolean flag = true;
         ArrayList list = new ArrayList();
@@ -181,7 +179,6 @@ public class YunRootExcutor {
             /**
              * 这里的executorSolutionHelpers就是下载好的可执行文件
              * */
-
             solutionMgr.executorSolutionHelpers = (SolutionHelpers[]) list.toArray(new SolutionHelpers[list.size()]);
 
             if (solutionMgr.executorSolutionHelpers == null) {

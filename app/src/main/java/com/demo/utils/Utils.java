@@ -6,10 +6,15 @@ import android.net.NetworkInfo;
 import android.net.Proxy;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 
+import com.demo.App;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.zip.CRC32;
 
@@ -512,9 +518,77 @@ public class Utils {
                 flag=false;
             }
         }
-
         return flag;
     }
+
+
+    /**
+     * 2017-8-11
+     * 添加root检测，若果root过并且成功，那么不需要执行root
+     *
+     *
+     * */
+    private  void callProcess()
+    {
+        InputStream inputStream=null;
+        java.lang.Process process =null;
+        BufferedReader br = null;
+        DataOutputStream outputStream = null;
+        Log.d("tag----","测试root检测功能 。。。。 ");
+        try {
+            process = Runtime.getRuntime().exec("su");
+            inputStream = process.getInputStream();
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            outputStream = new DataOutputStream(process.getOutputStream());
+            String cmd = "id\n";
+            outputStream.write(cmd.getBytes());
+            outputStream.write("exit\n".getBytes());
+            Log.e("tag----","write finished    === ");
+
+            String line =null;
+            while ((line = br.readLine())!= null)
+            {
+                Log.d("tag----",line);
+                if(line.contains("uid=0(root)"))
+                {
+                    Log.d("tag----","get root ");
+                    SpfUtils.set(App.getContext(),Const.ROOT_SUCESS,true);
+                }
+            }
+            int value = process.waitFor();
+            Log.d("tag----","value == "+value);
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(br != null)
+            {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(inputStream != null)
+            {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(process != null)
+            {
+                process.destroy();
+                process=null;
+            }
+        }
+
+    }
+
 
 
 }

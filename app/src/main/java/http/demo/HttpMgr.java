@@ -21,7 +21,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import http.helper.NetConfigration;
@@ -36,8 +35,8 @@ import http.utils.XmlFileSolute;
 
 public class HttpMgr {
 
-    private static String a;
-    private static Helpers[] b;
+    private static String url;
+    private static Helpers[] helperses;
 
     private static Context mContext;
 
@@ -71,10 +70,9 @@ public class HttpMgr {
     public static int initKrsdkStockConf(Context context, NetConfigration arg2, NetConfigration arg3) {
         return a(context, arg2, arg3, false);
     }
-
     static {
-        HttpMgr.a = UrlTest.b;
-        HttpMgr.b = new Helpers[]{new Helpers(0, "info|getUpdatesV2"), new Helpers(1, "conf|getConfigV2"),
+        HttpMgr.url = UrlTest.b;
+        HttpMgr.helperses = new Helpers[]{new Helpers(0, "info|getUpdatesV2"), new Helpers(1, "conf|getConfigV2"),
                 new Helpers(2, "kinguser|getSoftStatus"), new Helpers(3, "kinguser|reportSoftStatus"),
                 new Helpers(4, "info|reportSoftList"), new Helpers(5, "kinguser|reportMsg"), new Helpers(
                 6, "tipsmain|getMainTips"), new Helpers(7, "softupdate|getSoftUpdateTips"), new Helpers(
@@ -84,7 +82,6 @@ public class HttpMgr {
                 new Helpers(15, "kingrootsolution|getSolutions"), new Helpers(16, "kingrootreport|reportKingRootResult"),
                 new Helpers(17, "KingUserIssue|getKingUserUrl"), new Helpers(18, "checkCanTmpRoot|checkCanTmpRoot")};
     }
-
     /**
      * 获取solutions的关键点
      * 点击root按钮，会调用这个接口获取解决方案
@@ -98,17 +95,16 @@ public class HttpMgr {
         //  EntityManager.setFromSolution(true);//设置请求solution标识，
         UserInfo v3 = EntityManager.getUserInfo(context);
         LogUtil.d("userinfo =" + v3.toString());
-        GetKingRootSolutionReq v4 = EntityManager.getKingRootSolutionReq(); //Manager.c();
+        GetKingRootSolutionReq v4 = EntityManager.getKingRootSolutionReq(); //Manager.chart();
         LogUtil.d("getkingrootsolution = " + v4.toString());
         LogUtil.e("WupSession.getSolutions()上报设备信息deviceInfoXml : " + v4.deviceInfoXml);
-        HttpMgr.b(15, v0, v2);
-        v0.a("userinfo", v3);
-        v0.a("req", v4);
-        v0.a("phonetype", EntityManager.getPhoneType());
+        HttpMgr.init(15, v0, v2);
+        v0.setMapData("userinfo", v3);
+        v0.setMapData("req", v4);
+        v0.setMapData("phonetype", EntityManager.getPhoneType());
         LogUtil.e("phoneType = " + EntityManager.getPhoneType().toString());
         //准备网络请求
         int v0_1 = HttpMgr.a(context, v0, v2, true);
-
         if (v0_1 == 0) {
             GetKingRootSolutionResp v0_3 = (GetKingRootSolutionResp) v2.b("resp", new GetKingRootSolutionResp());
             LogUtil.e("vvvv " + v0_3);
@@ -154,10 +150,10 @@ public class HttpMgr {
             AtomicReference v4 = new AtomicReference();
             NetConfigration req = new NetConfigration((byte) 0);
             NetConfigration resp = new NetConfigration((byte) 0);
-            HttpMgr.b(13, req, resp);
-            req.a("phonetype", EntityManager.getPhoneType());
-            req.a("userinfo", EntityManager.getUserInfo(context));
-            req.a("deviceinfo", deviceInfo);
+            HttpMgr.init(13, req, resp);
+            req.setMapData("phonetype", EntityManager.getPhoneType());
+            req.setMapData("userinfo", EntityManager.getUserInfo(context));
+            req.setMapData("deviceinfo", deviceInfo);
             int ret = a(context, req, resp, true);
             if (ret == 0)
             {
@@ -198,9 +194,9 @@ public class HttpMgr {
     private static int a(Context arg6, NetConfigration arg7, NetConfigration arg8, boolean arg9) {
         LogUtil.e(" 每次调用的状态标识，是否启用kr-stock-conf " + arg9);
         int v2_1 = -1;
-        AtomicReference v0_4;
+        AtomicReference atomicReference;
         HttpUtils v1_1;
-        HttpUtils v3;
+        HttpUtils httpUtils;
         byte[] v0_3;
         int v0_5 = -1;
         int v1 = -6000;
@@ -210,25 +206,25 @@ public class HttpMgr {
         HttpUtils v2 = null;
         v0_3 = Cryptor.x(arg6, arg7.a());//
         LogUtil.d("cryptor.x = " + new String(v0_3));
-        v3 = HttpUtils.a(arg6, HttpMgr.a);
-        if (v3 == null)
+        httpUtils = HttpUtils.a(arg6, HttpMgr.url);
+        if (httpUtils == null)
         {
             LogUtil.e("没有获取到网络的对象!!");
             return  -1;
         }
 
-        v3.a("POST");
-        v3.a(v0_3);
+        httpUtils.a("POST");
+        httpUtils.a(v0_3);
         //发送请求，获取请求的反馈
-        LogUtil.d("waiting for http request !!" + a);
-        int ret = v3.a();
-        LogUtil.d("WupSession.reponseCode = " + v3.c() + ", contentLength = " + v3.e() + ", contentType = " + v3.f());
+        LogUtil.d("waiting for http request !!" + url);
+        int ret = httpUtils.a();
+        LogUtil.d("WupSession.reponseCode = " + httpUtils.c() + ", contentLength = " + httpUtils.e() + ", contentType = " + httpUtils.f());
         LogUtil.d("responseCode = " + ret);
-        v0_4 = new AtomicReference();
-        v2_1 = v3.a(v0_4);
+        atomicReference = new AtomicReference();
+        v2_1 = httpUtils.a(atomicReference);
         if (v2_1 == 0)
         {
-            byte[] v0_6 = (byte[]) v0_4.get();
+            byte[] v0_6 = (byte[]) atomicReference.get();
             LogUtil.d("response data = " + new String(v0_6));
             if (v0_6 == null) {
                 v0_5 = v2_1;
@@ -249,20 +245,20 @@ public class HttpMgr {
                 v0_5 = v2_1;
             }
         }
-        if (v3 != null) {
-            v3.closeHttp();
+        if (httpUtils != null) {
+            httpUtils.closeHttp();
         }
         return v0_5;
     }
     /**
      * 配置网络请求参数
      */
-    public static void b(int arg1, NetConfigration arg2, NetConfigration arg3) {
-        arg2.a("UTF-8");
-        arg2.a(arg1);
-        arg2.b(HttpMgr.b[arg1].b);
-        arg2.c(HttpMgr.b[arg1].c);
-        arg3.a("UTF-8");
+    public static void init(int arg1, NetConfigration arg2, NetConfigration arg3) {
+        arg2.setChart("UTF-8");
+        arg2.setRequestId(arg1);
+        arg2.setServantName(HttpMgr.helperses[arg1].argFirst);
+        arg2.setFuncName(HttpMgr.helperses[arg1].argSecond);
+        arg3.setChart("UTF-8");
     }
     /**
      * 下载解决方案外部接口

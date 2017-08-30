@@ -74,7 +74,7 @@ public class EntityManager {
             tmpUserInfo.ua = v0;
             tmpUserInfo.product = v10;
             tmpUserInfo.sdkversion = Build.VERSION.SDK_INT;
-            String[] v3_1 = UrlTest.a().trim().split("[\\.]");
+            String[] v3_1 = UrlTest.init().trim().split("[\\.]");
             ProductVersion v5_1 = new ProductVersion();
             int v0_1 = v3_1.length > 0 ? Integer.parseInt(v3_1[0]) : 1;
             v5_1.pversion = v0_1;
@@ -158,7 +158,7 @@ public class EntityManager {
                     EntityManager.getKingRootSolutionReq = v0_6;
                     EntityManager.reportKingRootResultReq = new ReportKingRootResultReq();
                     EntityManager.arrayList = new ArrayList();
-                    v0 = SPF.b(arg12, "session_id");
+                    v0 = SPF.getMarsrootSharePreferences(arg12, "session_id");
                     if (v0 != null) {
                         try {
                             EntityManager.i = Long.parseLong(v0);
@@ -188,7 +188,7 @@ public class EntityManager {
 
                     EntityManager.reportKingRootResultReq = new ReportKingRootResultReq();
                     EntityManager.arrayList = new ArrayList();
-                    v0 = SPF.b(arg12, "session_id");
+                    v0 = SPF.getMarsrootSharePreferences(arg12, "session_id");
 
                     if (v0 != null) {
                         try {
@@ -226,26 +226,26 @@ public class EntityManager {
         EntityManager.fromSolution = fromSolution;
     }
 
-    public static UserInfo getUserInfo(Context arg3) {
-        LogUtil.loge("getUserInfo " + arg3);
+    public static UserInfo getUserInfo(Context context) {
+        LogUtil.loge("getUserInfo " + context);
         int v0_1;
-        UserInfo v2;
-        v2 = EntityManager.userInfo;
-        v2.imei = PhoneInfoUtil.getIMEI(arg3);
-        v2.imsi = PhoneInfoUtil.getIMSI(arg3);
-        if (NetUtils.a(arg3) == 0) {
+        UserInfo userInfo;
+        userInfo = EntityManager.userInfo;
+        userInfo.imei = PhoneInfoUtil.getIMEI(context);
+        userInfo.imsi = PhoneInfoUtil.getIMSI(context);
+        if (NetUtils.a(context) == 0) {
             v0_1 = 2;
         } else {
             v0_1 = 1;
         }
-        v2.ct = v0_1;
-        v2.guid = FileUtils.getGuid();//读取网络下发数据的放回值
+        userInfo.ct = v0_1;
+        userInfo.guid = FileUtils.getGuid();//读取网络下发数据的放回值
 //        if (fromSolution)
 //        {
-//            v2.guid="V2;99000479400232;24:4B:81:2D:FC:64";
+//            userInfo.guid="V2;99000479400232;24:4B:81:2D:FC:64";
 //        }
-        LogUtil.loge("getUserInfo ----" + userInfo);
-        return v2;
+        LogUtil.loge("getUserInfo ----" + EntityManager.userInfo);
+        return userInfo;
     }
 
     public static GetKingRootSolutionReq getKingRootSolutionReq() {
@@ -263,71 +263,70 @@ public class EntityManager {
      * 修改使用这个方式
      */
 
-    public static void init(int arg11, Context arg12) {
-        String v0;
+    public static void init(int arg11, Context context) {
+        String info;
         int v10 = 39;
         int v9 = 3;
         int v8 = 2;
-        UserInfo v4 = new UserInfo();
-        v4.lc = "AA12CC01775BC76A";
-        v4.buildno = 154;
-        String[] v5 = new String[v9];
-        v5[0] = "ro.mediatek.platform";
-        v5[1] = "ro.build.hidden_ver";
-        v5[v8] = "ro.product.model";
-        int v6 = v5.length;
+        UserInfo userInfo = new UserInfo();
+        userInfo.lc = "AA12CC01775BC76A";
+        userInfo.buildno = 154;
+        String[] build_prop_keys = new String[v9];
+        build_prop_keys[0] = "ro.mediatek.platform";
+        build_prop_keys[1] = "ro.build.hidden_ver";
+        build_prop_keys[v8] = "ro.product.model";    //手机型号信息
+        int v6 = build_prop_keys.length;
         int v3 = 0;
         while(true) {
             if (v3 < v6) {
-                v0 = SystemProperties.get(v5[v3]);
+                info = SystemProperties.get(build_prop_keys[v3]);
                 ++v3;
-                if (TextUtils.isEmpty(((CharSequence) v0))) {
+                if (TextUtils.isEmpty(info)) {
                     continue;
                 }
             }
             else {
                 break;
             }
-            v4.ua = v0;
-            v4.product = v10;
-            v4.sdkversion = Build.VERSION.SDK_INT;
-            String[] v3_1 = UrlTest.a().trim().split("[\\.]");
-            v4.version = new ProductVersion();
-            ProductVersion v5_1 = v4.version;
-            int v0_1 = v3_1.length > 0 ? Integer.parseInt(v3_1[0]) : 1;
-            v5_1.pversion = v0_1;
-            v5_1 = v4.version;
-            v0_1 = v3_1.length >= v8 ? Integer.parseInt(v3_1[1]) : 0;
-            v5_1.cversion = v0_1;
-            ProductVersion v1 = v4.version;
-            v0_1 = v3_1.length >= v9 ? Integer.parseInt(v3_1[v8]) : 0;
-            v1.hotfix = v0_1;
-            EntityManager.userInfo = v4;
-            PhoneType v0_2 = new PhoneType();
-            v0_2.phonetype = v8;
-            v0_2.subplatform = 201;
-            EntityManager.phoneType = v0_2;
-            ChannelInfo v0_3 = new ChannelInfo();
-            v0_3.product = v10;
-            v0_3.isbuildin = 0;
-            PackageManager v1_1 = arg12.getPackageManager();
+            userInfo.ua = info;
+            userInfo.product = v10;
+            userInfo.sdkversion = Build.VERSION.SDK_INT;
+            String[] versionStrs = UrlTest.init().trim().split("[\\.]");
+            ProductVersion productVersion = new ProductVersion();
+            int v0_1 = versionStrs.length > 0 ? Integer.parseInt(versionStrs[0]) : 1;
+            productVersion.pversion = v0_1;
+            v0_1 = versionStrs.length >= v8 ? Integer.parseInt(versionStrs[1]) : 0;
+            productVersion.cversion = v0_1;
+            v0_1 = versionStrs.length >= v9 ? Integer.parseInt(versionStrs[v8]) : 0;
+            productVersion.hotfix = v0_1;
+            userInfo.version = productVersion;
+
+            EntityManager.userInfo = userInfo;
+            PhoneType phoneType = new PhoneType();
+            phoneType.phonetype = v8;
+            phoneType.subplatform = 201;
+            EntityManager.phoneType = phoneType;
+            ChannelInfo channelInfo = new ChannelInfo();
+            channelInfo.product = v10;
+            channelInfo.isbuildin = 0;
+            PackageManager packageManager = context.getPackageManager();
             try {
-                ApplicationInfo v1_4 = v1_1.getApplicationInfo(arg12.getPackageName(), PackageManager.GET_UNINSTALLED_PACKAGES);
-                if (v1_4 == null)
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), PackageManager.GET_UNINSTALLED_PACKAGES);
+                if (applicationInfo == null)
                 {
 
-                    EntityManager.channelId = v0_3;
+                    EntityManager.channelId = channelInfo;
                     SUIKey v0_4 = new SUIKey();
                     v0_4.lc = "AA12CC01775BC76A";
 
                     v0_4.name = "EP_KingRoot_SDK";
-                    v0_4.version = UrlTest.a().trim();
+                    v0_4.version = UrlTest.init().trim();
                     v0_4.type = v8;
 
                     v0_4.osversion = Build.VERSION.SDK;
                     v0_4.machineuid = Build.MODEL;
 
-                    v0_4.machineconf = "screen=" + PhoneInfoUtil.widthPixels(arg12) + "*" + PhoneInfoUtil.heightPixels(arg12);
+                    v0_4.machineconf = "screen=" + PhoneInfoUtil.widthPixels(context) + "*" + PhoneInfoUtil.heightPixels(context);
                     v0_4.subplatform = 0;
                     v0_4.isbuildin = 0;
 
@@ -340,7 +339,7 @@ public class EntityManager {
                     v0_5.model = Build.MODEL;
                     v0_5.product = Build.PRODUCT;
 
-                    v0_5.netfile = SystemUtils.getPhoneExternalInfo(arg12);
+                    v0_5.netfile = SystemUtils.getPhoneExternalInfo(context);
                     v0_5.lguid = FileUtils.getLguid();//读取属性文件w.g ///高版本的时候出现异常信息，导致后续不能执行
                     EntityManager.deviceInfo = v0_5;
 
@@ -356,12 +355,12 @@ public class EntityManager {
 
                     EntityManager.reportKingRootResultReq = new ReportKingRootResultReq();
                     EntityManager.arrayList = new ArrayList();
-                    v0 = SpfUtils.b(arg12, "session_id");
+                    info = SpfUtils.getMarsrootSharePreferences(context, "session_id");
 
-                    if (v0 != null)
+                    if (info != null)
                     {
                         try {
-                            EntityManager.i = Long.parseLong(v0);
+                            EntityManager.i = Long.parseLong(info);
                             LogUtil.w("local sessionId = " + EntityManager.i);
                             return;
                         } catch (Exception v0_7) {
@@ -371,66 +370,64 @@ public class EntityManager {
                     LogUtil.w("no local sessionId 1");
                 }
 
-                if ((v1_4.flags & 1) == 0)
+                if ((applicationInfo.flags & 1) == 0)
                 {
-                    EntityManager.channelId = v0_3;
-                    SUIKey v0_4 = new SUIKey();
-                    v0_4.lc = "AA12CC01775BC76A";
-                    v0_4.name = "EP_KingRoot_SDK";
-                    v0_4.version = UrlTest.a().trim();
-                    v0_4.type = v8;
-                    v0_4.osversion = Build.VERSION.SDK;
-                    v0_4.machineuid = Build.MODEL;
-                    v0_4.machineconf = "screen=" + PhoneInfoUtil.widthPixels(arg12) + "*" + PhoneInfoUtil.heightPixels(arg12);
-                    v0_4.subplatform = 0;
-                    v0_4.isbuildin = 0;
-                    EntityManager.suiKey = v0_4;
-                    DeviceInfo v0_5 = new DeviceInfo();
-                    v0_5.androidid = "android_id";
-                    v0_5.sdkversion = new Integer(Build.VERSION.SDK).intValue();
-                    v0_5.model = Build.MODEL;
-                    v0_5.product = Build.PRODUCT;
-                    v0_5.netfile = SystemUtils.getPhoneExternalInfo(arg12);
-                    v0_5.lguid = FileUtils.getLguid();//读取属性文件w.go
+                    EntityManager.channelId = channelInfo;
+                    SUIKey suiKey = new SUIKey();
+                    suiKey.lc = "AA12CC01775BC76A";
+                    suiKey.name = "EP_KingRoot_SDK";
+                    suiKey.version = UrlTest.init().trim();
+                    suiKey.type = v8;
+                    suiKey.osversion = Build.VERSION.SDK;
+                    suiKey.machineuid = Build.MODEL;
+                    suiKey.machineconf = "screen=" + PhoneInfoUtil.widthPixels(context) + "*" + PhoneInfoUtil.heightPixels(context);
+                    suiKey.subplatform = 0;
+                    suiKey.isbuildin = 0;
+                    EntityManager.suiKey = suiKey;
+                    DeviceInfo deviceInfo = new DeviceInfo();
+                    deviceInfo.androidid = "android_id";
+                    deviceInfo.sdkversion = new Integer(Build.VERSION.SDK).intValue();
+                    deviceInfo.model = Build.MODEL;
+                    deviceInfo.product = Build.PRODUCT;
+                    deviceInfo.netfile = SystemUtils.getPhoneExternalInfo(context);
+                    deviceInfo.lguid = FileUtils.getLguid();//读取属性文件w.go
 
-                    EntityManager.deviceInfo = v0_5;
-                    GetKingRootSolutionReq v0_6 = new GetKingRootSolutionReq();
-                    v0_6.deviceInfoXml = XmlFileSolute.getDeviceXmlInfo();
-                    v0_6.phoneType = EntityManager.phoneType;
-                    v0_6.callerProduct = arg11;
-                    EntityManager.getKingRootSolutionReq = v0_6;
+                    EntityManager.deviceInfo = deviceInfo;
+                    GetKingRootSolutionReq getKingRootSolutionReq = new GetKingRootSolutionReq();
+                    getKingRootSolutionReq.deviceInfoXml = XmlFileSolute.getDeviceXmlInfo();
+                    getKingRootSolutionReq.phoneType = EntityManager.phoneType;
+                    getKingRootSolutionReq.callerProduct = arg11;
+                    EntityManager.getKingRootSolutionReq = getKingRootSolutionReq;
                     EntityManager.reportKingRootResultReq = new ReportKingRootResultReq();
 
                     EntityManager.arrayList = new ArrayList();
-                    v0 = SpfUtils.b(arg12, "session_id");
-                    if (v0 != null) {
+                    info = SpfUtils.getMarsrootSharePreferences(context, "session_id");
+                    if (info != null) {
                         try {
-                            EntityManager.i = Long.parseLong(v0);
+                            EntityManager.i = Long.parseLong(info);
                             LogUtil.w("local sessionId = " + EntityManager.i);
                             return;
                         } catch (Exception v0_7) {
                             EntityManager.i = 0;
                         }
                     }
-
                     LogUtil.w("no local sessionId  2");
                 }
-
-                v0_3.isbuildin = 1;
-            } catch (Exception v1_2) {
-                LogUtil.exception("entitymgr exception", v1_2);
+                channelInfo.isbuildin = 1;
+            } catch (Exception e) {
+                LogUtil.exception("entitymgr exception", e);
             }
         }
-        v0 = Build.MODEL;
+        info = Build.MODEL;
     }
 
     public  static SUIKey getSuiKey(Context context)
     {
-        SUIKey v0_1 = suiKey;
-        v0_1.guid = FileUtils.getLguid();
-        v0_1.imei = FileUtils.getGuid();
-        v0_1.imsi = PhoneInfoUtil.getIMSI(context);
-        return  v0_1;
+        SUIKey suiKey = EntityManager.suiKey;
+        suiKey.guid = FileUtils.getLguid();
+        suiKey.imei = FileUtils.getGuid();
+        suiKey.imsi = PhoneInfoUtil.getIMSI(context);
+        return  suiKey;
 
     }
 

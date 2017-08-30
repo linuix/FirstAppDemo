@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.demo.entity.Entity;
 import com.demo.utils.Const;
@@ -15,7 +16,6 @@ import com.mars.MarsRoot;
 import com.root.helper.AbsJavaProcessImpla;
 import com.root.dao.IJavaProcessa;
 import com.root.dao.IJavaProcessh;
-import com.root.helper.AbsJavaProcessImpla;
 import com.root.helper.JavaProcess;
 import com.root.helper.JavaProcessk;
 import com.root.helper.ThreadLocalWeakRef;
@@ -26,6 +26,8 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 
 import http.demo.SolutionHelpers;
+
+import static com.demo.utils.LogUtil.d;
 
 
 /**
@@ -63,7 +65,7 @@ public class RootMgr {
     }
 
     public static boolean startKDFile(IJavaProcessa arg10) {
-        LogUtil.d("startKDFILE -- ");
+        d("startKDFILE -- ");
         boolean v0 = true;
         int v2 = 1;
         try {
@@ -83,7 +85,7 @@ public class RootMgr {
                 if (v2_1 == null) {
                     arg10.d("chmod 6755 " + v4_1);
                     arg10.d("chown 0.0 " + v4_1);
-                    LogUtil.d("start kd : ");
+                    d("start kd : ");
                     arg10.d(String.valueOf(v4_1) + " -d");
                     JavaProcessk.c = v4_1;
                     v2_1 = JavaProcessk.a(v4_1, 3);
@@ -103,7 +105,6 @@ public class RootMgr {
 
     /**
      * http添加解决方案到执行函数接口
-     *
      */
     public static void setSolutionHelpers(SolutionHelpers[] solutionHelpers)
     {
@@ -116,7 +117,6 @@ public class RootMgr {
     {
         isSucc = arg;
     }
-
     /**
      * execute root
      *
@@ -126,7 +126,7 @@ public class RootMgr {
      */
     //----------------------------备份---------------------
     public int execteRoot(int arg) {//arg=3
-        LogUtil.d("Execute Root ~~~ 参数是：" + arg);
+        d("Execute Root ~~~ 参数是：" + arg);
         int v2 = 200027;
         int v4 = -1;
         AbsJavaProcessImpla v5_1;
@@ -154,15 +154,15 @@ public class RootMgr {
         System.nanoTime();
         int v10 = 1;
         //test
-        int len = sids.length;//修改了这里，
+        //int len = sids.length;//修改了这里， 这里是测试数据。被写死的，需要使用下载的数据
         //execute
         if (helperses == null) {
             LogUtil.e("没有可以执行的解决方案，请检查网络或者确认是否初始化了");
             return resultCode;
         }
-        int length = helperses.length;
-        SpfUtils.markSdkStart(mConext, msg, len, v14);
-        LogUtil.d("记录文件生成 "+"\t ,solution length ="+len);
+        int length = helperses.length; //下载得到数据
+        SpfUtils.markSdkStart(mConext, msg, length, v14);
+        d("记录文件生成 "+"\t ,solution length ="+length);
         int indx = 0;
         while (indx < length)
         {
@@ -171,6 +171,7 @@ public class RootMgr {
             {
                 LogUtil.e("执行到了最后一个 ");
             }
+
             /**
              * 读取每一个执行文件
              在这个方法体中，去读取每一个文件，执行每一个文件
@@ -189,14 +190,15 @@ public class RootMgr {
             //soltionHelpers.n = data/data/com.demo/app_krsdk/jars/sid
             LogUtil.e("解决方案的执行路径：" + solutionHelpers.n);
             ///
-            LogUtil.d("执行的方案: sid =" + solutionHelpers.b);
-            if (indx + 1 == len) {
-                LogUtil.d("next_execte_solution_id indx = len 最后一个 " + indx);
-                SpfUtils.a(this.mConext, "next_execute_solution_id");
+            d("执行的方案: sid =" + solutionHelpers.b);
+            if (indx + 1 == length) {
+                d("next_execte_solution_id indx = len 最后一个 " + indx);
+                SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id");
             } else {
-                LogUtil.d("index =" + indx + " " + "next_execte_solution_id " + helperses[indx + 1].b);
+
+                Log.d("tag---","index =" + indx + " " + "next_execte_solution_id " + helperses[indx + 1].b);
                 //记录下一个要执行的解决方案
-                SpfUtils.a(this.mConext, "next_execute_solution_id", helperses[indx + 1].b);
+                SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id", helperses[indx + 1].b);
             }
             //获取Root实例类工具执行root,记得加上标志位,同时使用weekReference使用
             //switchCracker的int tag =solutionHelpers.l interface_type 的值
@@ -208,42 +210,42 @@ public class RootMgr {
             } else {
                 //设置标志位i
                 cracker.a(v14);
-                LogUtil.d("init solution idx = " + indx + ", sid = " + solutionHelpers.b + " 给父类的标志位是：" + v14);
+                d("init solution idx = " + indx + ", sid = " + solutionHelpers.b + " 给父类的标志位是：" + v14);
                 boolean flag = cracker.beforeRoot();//准备文件
                 MarsRoot.setEntity(entity);
                 if (flag)
                 {//开始执行
-                    LogUtil.d(" 准备文件ok ");
+                    d(" 准备文件ok ");
                     commlog.recordExecutInfo("KRSDK_Solution_Execute_Begin", 0, "", "", handler, new Object[]{solutionHelpers.b});
                     RootLog rootLog = new RootLog();
                     startRootThread(mConext, solutionHelpers.b, new WeakReference(cracker));
                     //记录执行文件
                     SpfUtils.mark(mConext, solutionHelpers.b, indx, solutionHelpers.d);//记录执行的
                     //这里的内部方法应该需要在此调试 ，
-                    resultCode = cracker.a(rootLog);//启动执行,把kd文件释放到linux内，返回kd文件的路径。供给下一步调用cracker.b()就是执行这个文件
-                    LogUtil.d("执行获取临时root的 process resultcode[ " + resultCode + " ]");
+                    resultCode = cracker.a(rootLog);//启动执行,把kd文件释放到linux内，返回kd文件的路径。供给下一步调用cracker.getMarsrootSharePreferences()就是执行这个文件
+                    d("执行获取临时root的 process resultcode[ " + resultCode + " ]");
                 }
                 stopThread();//
                 if (resultCode == 0)
                 {
-                    LogUtil.d("resultCode == 0");
+                    d("resultCode == 0");
                     AbsJavaProcessImpla v18 = cracker.b();//获取解决方案的对象.调用javaprocessk 执行连接kd文件，生成javaprocessk 对象，关键函数1,任然是连接kd文件
                     if (v18 != null)
                     {
-                        LogUtil.d("AbsJavaProcessImpla!= null");
+                        d("AbsJavaProcessImpla!= null");
                         v18.c(solutionHelpers.b);
                         v1_1 = 1;
                         v2 = 0;
-                        LogUtil.d("方案临时Root成功：sid = " + solutionHelpers.b);
+                        d("方案临时Root成功：sid = " + solutionHelpers.b);
 
 
                     } else {
-                        LogUtil.d("AbsJavaProcessImpla == null");
+                        d("AbsJavaProcessImpla == null");
                         v2 = 1;
                         v1_1 = 0;
                     }
                     if (v14) {
-                        LogUtil.d("v14 =true");
+                        d("v14 =true");
 
                         v4 = ApkInstallUtil.a();//调用第三个executorRunner
                         v6 = JavaProcess.a(20000, 10);//测试执行su文件能否成功~~~
@@ -263,7 +265,7 @@ public class RootMgr {
                                 v17 = v6;
                                 v6_1 = 0;
                             }
-                            LogUtil.d("ready to read RootUtils3 ");
+                            d("ready to read RootUtils3 ");
                             //安装su 和superuser.apk
                             /**
                              *
@@ -275,17 +277,17 @@ public class RootMgr {
                             if (RootUtils3.a(
                                     this.mConext,
                                     v18,
-                                    String.valueOf(this.entity.file.getAbsolutePath()) + "/mysu",
-                                    String.valueOf(this.entity.file.getAbsolutePath()) + "/MySuperuser.apk"))
+                                    String.valueOf(this.entity.file.getAbsolutePath()) + "/su",
+                                    String.valueOf(this.entity.file.getAbsolutePath()) + "/superuser.apk"))
                             {
-                                LogUtil.d("read RootUtils3 ok");
+                                d("read RootUtils3 ok");
                                 v1_1 = ApkInstallUtil.a();
                                 v4_1 = JavaProcess.a(15000, 1);
                                 v2_2 = ApkInstallUtil.a(((IJavaProcessh) v4_1));
                             }
                             else
                             {
-                                LogUtil.d("read RootUtils3 failed");
+                                d("read RootUtils3 failed");
                                 v2_2 = v1_3;
                                 v1_1 = v4;
                                 v4_1 = v6;
@@ -304,7 +306,7 @@ public class RootMgr {
                         v4_1 = v17;
                     }//v14
                     else {
-                        LogUtil.d("v14 =false");
+                        d("v14 =false");
                         v15 = v1_1;
                         v1_1 = v2;
                         v2 = v4;
@@ -312,13 +314,13 @@ public class RootMgr {
                     }
                     if (v15 != 0)
                     {
-                        LogUtil.d("记录成功方案，移除下一个待执行方案标记");
+                        d("记录成功方案，移除下一个待执行方案标记");
 
-                        SpfUtils.a(this.mConext, "solution_success_id", solutionHelpers.b);
-                        SpfUtils.a(this.mConext, "next_execute_solution_id");
+                        SpfUtils.removeMarsRootSharedPreferences(this.mConext, "solution_success_id", solutionHelpers.b);
+                        SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id");
                         v6 = v4_1;
                         v4_2 = v18;
-                        LogUtil.d("sid = " + solutionHelpers.b + ", exploitRet = " + v19 + ", rootCode = "+ v2 + ", tmpShell = " + v4_2 + ", suShell = " + v6);
+                        d("sid = " + solutionHelpers.b + ", exploitRet = " + v19 + ", rootCode = "+ v2 + ", tmpShell = " + v4_2 + ", suShell = " + v6);
                     }
                     v6 = v4_1;
                     v4_2 = v18;
@@ -332,14 +334,14 @@ public class RootMgr {
                         msg.obj="已经安装了自己的文件，可以尝试调用mysu文件获取root权限";
                         msg.what= Const.GET_TMP_SHELL;
                         handler.sendMessage(msg);
-                        SpfUtils.set(mConext,"succ",isSucc);
+                        SpfUtils.set(mConext,Const.ROOT_SUCESS,isSucc);
                         break;
                     }
 
                     /**************************/
                     if (v1_1 != 0)
                     {
-                        LogUtil.d("v1_1 != 0");
+                        d("v1_1 != 0");
                         v1_1 = v19;
                         v8 = v4_2;
                         v9 = v6;
@@ -350,7 +352,7 @@ public class RootMgr {
                     v5_1 = v4_2;
                     if (v5_1 != null && (arg & 2) == 2) {
                         startKDFile(((IJavaProcessa) v5_1));
-                        LogUtil.d("startKDFile ");
+                        d("startKDFile ");
                         if (checkTmpShell())
                         {
                             LogUtil.e("已获取到root权限，退出循环");
@@ -365,7 +367,7 @@ public class RootMgr {
                         AbsJavaProcessImpla v6_2 = v5_1;
                     }
                 } else {
-                    LogUtil.d("读取进程中的返回状态值 不是 0： " + resultCode);
+                    d("读取进程中的返回状态值 不是 0： " + resultCode);
                     LogUtil.e("出现失败的exploit " + solutionHelpers.b);
                     Utils.recordFailedExploit(mConext, solutionHelpers.b);
                     v2 = v4;
@@ -396,8 +398,8 @@ public class RootMgr {
      */
     private void startRootThread(Context context/*, Handler handler*/, String sid, WeakReference weakReference) {
         long v2 = System.currentTimeMillis() - SystemClock.elapsedRealtime();
-        LogUtil.d("bootTime = " + v2);
-        SpfUtils.a(context, "executing_sid_time", String.valueOf(sid) + "\t" + v2);
+        d("bootTime = " + v2);
+        SpfUtils.removeMarsRootSharedPreferences(context, "executing_sid_time", String.valueOf(sid) + "\t" + v2);
         control = true;
         stopThread();
         CommExecutThread tmp = new CommExecutThread(context/*, handler*/, sid, weakReference);
@@ -418,8 +420,8 @@ public class RootMgr {
      */
     private FooRoot switchCracker(Context context, Entity entity, SolutionHelpers solutionHelpers, Handler handler /*String sid, int flag*/) {
         FooRoot fooRoot = null;
-        ThreadLocalWeakRef.c();
-        switch (solutionHelpers.l) {
+        ThreadLocalWeakRef.createThreadLocal();
+        switch (solutionHelpers.l) { //type 
             case 1:
                 fooRoot = new JavaRoot(context, entity, solutionHelpers, handler/*sid*/);
                 break;
@@ -435,7 +437,7 @@ public class RootMgr {
                 ThreadLocalWeakRef.a(7003, "interface_type=" + solutionHelpers.l);
                 break;
         }
-        LogUtil.d("getCracker =" + fooRoot);
+        d("getCracker =" + fooRoot);
         return fooRoot;
     }
 

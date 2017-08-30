@@ -3,8 +3,6 @@ package com.root.helper;
 import android.text.TextUtils;
 
 import com.demo.utils.LogUtil;
-import com.mars.MarsRoot;
-import com.root.RootMgr;
 import com.root.dao.IJavaProcessh;
 
 /**
@@ -97,19 +95,17 @@ public abstract class AbsJavaProcessImpla implements IJavaProcessh {
     }
     public static boolean b(String arg4) {
         LogUtil.d("AbsJavaProcessImpla v18 检测是否获取root权限 ");
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         boolean v0 = false;
         LogUtil.d("id = " + arg4);
         if(!TextUtils.isEmpty(((CharSequence)arg4)) && (arg4.contains("uid=0(root)"))) {
             v0 = true;
         }
-
        LogUtil.d("isFullyRoot|id: " + arg4 + ", isRoot: " + v0);
         if(!v0) {
             ThreadLocalWeakRef.a(7012, "id=" + arg4);
         }
-
-        //在这里安装自己的su superuser.apk
+//在这里安装自己的su superuser.apk
 //        if (v0)
 //        {
 //            LogUtil.e("拿到临时root 权限，接着就是写自己的文件");

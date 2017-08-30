@@ -8,16 +8,27 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Process;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.demo.check.CheckRoot;
 import com.demo.test.Test;
 import com.demo.utils.Const;
 import com.demo.utils.InitConfig;
 import com.demo.utils.LogUtil;
+import com.demo.utils.SpfUtils;
 import com.root.RootMgr;
 import com.mars.root.R;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class MainActivity extends Activity {
 
     private TextView tv;
@@ -28,8 +39,83 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_activity_main);
-
         tv = (TextView) findViewById(R.id.tv);
+        checkRoot();
+    }
+
+    private  void checkRoot()
+    {
+      //  CheckRoot.excuteSuAndSh();
+        new Thread(){
+            @Override
+            public void run() {
+                callProcess();
+            }
+        }.start();
+    }
+    private  void callProcess()
+    {
+        InputStream inputStream=null;
+        java.lang.Process process =null;
+        BufferedReader br = null;
+        DataOutputStream outputStream = null;
+        Log.d("tag----","测试root检测功能 。。。。 ");
+        try {
+           process = Runtime.getRuntime().exec("su");
+          inputStream = process.getInputStream();
+            br = new BufferedReader(new InputStreamReader(inputStream));
+            outputStream = new DataOutputStream(process.getOutputStream());
+//            String line =null;
+//            while ((line = br.readLine())!= null)
+//            {
+//                Log.d("tag----",line);
+//            }
+            String cmd = "id\n";
+            outputStream.write(cmd.getBytes());
+            outputStream.write("exit\n".getBytes());
+            Log.e("tag----","write finished    === ");
+
+            String line =null;
+            while ((line = br.readLine())!= null)
+            {
+                Log.d("tag----",line);
+                if(line.contains("uid=0(root)"))
+                {
+                    Log.d("tag----","get root ");
+                }
+            }
+            int value = process.waitFor();
+            Log.d("tag----","value == "+value);
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(br != null)
+            {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(inputStream != null)
+            {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(process != null)
+            {
+                process.destroy();
+                process=null;
+            }
+        }
+
     }
 
 
@@ -56,7 +142,6 @@ public class MainActivity extends Activity {
                 handler.sendEmptyMessage(Const.INT_CODE);
                 show("intSdk() test!!");
                 break;
-
             /**
              * 这里应该包括了
              * 网络请求解决方案列表和解析获取解决方案的url:: getSolutions()
@@ -76,9 +161,19 @@ public class MainActivity extends Activity {
 
                 break;
             case R.id.execute:
+
+                //2017-8-11 增加检测机制 ，在开始执行root前，判断是否root，
+                if(SpfUtils.get(App.getContext(),Const.ROOT_SUCESS))
+                {
+//                    Toast.makeText(this, "root success !! ", Toast.LENGTH_SHORT).show();
+                    show("已经获取到root，无需root");
+                    tv.setText("已经获取到root ,无需再次获取");
+                    return;
+                }
                 //执行root
                 handler.sendEmptyMessage(Const.ROOT_TEST);
-                Toast.makeText(this, "test root", Toast.LENGTH_SHORT).show();
+                show("开始执行root");
+             //   Toast.makeText(this, "test root", Toast.LENGTH_SHORT).show();
 //                MyAsyncTask task = new MyAsyncTask();
 //                task.execute();
                 break;
@@ -99,8 +194,6 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(Void... params) {
-
-
             String ret = Test.getkrcfg_txt(InitConfig.mContext, InitConfig.entity);
 //            boolean ret = InitConfig.initSdk();
 //            if (!ret)
@@ -128,15 +221,12 @@ public class MainActivity extends Activity {
 
             return ret;
         }
-
         @Override
         protected void onPostExecute(String s) {
             tv.setText("" + s);
         }
 
-
     }
-
     /**
      * toast显示函数
      */
@@ -144,8 +234,6 @@ public class MainActivity extends Activity {
         Toast toast = Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT);
         toast.show();
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -187,7 +275,7 @@ public class MainActivity extends Activity {
             {
                 String data = intent.getStringExtra("root");
                 boolean flag = intent.getBooleanExtra("flag",false);//默认取出false
-                tv.setText("Root 了吗？"+data+" \n状态标识：flag ="+flag+"\t"+getName());
+                tv.setText("Root 了吗？"+data+" \n root 状态标识：flag ="+flag+"\t"+getName());
             }
         }
     }

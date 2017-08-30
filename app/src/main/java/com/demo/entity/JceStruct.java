@@ -49,7 +49,7 @@ public abstract class JceStruct implements Serializable {
     public byte[] toByteArray() {
         HelperC v0 = new HelperC();
         this.writeTo(v0);
-        return v0.b();
+        return v0.getBufferData();
     }
 
     public abstract void writeTo(HelperC arg1);

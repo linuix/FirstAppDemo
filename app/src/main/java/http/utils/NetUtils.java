@@ -8,37 +8,37 @@ import android.net.Proxy;
 import com.demo.utils.LogUtil;
 
 public final class NetUtils {
-    public static byte a(Context arg5) {
+    public static byte a(Context context) {
         byte v0_3;
-        NetworkInfo v0_2;
+        NetworkInfo networkInfo;
         byte v2 = -1;
-        ConnectivityManager v0 = (ConnectivityManager) arg5.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo v3 = null;
         try {
-            v0_2 = ((ConnectivityManager)v0).getActiveNetworkInfo();
+            networkInfo = ((ConnectivityManager)connectivityManager).getActiveNetworkInfo();
         }
         catch(Throwable v0_1)
         {
             LogUtil.exception("NetworkUtil.getNetworkType() throw e", v0_1);
-            v0_2 = v3;
+            networkInfo = v3;
         }
 
-        if(v0_2 != null)
+        if(networkInfo != null)
         {
-            if(v0_2.getState() != NetworkInfo.State.CONNECTING && v0_2.getState() != NetworkInfo.State.CONNECTED)
+            if(networkInfo.getState() != NetworkInfo.State.CONNECTING && networkInfo.getState() != NetworkInfo.State.CONNECTED)
             {
                 v0_3 = v2;
             }
 
-            if(v0_2.getType() == 1)
+            if(networkInfo.getType() == 1)
             {
                 v0_3 = 0;
                 return v0_3;
             }
 
-            if(v0_2.getType() == 0)
+            if(networkInfo.getType() == 0)
             {
-                if(Proxy.getDefaultHost() == null && Proxy.getHost(arg5) == null)
+                if(Proxy.getDefaultHost() == null && Proxy.getHost(context) == null)
                 {
                     return 1;
                 }

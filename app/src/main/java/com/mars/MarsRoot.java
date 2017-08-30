@@ -1,6 +1,8 @@
 package com.mars;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.demo.App;
 import com.demo.entity.Entity;
 import com.demo.process.RetValue;
@@ -167,6 +169,7 @@ public class MarsRoot {
             if (process == null) {
                 return flag;
             }
+            Log.e("yll","root --------------------------------------------- success");
             RetValue value = process.execut(cmd);
             if (value.ret == 0) {
                 File file = new File("/system/bin/au");
@@ -187,10 +190,11 @@ public class MarsRoot {
                 flag = true;
             }
         } catch (Throwable v) {
+            v.printStackTrace();
             LogUtil.exception("MarsRoot mount exeception ", v);
         }
         LogUtil.e("更改system 目录的属性 成功 " + flag);
-        return flag;
+        return false;
     }
 
     /**
@@ -201,9 +205,9 @@ public class MarsRoot {
         if (process == null) {
             return flag;
         }
-        File apk = new File("/system/app/MySuperuser.apk");
+        File apk = new File("/system/app/superuser.apk");
         try {
-            String src = entity.a(new String[]{"MySuperuser.apk"});
+            String src = entity.a(new String[]{"superuser.apk"});
             String dst = apk.getAbsolutePath();
             String cmd = MarsRootCfg.chown;
             String extract = MarsRootCfg.chmod;
@@ -234,6 +238,12 @@ public class MarsRoot {
         return flag;
     }
 
+    /**
+     * 写入
+     * @param name
+     * @param src
+     * @return
+     */
     private static boolean installSu(String name, String src) {
         boolean flag = false;
         String path = MarsRootCfg.bin;

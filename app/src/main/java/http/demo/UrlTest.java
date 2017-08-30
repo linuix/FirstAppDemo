@@ -19,17 +19,17 @@ public final class UrlTest {
         UrlTest.e = "1.0.14";
     }
 
-    public static String a() {
+    public static String init() {
         return UrlTest.e;
     }
 
-    public static void a(boolean arg2, boolean arg3) {
-        String v0 = arg2 ? "http://wuptest.cs0309.3g.qq.com" : "http://pmir.3g.qq.com/";
-        UrlTest.b = v0;
+    public static void init(boolean arg2, boolean arg3) {
+        String url = arg2 ? "http://wuptest.cs0309.3g.qq.com" : "http://pmir.3g.qq.com/";
+        UrlTest.b = url;
         UrlTest.a = arg3;
         LogUtil.e("useTestURL = " + arg2 + ", logSwitchOn = " + arg3);
-        v0 = arg2 ? "http://bh.cs0309.3g.qq.com" : "http://bh.3g.qq.com";
-        UrlTest.c = v0;
+        url = arg2 ? "http://bh.cs0309.3g.qq.com" : "http://bh.3g.qq.com";
+        UrlTest.c = url;
     }
 
     public static int b() {

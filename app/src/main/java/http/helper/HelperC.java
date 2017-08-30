@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class HelperC {
 
-    protected String a;
-    private ByteBuffer b;
+    protected String chart;
+    private ByteBuffer byteBuffer;
 
     public HelperC() {
         this(128);//默认ByteBuffer的大小
@@ -24,12 +24,12 @@ public class HelperC {
 
     public HelperC(int arg2) {
         super();
-        this.a = "GBK";
-        this.b = ByteBuffer.allocate(arg2);
+        this.chart = "GBK";
+        this.byteBuffer = ByteBuffer.allocate(arg2);
     }
 
-    public final int a(String arg2) {
-        this.a = arg2;
+    public final int setChart(String arg2) {
+        this.chart = arg2;
         return 0;
     }
 
@@ -37,110 +37,110 @@ public class HelperC {
      * 对象的处理函数，根据不同的对象，处理不同的数据格式
      *
      * */
-    public final void a(Object arg6, int arg7) {
+    public final void addObjectData(Object arg6, int arg7) {
         byte v3 = 9;
         int v2 = 8;
         int v0;
 
         if ((arg6 instanceof Byte)) {
-            this.a(((Byte) arg6).byteValue(), arg7);//操作byte类型
+            this.addByteData(((Byte) arg6).byteValue(), arg7);//操作byte类型
         } else if ((arg6 instanceof Boolean)) {
-            this.a(((Boolean) arg6).booleanValue(), arg7);//操作boolen类型
+            this.addBooleanData(((Boolean) arg6).booleanValue(), arg7);//操作boolen类型
         } else if ((arg6 instanceof Short)) {
-            this.a(((Short) arg6).shortValue(), arg7);//操作short类型
+            this.addShortData(((Short) arg6).shortValue(), arg7);//操作short类型
         } else if ((arg6 instanceof Integer)) {
-            this.a(((Integer) arg6).intValue(), arg7);//操作int类型
+            this.addIntData(((Integer) arg6).intValue(), arg7);//操作int类型
         } else if ((arg6 instanceof Long)) {
-            this.a(((Long) arg6).longValue(), arg7);//操作long类型
+            this.addLongData(((Long) arg6).longValue(), arg7);//操作long类型
         } else if ((arg6 instanceof Float)) {
-            this.a(((Float) arg6).floatValue(), arg7);//操作float类型
+            this.addFloatData(((Float) arg6).floatValue(), arg7);//操作float类型
         } else if ((arg6 instanceof Double)) {
-            this.a(((Double) arg6).doubleValue(), arg7);//操作double类型
+            this.addDoubleData(((Double) arg6).doubleValue(), arg7);//操作double类型
         }
         else if((arg6 instanceof String)) {
-            this.a(((String)arg6), arg7);//String 类型
+            this.addStringData(((String)arg6), arg7);//String 类型
         }
         else if((arg6 instanceof Map)) {
-            this.a(((Map)arg6), arg7);//Map类型
+            this.addMapData(((Map)arg6), arg7);//Map类型
         }
 
         else if((arg6 instanceof List)) {
-            this.a(((Collection)arg6), arg7);//List类型
+            this.addListData(((Collection)arg6), arg7);//List类型
         }
         else if((arg6 instanceof JceStruct)) {
-            this.a(((JceStruct)arg6), arg7);//JceStruct类型，这是一个数据来源的父类类型
+            this.addJceStructData(((JceStruct)arg6), arg7);//JceStruct类型，这是一个数据来源的父类类型
         }
 //数组类型
         else if((arg6 instanceof byte[])) {
-            this.a(((byte[])arg6), arg7);//byte[]类型
+            this.addByteData(((byte[])arg6), arg7);//byte[]类型
         }
 
         else if((arg6 instanceof boolean[])) {//boolean[]类型
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((boolean[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((boolean[])arg6).length, 0);
             v2 = ((boolean[])arg6).length;
 
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((boolean[])arg6)[v0], 0);
+                this.addBooleanData(((boolean[])arg6)[v0], 0);
             }
         }
         else if((arg6 instanceof short[])) {
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((short[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((short[])arg6).length, 0);
             v2 = ((short[])arg6).length;
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((short[])arg6)[v0], 0);
+                this.addShortData(((short[])arg6)[v0], 0);
             }
         }
         else if((arg6 instanceof int[])) {
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((int[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((int[])arg6).length, 0);
             v2 = ((int[])arg6).length;
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((int[])arg6)[v0], 0);
+                this.addIntData(((int[])arg6)[v0], 0);
             }
         }
         else if((arg6 instanceof long[])) {
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((long[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((long[])arg6).length, 0);
             v2 = ((long[])arg6).length;
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((long[])arg6)[v0], 0);
+                this.addLongData(((long[])arg6)[v0], 0);
             }
         }
         else if((arg6 instanceof float[])) {
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((float[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((float[])arg6).length, 0);
             v2 = ((float[])arg6).length;
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((float[])arg6)[v0], 0);
+                this.addFloatData(((float[])arg6)[v0], 0);
             }
         }
         else if((arg6 instanceof double[])) {
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((double[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((double[])arg6).length, 0);
             v2 = ((double[])arg6).length;
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((double[])arg6)[v0], 0);
+                this.addDoubleData(((double[])arg6)[v0], 0);
             }
         }
         else if(arg6.getClass().isArray()) {
-            this.a(v2);
-            this.b(v3, arg7);
-            this.a(((Class<?>[])arg6).length, 0);
+            this.addByteBuffer(v2);
+            this.addByteBufferData(v3, arg7);
+            this.addIntData(((Class<?>[])arg6).length, 0);
             v2 = ((Class<?>[])arg6).length;
             for(v0 = 0; v0 < v2; ++v0) {
-                this.a(((Class<?>[])arg6)[v0], 0);
+                this.addObjectData(((Class<?>[])arg6)[v0], 0);
             }
         }
         else if((arg6 instanceof Collection)) {
-            this.a(((Collection)arg6), arg7);
+            this.addListData(((Collection)arg6), arg7);
         }
         else {
             throw new IllegalArgumentException("write object error: unsupport type. " + arg6.getClass());
@@ -151,15 +151,15 @@ public class HelperC {
     /**
      * 获取ByteBuffer
      * */
-    public final ByteBuffer a() {
-        return this.b;
+    public final ByteBuffer getByteBuffer() {
+        return this.byteBuffer;
     }
 /**
  * 获取ByteBuffer内的数据
  * */
-    public final byte[] b() {
-        byte[] v0 = new byte[this.b.position()];
-        System.arraycopy(this.b.array(), 0, v0, 0, this.b.position());
+    public final byte[] getBufferData() {
+        byte[] v0 = new byte[this.byteBuffer.position()];
+        System.arraycopy(this.byteBuffer.array(), 0, v0, 0, this.byteBuffer.position());
         return v0;
     }
 
@@ -167,24 +167,24 @@ public class HelperC {
  *
  *操作byte[]数组类型
  * */
-    public final void a(byte[] arg3, int arg4) {
-        this.a(arg3.length + 8);
-        this.b((byte)13, arg4);
-        this.b((byte)0, 0);
-        this.a(arg3.length, 0);
-        this.b.put(arg3);
+    public final void addByteData(byte[] arg3, int arg4) {
+        this.addByteBuffer(arg3.length + 8);
+        this.addByteBufferData((byte)13, arg4);
+        this.addByteBufferData((byte)0, 0);
+        this.addIntData(arg3.length, 0);
+        this.byteBuffer.put(arg3);
     }
 
     /**
      *
      * 操作JceStruct类型
      * */
-    public final void a(JceStruct arg3, int arg4) {
-        this.a(2);
-        this.b((byte)10, arg4);
+    public final void addJceStructData(JceStruct arg3, int arg4) {
+        this.addByteBuffer(2);
+        this.addByteBufferData((byte)10, arg4);
         arg3.writeTo(this);
-        this.a(2);
-        this.b((byte)11, 0);
+        this.addByteBuffer(2);
+        this.addByteBufferData((byte)11, 0);
     }
 
 /***
@@ -192,15 +192,15 @@ public class HelperC {
  * 操作List类型
  *
  * */
-    public final void a(Collection arg4, int arg5) {
-        this.a(8);
-        this.b((byte)9, arg5);
+    public final void addListData(Collection arg4, int arg5) {
+        this.addByteBuffer(8);
+        this.addByteBufferData((byte)9, arg5);
         int v0 = arg4 == null ? 0 : arg4.size();
-        this.a(v0, 0);
+        this.addIntData(v0, 0);
         if(arg4 != null) {
             Iterator v2 = arg4.iterator();
             while(v2.hasNext()) {
-                this.a(v2.next(), 0);
+                this.addObjectData(v2.next(), 0);
             }
         }
     }
@@ -210,17 +210,17 @@ public class HelperC {
      *
      * 操作Map类型
      * **/
-    public final void a(Map arg5, int arg6) {
-        this.a(8);
-        this.b((byte)8, arg6);
+    public final void addMapData(Map arg5, int arg6) {
+        this.addByteBuffer(8);
+        this.addByteBufferData((byte)8, arg6);
         int v0 = arg5 == null ? 0 : arg5.size();
-        this.a(v0, 0);
+        this.addIntData(v0, 0);
         if(arg5 != null) {
             Iterator v2 = arg5.entrySet().iterator();
             while(v2.hasNext()) {
                 Object v0_1 = v2.next();
-                this.a(((Map.Entry)v0_1).getKey(), 0);
-                this.a(((Map.Entry)v0_1).getValue(), 1);
+                this.addObjectData(((Map.Entry)v0_1).getKey(), 0);
+                this.addObjectData(((Map.Entry)v0_1).getValue(), 1);
             }
         }
     }
@@ -232,25 +232,25 @@ public class HelperC {
  *
  * 操作String类型数据
  * */
-    public final void a(String arg4, int arg5) {
+    public final void addStringData(String arg4, int arg5) {
         byte[] v0_1;
         try {
-            v0_1 = arg4.getBytes(this.a);
+            v0_1 = arg4.getBytes(this.chart);
         }
         catch(UnsupportedEncodingException v0) {
             v0_1 = arg4.getBytes();
         }
 
-        this.a(v0_1.length + 10);
+        this.addByteBuffer(v0_1.length + 10);
         if(v0_1.length > 255) {
-            this.b((byte)7, arg5);
-            this.b.putInt(v0_1.length);
-            this.b.put(v0_1);
+            this.addByteBufferData((byte)7, arg5);
+            this.byteBuffer.putInt(v0_1.length);
+            this.byteBuffer.put(v0_1);
         }
         else {
-            this.b((byte)6, arg5);
-            this.b.put(((byte)v0_1.length));
-            this.b.put(v0_1);
+            this.addByteBufferData((byte)6, arg5);
+            this.byteBuffer.put(((byte)v0_1.length));
+            this.byteBuffer.put(v0_1);
         }
     }
 
@@ -260,57 +260,57 @@ public class HelperC {
     /**
      * 操作double类型
      */
-    public final void a(double arg2, int arg4) {
-        this.a(10);
-        this.b((byte) 5, arg4);
-        this.b.putDouble(arg2);
+    public final void addDoubleData(double arg2, int arg4) {
+        this.addByteBuffer(10);
+        this.addByteBufferData((byte) 5, arg4);
+        this.byteBuffer.putDouble(arg2);
     }
 
     /**
      * 操作float类型
      */
-    private void a(float arg2, int arg3) {
-        this.a(6);//工具1
-        this.b((byte) 4, arg3);//工具2
-        this.b.putFloat(arg2);
+    private void addFloatData(float arg2, int arg3) {
+        this.addByteBuffer(6);//工具1
+        this.addByteBufferData((byte) 4, arg3);//工具2
+        this.byteBuffer.putFloat(arg2);
     }
 
     /**
      * 操作long类型
      */
-    public final void a(long arg3, int arg5) {
-        this.a(10);
+    public final void addLongData(long arg3, int arg5) {
+        this.addByteBuffer(10);
         if (arg3 < -2147483648 || arg3 > 2147483647) {
-            this.b((byte) 3, arg5);//工具2
-            this.b.putLong(arg3);
+            this.addByteBufferData((byte) 3, arg5);//工具2
+            this.byteBuffer.putLong(arg3);
         } else {
-            this.a(((int) arg3), arg5);//int类型
+            this.addIntData(((int) arg3), arg5);//int类型
         }
     }
 
     /**
      * 操作int类型
      */
-    public final void a(int arg2, int arg3) {
-        this.a(6);
+    public final void addIntData(int arg2, int arg3) {
+        this.addByteBuffer(6);
         if (arg2 < -32768 || arg2 > 32767) {
-            this.b((byte) 2, arg3);//工具2
-            this.b.putInt(arg2);
+            this.addByteBufferData((byte) 2, arg3);//工具2
+            this.byteBuffer.putInt(arg2);
         } else {
-            this.a(((short) arg2), arg3);//short类型
+            this.addShortData(((short) arg2), arg3);//short类型
         }
     }
 
     /**
      * 操作short类型
      */
-    public final void a(short arg2, int arg3) {
-        this.a(4);
+    public final void addShortData(short arg2, int arg3) {
+        this.addByteBuffer(4);
         if (arg2 < -128 || arg2 > 127) {
-            this.b((byte) 1, arg3);//工具2
-            this.b.putShort(arg2);
+            this.addByteBufferData((byte) 1, arg3);//工具2
+            this.byteBuffer.putShort(arg2);
         } else {
-            this.a(((byte) arg2), arg3);
+            this.addByteData(((byte) arg2), arg3);
         }
     }
 
@@ -318,44 +318,46 @@ public class HelperC {
     /**
      * 操作boolean类型
      */
-    private void a(boolean arg2, int arg3) {
+    private void addBooleanData(boolean arg2, int arg3) {
         int v0 = arg2 ? 1 : 0;
-        this.a(((byte) v0), arg3);//工具1
+        this.addByteData(((byte) v0), arg3);//工具1
     }
 
     /**
      * 操作byte类型
      */
-    public final void a(byte arg2, int arg3) {
-        this.a(3);//工具1
+    public final void addByteData(byte arg2, int arg3) {
+        this.addByteBuffer(3);//工具1
         if (arg2 == 0) {
-            this.b((byte) 12, arg3);
+            this.addByteBufferData((byte) 12, arg3);
         } else {
-            this.b((byte) 0, arg3);//工具2
-            this.b.put(arg2);
+            this.addByteBufferData((byte) 0, arg3);//工具2
+            this.byteBuffer.put(arg2);
         }
     }
 
     /**
      * 工具1
+     * 如果缓冲区剩余容量小于 @arg5
+     * 缓冲区扩容到原来容量+arg5的两倍
      */
-    private void a(int arg5) {
-        if (this.b.remaining() < arg5) {
-            ByteBuffer v0 = ByteBuffer.allocate((this.b.capacity() + arg5) * 2);
-            v0.put(this.b.array(), 0, this.b.position());
-            this.b = v0;
+    private void addByteBuffer(int arg5) {
+        if (this.byteBuffer.remaining() < arg5) {
+            ByteBuffer v0 = ByteBuffer.allocate((this.byteBuffer.capacity() + arg5) * 2);
+            v0.put(this.byteBuffer.array(), 0, this.byteBuffer.position());
+            this.byteBuffer = v0;
         }
     }
 
     /**
      * 工具2
      */
-    private void b(byte arg4, int arg5) {
+    private void addByteBufferData(byte arg4, int arg5) {
         if (arg5 < 15) {
-            this.b.put(((byte) (arg5 << 4 | arg4)));
+            this.byteBuffer.put(((byte) (arg5 << 4 | arg4)));
         } else if (arg5 < 256) {
-            this.b.put(((byte) (arg4 | 240)));
-            this.b.put(((byte) arg5));
+            this.byteBuffer.put(((byte) (arg4 | 240)));
+            this.byteBuffer.put(((byte) arg5));
         } else {
             throw new IllegalArgumentException("tag is too large: " + arg5);
         }

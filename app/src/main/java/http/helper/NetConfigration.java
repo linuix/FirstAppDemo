@@ -35,12 +35,12 @@ public final class NetConfigration extends OpertorC {
         this.g.iVersion = 2;
     }
 
-    public final void a(String arg4, Object arg5) {
+    public final void setMapData(String arg4, Object arg5) {
         if(arg4.startsWith(".")) {
             throw new IllegalArgumentException("put name can not startwith . , now is " + arg4);
         }
 
-        super.a(arg4, arg5);
+        super.setMapData(arg4, arg5);
     }
 
     public final byte[] a() {
@@ -51,20 +51,20 @@ public final class NetConfigration extends OpertorC {
             }
             if(this.g.sFuncName != null) {
                 HelperC v0 = new HelperC(0);
-                v0.a(this.c);
+                v0.setChart(this.chart);
                 if(this.g.iVersion == v3) {
-                    v0.a(this.a, 0);
+                    v0.addMapData(this.a, 0);
                 }
                 else {
-                    v0.a(this.e, 0);
+                    v0.addMapData(this.e, 0);
                 }
 
-                this.g.sBuffer = Helper1.a(v0.a());
+                this.g.sBuffer = Helper1.copyData(v0.getByteBuffer());
 
                 v0 = new HelperC(0);
-                v0.a(this.c);
+                v0.setChart(this.chart);
                 this.g.writeTo(v0);
-                byte[] v0_1 = Helper1.a(v0.a());
+                byte[] v0_1 = Helper1.copyData(v0.getByteBuffer());
                 int v1 = v0_1.length;
                 ByteBuffer v2 = ByteBuffer.allocate(v1 + 4);
                 v2.putInt(v1 + 4).put(v0_1).flip();
@@ -107,11 +107,11 @@ public final class NetConfigration extends OpertorC {
             LogUtil.e("original 网络数据 arg: "+new String(arg5) + " ,len ="+arg5.length);
             GetKingRootSolutionResp response =null;
             HelperA v0_1 = new HelperA(arg5,(byte) 0);
-            v0_1.a(this.c);
+            v0_1.a(this.chart);
             this.g.readFrom(v0_1);//这里把byte[]准备好
             if(this.g.iVersion == 3)
             {//开始的时候，设置好的参数
-                LogUtil.d(" iVersion == 3 " +c);
+                LogUtil.d(" iVersion == 3 " + chart);
                 LogUtil.e("操作后的数据字节 g.sBuffer.length ："+g.sBuffer.length+",content ="+new String(g.sBuffer));
                 Utils.writeNetData(g.sBuffer);
                 //从这里开始设置数据
@@ -140,7 +140,7 @@ public final class NetConfigration extends OpertorC {
                 }
              HelperA v0_2 = new HelperA(this.g.sBuffer);//这里的sBuffer就是反馈回来的数据的长度，需要使用自己的写法计算出来整个字符串
 
-                v0_2.a(this.c);
+                v0_2.a(this.chart);
                 if(NetConfigration.h == null)
                 {
                     v1 = new HashMap();
@@ -157,7 +157,7 @@ public final class NetConfigration extends OpertorC {
             {
                 LogUtil.d("iVersion != 3");
                 v0_1 = new HelperA(this.g.sBuffer);
-                v0_1.a(this.c);
+                v0_1.a(this.chart);
                 if(NetConfigration.i == null)
                 {
                     NetConfigration.i = new HashMap();
@@ -177,17 +177,17 @@ public final class NetConfigration extends OpertorC {
         }
     }
 
-    public final void a(String arg1)
+    public final void setChart(String arg1)
     {
-        super.a(arg1);
+        super.setChart(arg1);
     }
 
-    public final void a(int arg2)
+    public final void setRequestId(int arg2)
     {
         this.g.iRequestId = arg2;
     }
 
-    public final void b(String arg2)
+    public final void setServantName(String arg2)
     {
         this.g.sServantName = arg2;
     }
@@ -197,7 +197,7 @@ public final class NetConfigration extends OpertorC {
         super.b();
         this.g.iVersion = 3;
     }
-    public final void c(String arg2)
+    public final void setFuncName(String arg2)
     {
         this.g.sFuncName = arg2;
     }

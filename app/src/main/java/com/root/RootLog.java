@@ -47,7 +47,7 @@ public class RootLog {
                 this.e = v2;
             }
             catch(IOException v0_1) {
-//                e.sdk_gt18(this.c);
+//                e.sdk_gt18(this.chart);
                 Utils.close(c);
                 this.c = null;
             }

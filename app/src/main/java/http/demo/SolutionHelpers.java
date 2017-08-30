@@ -51,8 +51,8 @@ public final class SolutionHelpers {
     public String toString() {
         return "SolutionHelpers{" +
                 "sdk_gt18='" + a + '\'' +
-                ", b='" + b + '\'' +
-                ", c='" + c + '\'' +
+                ", getMarsrootSharePreferences='" + b + '\'' +
+                ", chart='" + c + '\'' +
                 ", d=" + d +
                 ", e=" + e +
                 ", f=" + f +

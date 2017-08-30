@@ -32,7 +32,7 @@ public class RebootUtils {
         if (flag)
         {
             InitConfig.init();
-            if (!SpfUtils.get(context,"succ"))
+            if (!SpfUtils.get(context,Const.ROOT_SUCESS))
             {
                 InitConfig.getHandler().sendEmptyMessage(Const.ROOT_TEST);
             }

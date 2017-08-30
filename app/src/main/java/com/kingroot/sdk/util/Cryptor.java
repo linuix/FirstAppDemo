@@ -9,6 +9,11 @@ public final class Cryptor {
 
     public static native byte[] y(Context arg0, byte[] arg1) ;
 
+    /**
+     * 解密
+     * @param arg0
+     * @return
+     */
     public static final native byte[] z(byte[] arg0) ;
 }
 

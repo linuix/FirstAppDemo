@@ -27,19 +27,19 @@ public final class RootExtInfo extends JceStruct {
 
     public final void writeTo(HelperC arg3) {
         if(this.canRoot != 0) {
-            arg3.a(this.canRoot, 0);
+            arg3.addIntData(this.canRoot, 0);
         }
 
         if(this.useTime != 0) {
-            arg3.a(this.useTime, 1);
+            arg3.addIntData(this.useTime, 1);
         }
 
         if(this.succUsers != 0) {
-            arg3.a(this.succUsers, 2);
+            arg3.addIntData(this.succUsers, 2);
         }
 
         if(this.succRate != 0) {
-            arg3.a(this.succRate, 3);
+            arg3.addIntData(this.succRate, 3);
         }
     }
 }

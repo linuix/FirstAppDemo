@@ -44,14 +44,14 @@ public final class GetKingRootSolutionResp extends JceStruct {
     }
 
     public final void writeTo(HelperC arg4) {
-        arg4.a(this.sessionId, 0);
-        arg4.a(this.solutionsXmls, 1);
+        arg4.addLongData(this.sessionId, 0);
+        arg4.addListData(this.solutionsXmls, 1);
         if(this.pcRootInfo != null) {
-            arg4.a(this.pcRootInfo, 2);
+            arg4.addJceStructData(this.pcRootInfo, 2);
         }
 
         if(this.mobileRootInfo != null) {
-            arg4.a(this.mobileRootInfo, 3);
+            arg4.addJceStructData(this.mobileRootInfo, 3);
         }
     }
 }

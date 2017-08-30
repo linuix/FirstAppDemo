@@ -25,7 +25,7 @@ public final class JavaProcess extends JavaProcessImplw implements IJavaProcessh
         ((JavaProcessImplw) this).a = v0;
     }
     public static JavaProcess a(int arg5, int arg6) {
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         JavaProcess v0_1 = null;
         int v0 = 0;
         try {

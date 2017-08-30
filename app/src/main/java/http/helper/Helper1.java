@@ -21,7 +21,7 @@ public final class Helper1 {
         Helper1.b = v3;
     }
 
-    public static byte[] a(ByteBuffer arg4) {
+    public static byte[] copyData(ByteBuffer arg4) {
         byte[] v0 = new byte[arg4.position()];
         System.arraycopy(arg4.array(), 0, v0, 0, v0.length);
         return v0;

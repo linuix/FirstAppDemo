@@ -37,7 +37,7 @@ public class RecordRootSolution {
     }
     public static boolean check(Context arg5, SolutionHelpers solutionHelpers, boolean arg7) {
         boolean v0 = false;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         if(!a(solutionHelpers.l, new int[]{0, 1, 2, 3, 4, 5})) {
             ThreadLocalWeakRef.a(7003, "interface_type=" + solutionHelpers.l);
         }
@@ -119,7 +119,7 @@ public class RecordRootSolution {
         {
             jars.mkdirs();
         }
-        String v1 = SpfUtils.b(context, "next_execute_solution_id");
+        String v1 = SpfUtils.getMarsrootSharePreferences(context, "next_execute_solution_id");
         ///在这里执行读取重启方案的数据
         if ( reboot ==1)
         {
@@ -145,7 +145,7 @@ public class RecordRootSolution {
         }
         SolutionHelpers[] respSolutionHelpers = solutionManager.respSolutionHelpers;
         iteratorJars(jars, respSolutionHelpers);//迭代文件
-         v1 = SpfUtils.b(context, "solution_success_id");//取出solution_success_id
+         v1 = SpfUtils.getMarsrootSharePreferences(context, "solution_success_id");//取出solution_success_id
         if (!TextUtils.isEmpty(((CharSequence) v1)))
         {
             File v3 = new File(xmls, v1);
@@ -229,7 +229,7 @@ public class RecordRootSolution {
 
         LogUtil.e("查找本地方案是否存在可以用");
         SolutionManager solutionMgr =null;
-        String path  = SpfUtils.b(context,"solution_success_id");
+        String path  = SpfUtils.getMarsrootSharePreferences(context,"solution_success_id");
         if (!TextUtils.isEmpty(path))
         {
             File file = new File(xmls,path);
@@ -429,7 +429,7 @@ public class RecordRootSolution {
                 return solutionMgrNet;
             }
             LogUtil.loge("存储方案下发顺序列表 记录在spf中");
-            SpfUtils.a(context, "solution_id_list", TextUtils.join(",", ((Object[]) v5)));
+            SpfUtils.removeMarsRootSharedPreferences(context, "solution_id_list", TextUtils.join(",", ((Object[]) v5)));
         }
         return  solutionMgrNet;
     }

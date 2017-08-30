@@ -2,9 +2,11 @@ package com.mars;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import com.demo.App;
 import com.demo.process.RootProcess;
+import com.demo.utils.Const;
 import com.demo.utils.LogUtil;
 import com.demo.utils.SpfUtils;
 import com.demo.utils.Utils;
@@ -56,6 +58,7 @@ public class ReplaceRoot {
         }
         try
         {
+            Log.d("tag---","cmd "+cmd);
             mProcess = Runtime.getRuntime().exec(cmd);
             DataOutputStream outputStream = new DataOutputStream(mProcess.getOutputStream());
             for (int index = 0; index < keepRoot.length; ++index) {
@@ -68,7 +71,7 @@ public class ReplaceRoot {
             mProcess.waitFor();
             LogUtil.e("接管完成"); //成功标志
             flag = true;
-            SpfUtils.set(App.getContext(),"succ",flag);//设置退出程序标识
+            SpfUtils.set(App.getContext(), Const.ROOT_SUCESS,flag);//设置退出程序标识
         } catch (Throwable v)
         {
             LogUtil.exception("执行自定义su出现异常  ReplaceRoot.class", v);

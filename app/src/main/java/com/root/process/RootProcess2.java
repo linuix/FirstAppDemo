@@ -142,7 +142,7 @@ public RetValue execute(ProcessHelper arg)
                 checkArg(object, v0_1, v2);
                 //重置流里边的内容
                 streamRest();
-//                LogUtil.loge("write to process + " + String.valueOf(object.b));
+//                LogUtil.loge("write to process + " + String.valueOf(object.getPackageName));
                 data_out_put_stream.write((String.valueOf(object.b) + "\n").getBytes());
                 data_out_put_stream.flush();
                 synchronized (locak)

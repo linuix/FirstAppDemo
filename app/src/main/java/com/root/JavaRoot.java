@@ -43,7 +43,6 @@ public class JavaRoot extends FooRoot {
         LogUtil.e("javaroot 1 construct ");
     }
     //测试loadClass XSolution
-
     @Override
     public boolean beforeRoot() {
         super.beforeRoot();
@@ -55,7 +54,7 @@ public class JavaRoot extends FooRoot {
         rootProcess.execut("cat " + solutionHelpers.n + " > " + vroot);
         //load classes.dex文件
         rootProcess.closeAll();//关闭进程
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         if (loadClass()) {
             LogUtil.d("可以调用反射方法，使用动态加载的classes.dex的方法");
             try {
@@ -138,7 +137,7 @@ public class JavaRoot extends FooRoot {
         int v13 = 5;
         int v5 = 3;
         int v4 = 2;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         LogUtil.e("Javaroot onRooting  invoke classes.dex to do this");
         if (!loadClass()) {
             v0 = 1;
@@ -164,7 +163,7 @@ public class JavaRoot extends FooRoot {
             log.recordExecutInfo(v1, v2_1, new StringBuilder(String.valueOf(this.ret)).toString(), "", this.handler, new Object[]{this.solutionHelpers.b});
             SpfUtils.markExploitRet(this.mContext, this.ret, new StringBuilder(String.valueOf(this.ret)).toString());
             String[] v11 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
-            SpfUtils.a(this.mContext, "EMID_KRSDK_EXReport_Info");
+            SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
             v9 = (System.nanoTime() - v9) / 1000000;
             if (v11.length >= v13) {
                 log = new CommonLog(context);
@@ -208,7 +207,7 @@ public class JavaRoot extends FooRoot {
     private AbsJavaProcessImpla getCracker() {
         AbsJavaProcessImpla obj = null;
         JavaProcessImplh_absA arg ;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         LogUtil.e("JavaRootSolution.getSolutionShell()");
         if (ret == 0) {
             if (!loadClass()) {

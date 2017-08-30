@@ -25,7 +25,7 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
 public final class OpenKrsdkCert {
-    private static RSAPublicKey a;
+    private static RSAPublicKey rsaPublicKey;
     private Properties b;
     private static  char[] symbols;
 
@@ -36,15 +36,15 @@ public final class OpenKrsdkCert {
         RSAPublicKey v2 = null;
         X509EncodedKeySpec v1 = new X509EncodedKeySpec(Base64.decode("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCTrqGfyNYDKZEFfvXuYOu9mSCNu6ri10PMG2xJ5sBuUN2OFBT1W5n/dyUkR+Xgnd6w9arSFnU/8fpiP4DRZPL7pkmgzJvjoPqrreXO4nGRQtVbp6sD/gWCKsTlJ9bk01W32gfSOrCNch8BQJO8nE01ffnWmyRiqVTbuh9KEGgcwIDAQAB", 0));
         try {
-            OpenKrsdkCert.a = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(((KeySpec)v1));
+            OpenKrsdkCert.rsaPublicKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(((KeySpec)v1));
         }
         catch(NoSuchAlgorithmException v0) {
             v0.printStackTrace();
-            OpenKrsdkCert.a = v2;
+            OpenKrsdkCert.rsaPublicKey = v2;
         }
         catch(InvalidKeySpecException v0_1) {
             v0_1.printStackTrace();
-            OpenKrsdkCert.a = v2;
+            OpenKrsdkCert.rsaPublicKey = v2;
         }
     }
 
@@ -53,47 +53,47 @@ public final class OpenKrsdkCert {
         this.b = arg1;
     }
 
-    public static OpenKrsdkCert init(AssetManager arg6, String arg7) {
-        OpenKrsdkCert v2_1 = null;
+    public static OpenKrsdkCert init(AssetManager assetManager, String arg7) {
+        OpenKrsdkCert openKrsdkCert = null;
        LogUtil.d("KRSDKCertificate loadFromAsset >>>>>>>>>>");
-        InputStream v1=null;
+        InputStream inputStream=null;
         try {
-             v1 = arg6.open(arg7, 1);
-            if(OpenKrsdkCert.a(v1) != 1413698123) {
+             inputStream = assetManager.open(arg7, 1);
+            if(OpenKrsdkCert.readInt(inputStream) != 1413698123) {
                 throw new DataFormatException("Not sdk_gt18 kingroot sdk certification file");
             }
-            int v0_1 = OpenKrsdkCert.a(v1);
-            byte[] v2 = new byte[OpenKrsdkCert.a(v1)];
+            int v0_1 = OpenKrsdkCert.readInt(inputStream);
+            byte[] v2 = new byte[OpenKrsdkCert.readInt(inputStream)];
             byte[] v3 = new byte[v0_1];
-            v1.read(v2);
-            Inflater v4 = new Inflater();
-            v4.setInput(v2);
-            if(v0_1 != v4.inflate(v3)) {
+            inputStream.read(v2);
+            Inflater decompresser = new Inflater();
+            decompresser.setInput(v2);
+            if(v0_1 != decompresser.inflate(v3)) {
                 throw new DataFormatException("Unexpected data length");
             }
-            v4.end();
-            Properties v0_2 = new Properties();
-            v0_2.loadFromXML(new ByteArrayInputStream(v3));
-            v3 = new byte[OpenKrsdkCert.a(v1)];
-            v1.read(v3);
-            Signature v4_1 = Signature.getInstance("SHA1WithRSA");
-            v4_1.initVerify(OpenKrsdkCert.a);
-            v4_1.update(v2);
-            if(!v4_1.verify(v3)) {
+            decompresser.end();
+            Properties properties = new Properties();
+            properties.loadFromXML(new ByteArrayInputStream(v3));
+            v3 = new byte[OpenKrsdkCert.readInt(inputStream)];
+            inputStream.read(v3);
+            Signature signature = Signature.getInstance("SHA1WithRSA");
+            signature.initVerify(OpenKrsdkCert.rsaPublicKey);
+            signature.update(v2);
+            if(!signature.verify(v3)) {
                 throw new SignatureException("Bad signature");
             }
 
-            v2_1 = new OpenKrsdkCert(v0_2);
+            openKrsdkCert = new OpenKrsdkCert(properties);
         }
         catch(Throwable v0) {
-            Utils.close(v1);
+            Utils.close(inputStream);
         }
 
-        Utils.close(v1);
-        return v2_1;
+        Utils.close(inputStream);
+        return openKrsdkCert;
     }
 
-    public final String a() {
+    public final String getChanel() {
         return this.b.getProperty("channel_id");
     }
 
@@ -102,7 +102,7 @@ public final class OpenKrsdkCert {
         String v1 = null;
         try {
             v1 = OpenKrsdkCert.b(arg5);
-            if(!arg5.getPackageName().equals(this.b())) {
+            if(!arg5.getPackageName().equals(this.getPackageName())) {
                 LogUtil.e("Certifacate Fail, PackageName wrong.");
             }
             else if(!v1.equals(this.c())) {
@@ -122,7 +122,7 @@ public final class OpenKrsdkCert {
         return v0;
     }
 
-    private static int a(InputStream arg2) {
+    private static int readInt(InputStream arg2) {
         int ret =0;
         try {
              ret =arg2.read() | arg2.read() << 8 | arg2.read() << 16 | arg2.read() << 24;
@@ -132,11 +132,11 @@ public final class OpenKrsdkCert {
         return ret;
     }
 
-    public final String b() {
+    public final String getPackageName() {
         return this.b.getProperty("package_name");
     }
 
-    public static PackageInfo a(Context arg3, String arg4) {
+    public static PackageInfo getChanel(Context arg3, String arg4) {
         PackageInfo v0 = null;
         try {
             v0 = arg3.getPackageManager().getPackageInfo(arg4, PackageManager.GET_SIGNATURES);
@@ -181,7 +181,7 @@ public final class OpenKrsdkCert {
         CertificateException v1_1;
         IOException v1_2;
         String v0_3;
-        PackageInfo v0 = a(arg4, arg4.getPackageName());
+        PackageInfo v0 = getChanel(arg4, arg4.getPackageName());
         String v1 = null;
         if(v0 != null) {
             ByteArrayInputStream v2 = new ByteArrayInputStream(v0.signatures[0].toByteArray());

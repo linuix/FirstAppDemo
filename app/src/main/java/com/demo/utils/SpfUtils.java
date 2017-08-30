@@ -32,7 +32,7 @@ public class SpfUtils {
         v0.commit();
     }
 
-    public static void a(Context arg2, String arg3, String arg4) {
+    public static void removeMarsRootSharedPreferences(Context arg2, String arg3, String arg4) {
         arg2.getSharedPreferences("marsroot", 0).edit().putString(arg3, arg4).commit();
     }
 
@@ -77,7 +77,7 @@ public class SpfUtils {
 
         v1.edit().putString(arg7, v3.toString()).commit();
     }
-       public static void a(Context arg2, String arg3) {
+       public static void removeMarsRootSharedPreferences(Context arg2, String arg3) {
         arg2.getSharedPreferences("marsroot", 0).edit().remove(arg3).commit();
     }
 
@@ -93,8 +93,8 @@ public class SpfUtils {
         arg2.getSharedPreferences("marsroot", 0).edit().putLong(arg3, arg4).commit();
     }
 
-    public static String b(Context arg2, String arg3) {
-        return arg2.getSharedPreferences("marsroot", 0).getString(arg3, null);
+    public static String getMarsrootSharePreferences(Context context, String key) {
+        return context.getSharedPreferences("marsroot", 0).getString(key, null);
     }
 
     public static int c(Context arg2, String arg3) {

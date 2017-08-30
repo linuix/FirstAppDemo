@@ -16,8 +16,8 @@ public final class ProcessHelper {
     public String toString() {
         return "ProcessHelper{" +
                 "sdk_gt18='" + a + '\'' +
-                ", b='" + b + '\'' +
-                ", c=" + c +
+                ", getPackageName='" + b + '\'' +
+                ", chart=" + c +
                 '}';
     }
 }

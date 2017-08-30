@@ -39,7 +39,7 @@ public final class CommUtilc extends AbsCommUtila {
         this.b = 0;
         if (this.c != null && !TextUtils.isEmpty(this.c.j) && (!this.c.g || (SelinuxUtils.a())) && (this
                 .c.d == v4 || SelinuxUtils.sdk() >= this.c.d) && (this.c.e == v4 || SelinuxUtils.sdk() <= this.c.e)) {
-            LogUtil.e("commUtilc executeHelper.j ="+c.j+" , c.k = "+c.k);
+            LogUtil.e("commUtilc executeHelper.j ="+c.j+" , chart.k = "+c.k);
             boolean v0 = CommUtils2.a(this.c.j, this.c.k) == 0 ? true : false;
             this.a = v0;
             if (this.a) {

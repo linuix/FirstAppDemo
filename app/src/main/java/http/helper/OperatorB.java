@@ -18,7 +18,7 @@ public class OperatorB {
 
     protected HashMap a;
     protected HashMap b;
-    protected String c;
+    protected String chart;
     HelperA d;
     private HashMap e;
 
@@ -27,7 +27,7 @@ public class OperatorB {
         this.a = new HashMap();
         this.b = new HashMap();
         this.e = new HashMap();
-        this.c = "GBK";
+        this.chart = "GBK";
         this.d = new HelperA();
     }
 
@@ -84,8 +84,8 @@ public class OperatorB {
         arg4.add("?");
     }
 
-    public void a(String arg1) {
-        this.c = arg1;
+    public void setChart(String arg1) {
+        this.chart = arg1;
     }
 
     public void a(String arg5, Object arg6) {
@@ -102,9 +102,9 @@ public class OperatorB {
         }
 
         HelperC v0 = new HelperC();
-        v0.a(this.c);
-        v0.a(arg6, 0);
-        byte[] v0_1 = Helper1.a(v0.a());
+        v0.setChart(this.chart);
+        v0.addObjectData(arg6, 0);
+        byte[] v0_1 = Helper1.copyData(v0.getByteBuffer());
         HashMap v1 = new HashMap(1);
         ArrayList v2 = new ArrayList(1);
         OperatorB.a(v2, arg6);
@@ -115,7 +115,7 @@ public class OperatorB {
 
     public void a(byte[] arg6) {
         this.d.a(arg6);
-        this.d.a(this.c);
+        this.d.a(this.chart);
         HashMap v0 = new HashMap(1);
         HashMap v1 = new HashMap(1);
         v1.put("", new byte[0]);
@@ -125,10 +125,10 @@ public class OperatorB {
 
     public byte[] a() {
         HelperC v0 = new HelperC(0);
-        v0.a(this.c);
-        v0.a(this.a, 0);
+        v0.setChart(this.chart);
+        v0.addMapData(this.a, 0);
         LogUtil.d("bbbbb get data");
-        return Helper1.a(v0.a());
+        return Helper1.copyData(v0.getByteBuffer());
     }
 
 

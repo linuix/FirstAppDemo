@@ -147,16 +147,16 @@ public final class RequestPacket extends JceStruct {
     }
 
     public final void writeTo(HelperC arg3) {
-        arg3.a(this.iVersion, 1);
-        arg3.a(this.cPacketType, 2);
-        arg3.a(this.iMessageType, 3);
-        arg3.a(this.iRequestId, 4);
-        arg3.a(this.sServantName, 5);
-        arg3.a(this.sFuncName, 6);
-        arg3.a(this.sBuffer, 7);
-        arg3.a(this.iTimeout, 8);
-        arg3.a(this.context, 9);
-        arg3.a(this.status, 10);
+        arg3.addShortData(this.iVersion, 1);
+        arg3.addByteData(this.cPacketType, 2);
+        arg3.addIntData(this.iMessageType, 3);
+        arg3.addIntData(this.iRequestId, 4);
+        arg3.addStringData(this.sServantName, 5);
+        arg3.addStringData(this.sFuncName, 6);
+        arg3.addByteData(this.sBuffer, 7);
+        arg3.addIntData(this.iTimeout, 8);
+        arg3.addMapData(this.context, 9);
+        arg3.addMapData(this.status, 10);
     }
 
     @Override

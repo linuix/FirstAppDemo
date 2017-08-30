@@ -26,11 +26,11 @@ public class GuidThread implements Runnable {
         ArrayList v2 =new ArrayList();
         NetConfigration v3 = new NetConfigration((byte) 0);
         NetConfigration v4 = new NetConfigration((byte) 0);
-        HttpMgr.b(12, v3, v4);
-        v3.a("phonetype",EntityManager.getPhoneType());
-        v3.a("userinfo",EntityManager.getUserInfo(context));
-        v3.a("suikey",EntityManager.getSuiKey(context));
-        v3.a("vecsui",v2);
+        HttpMgr.init(12, v3, v4);
+        v3.setMapData("phonetype",EntityManager.getPhoneType());
+        v3.setMapData("userinfo",EntityManager.getUserInfo(context));
+        v3.setMapData("suikey",EntityManager.getSuiKey(context));
+        v3.setMapData("vecsui",v2);
         LogUtil.e("get guid ...........");
         int ret =HttpMgr.initKrsdkStockConf(context,v3,v4);
         LogUtil.d("guid http  response code ="+ret);

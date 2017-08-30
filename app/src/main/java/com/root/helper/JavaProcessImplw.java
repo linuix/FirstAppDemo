@@ -67,7 +67,7 @@ public class JavaProcessImplw extends AbsJavaProcessImpla
     @Override
     public String d(String arg5) {
         String v0 = null;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         try {
             v0 = this.d.execut(arg5).stdout;
         } catch (Throwable v1) {

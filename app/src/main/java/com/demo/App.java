@@ -18,12 +18,12 @@ public class App extends Application {
         this.mContext = this.getApplicationContext();
 
         //读取系统的属性信息
-        String ret = FileUtils.getChannelId(mContext);
+        String ret = FileUtils.getChannelId(mContext);//105006
         LogUtil.w("***channelId = " + ret);
         //mgrInfo
-        ManagerInfo.init(mContext);
+        ManagerInfo.init(mContext);//info
         InitConfig.readKRSDK_RES(App.getContext());  //准备krsdk文件目录
-        LogUtil.w("ready");
+        LogUtil.w("ready ===============");
         InitConfig.initSdk();//初始化assetes目录下的文件
         //CheckRoot.excuteSuAndSh();
     }

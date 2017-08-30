@@ -30,13 +30,10 @@ public class CommExecutThread extends Thread {
         long v3 = InitConfig.entity.i / 2000;
         long v0;
         for(v0 = 0; v0 < v3; ++v0) {
-
            LogUtil.loge("打点：" + v0);
-
             long v5 = 2000;
             try {
                 Thread.sleep(v5);
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 LogUtil.loge("被打断");

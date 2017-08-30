@@ -41,7 +41,7 @@ public class JavaProcessImplh_absA extends AbsJavaProcessImpla {
 
 
         String v0_2 =null;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         String v1 = null;
         try
         {

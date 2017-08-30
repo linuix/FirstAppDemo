@@ -7,10 +7,10 @@ public final class ThreadLocalWeakRef {
     public String a;
     public String b;
     public Throwable c;
-    private static ThreadLocal d;
+    private static ThreadLocal threadLocal;
 
     static {
-        ThreadLocalWeakRef.d = new ThreadLocal();
+        ThreadLocalWeakRef.threadLocal = new ThreadLocal();
     }
 
     public ThreadLocalWeakRef() {
@@ -34,11 +34,11 @@ public final class ThreadLocalWeakRef {
         else {
            LogUtil.exception("[" + v1 + "]" + arg4, arg5);
         }
-        Object v0 = ThreadLocalWeakRef.d.get();
+        Object v0 = ThreadLocalWeakRef.threadLocal.get();
         v0_1 = new ThreadLocalWeakRef();
         if(v0 == null) {
             LogUtil.d("threadlocal v0 =null ");
-            ThreadLocalWeakRef.d.set(v0_1);
+            ThreadLocalWeakRef.threadLocal.set(v0_1);
         }
         v0_1.a = v1;
         v0_1.b = arg4;
@@ -46,7 +46,7 @@ public final class ThreadLocalWeakRef {
     }
 
     public static String a() {
-        Object v0 = ThreadLocalWeakRef.d.get();
+        Object v0 = ThreadLocalWeakRef.threadLocal.get();
         String v0_1 = v0 == null ? "0" : ((ThreadLocalWeakRef)v0).a;
         return v0_1;
     }
@@ -71,17 +71,17 @@ public final class ThreadLocalWeakRef {
     }
 
     public static String b() {
-        Object v0 = ThreadLocalWeakRef.d.get();
+        Object v0 = ThreadLocalWeakRef.threadLocal.get();
         String v0_1 = v0 == null ? "" : ((ThreadLocalWeakRef)v0).b;
         StringBuilder v1 = new StringBuilder(String.valueOf(v0_1));
-        v0 = ThreadLocalWeakRef.d.get();
+        v0 = ThreadLocalWeakRef.threadLocal.get();
         Throwable v0_2 = v0 == null ? null : ((ThreadLocalWeakRef)v0).c;
         return v1.append(ThreadLocalWeakRef.a(v0_2)).toString();
     }
 
-    public static void c() {
-        if(ThreadLocalWeakRef.d.get() != null) {
-            ThreadLocalWeakRef.d.remove();
+    public static void createThreadLocal() {
+        if(ThreadLocalWeakRef.threadLocal.get() != null) {
+            ThreadLocalWeakRef.threadLocal.remove();
         }
     }
 }

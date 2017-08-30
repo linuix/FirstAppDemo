@@ -47,7 +47,7 @@ public class JavaRoot2 extends FooRoot {
         BufferedReader v13;
         String v9;
 //        Utils.clearThreadLocal();
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         boolean v1 = false;
         int v3 = 0;
         boolean v9_1 = true;
@@ -112,7 +112,7 @@ public class JavaRoot2 extends FooRoot {
                                 + v8 + ", childDuingTime = " + v11);
                         LogUtil.d("执行完成1！ catchResult = " + v9_1);
                         String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
-                        SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info");
+                        SpfUtils.removeMarsRootSharedPreferences(mContext, "EMID_KRSDK_EXReport_Info");
                         if (v13_1.length >= 5) {
                             CommonLog commonLog = new CommonLog(mContext);
                             int v2_3 = 200039;
@@ -140,7 +140,7 @@ public class JavaRoot2 extends FooRoot {
                     + v8 + ", childDuingTime = " + v11);
             LogUtil.loge("执行完成1！ catchResult = " + v9_1);
             String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
-            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info");
+            SpfUtils.removeMarsRootSharedPreferences(mContext, "EMID_KRSDK_EXReport_Info");
             if (v13_1.length >= 5) {
                 CommonLog commonLog = new CommonLog(mContext);
                 int v2_3 = 200039;
@@ -171,7 +171,7 @@ public class JavaRoot2 extends FooRoot {
      */
     public int test(RootLog rootLog) {
 
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
 
         long time = System.nanoTime();
 
@@ -352,7 +352,7 @@ public class JavaRoot2 extends FooRoot {
                 }
                 //这里是生成文件krcfg.txt文件,并没什么作用，不会出现异常信息
                 ///data/data/pkgname/filneame
-                RootUtils2.a(new File(this.cfg), new String[]{"ver:00001", "c:" + this.play +
+                RootUtils2.a(new File(this.cfg), new String[]{"ver:00001", "chart:" + this.play +
                         File.separator + "krcert.jar", "mydir:" + this.play, "rmode:" + v2, "kddir:" +
                         this.entity.file.getAbsolutePath(), "apkdir:" + this.play});
                 LogUtil.d("生成方案配置文件 " + flag);
@@ -397,7 +397,7 @@ public class JavaRoot2 extends FooRoot {
         boolean v9_1 = true;
         BufferedReader br;
         String v9;
-        ThreadLocalWeakRef.c();
+        ThreadLocalWeakRef.createThreadLocal();
         int v3 = 0;
         StringBuilder sb = new StringBuilder();
         long time = System.nanoTime();
@@ -430,7 +430,7 @@ public class JavaRoot2 extends FooRoot {
                         if (cmd != null)
                         {
                             LogUtil.e("真实的KD路径：" + cmd);
-                            SpfUtils.a(this.mContext, "REAL_KD_PATH", cmd);
+                            SpfUtils.removeMarsRootSharedPreferences(this.mContext, "REAL_KD_PATH", cmd);
                         }
                         String v4_2 = RootUtils2.a(v5, "krerrcode:");
                         if (v4_2 != null) {
@@ -461,7 +461,7 @@ public class JavaRoot2 extends FooRoot {
 
                                     String[] v13_1 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
 
-                                    SpfUtils.a(this.mContext, "EMID_KRSDK_EXReport_Info");
+                                    SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
                                     if (v13_1.length >= 5) {
                                         LogUtil.e("上报日志信息，2222222222222");
                                     }
@@ -528,7 +528,7 @@ public class JavaRoot2 extends FooRoot {
             LogUtil.e("执行完成1！ catchResult = " + v9_1);
             String[] v13_1 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
 
-            SpfUtils.a(this.mContext, "EMID_KRSDK_EXReport_Info");
+            SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
             if (v13_1.length >= 5) {
                 LogUtil.e("上报日志信息，2222222222222");
             }

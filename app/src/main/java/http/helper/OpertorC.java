@@ -19,11 +19,11 @@ public class OpertorC extends OperatorB {
         this.f = new HelperA();
     }
 
-    public void a(String arg1) {
-        super.a(arg1);
+    public void setChart(String arg1) {
+        super.setChart(arg1);
     }
 
-    public void a(String arg3, Object arg4) {
+    public void setMapData(String arg3, Object arg4) {
         if(this.e == null) {
             super.a(arg3, arg4);
         }
@@ -37,10 +37,10 @@ public class OpertorC extends OperatorB {
             throw new IllegalArgumentException("can not support Set");
         }
         else {
-            HelperC v0 = new HelperC();
-            v0.a(this.c);
-            v0.a(arg4, 0);
-            this.e.put(arg3, Helper1.a(v0.a()));
+            HelperC helperC = new HelperC();
+            helperC.setChart(this.chart);
+            helperC.addObjectData(arg4, 0);
+            this.e.put(arg3, Helper1.copyData(helperC.getByteBuffer()));
             LogUtil.d("htpp ready data " + e.size() + ", e.size() = " + e.size());
         }
     }
@@ -51,7 +51,7 @@ public class OpertorC extends OperatorB {
         }
         catch(Exception v0) {
             this.f.a(arg5);
-            this.f.a(this.c);
+            this.f.a(this.chart);
             HashMap v0_1 = new HashMap(1);
             v0_1.put("", new byte[0]);
             this.e = this.f.a(((Map)v0_1), 0, false);
@@ -62,9 +62,9 @@ public class OpertorC extends OperatorB {
         byte[] v0_1;
         if(this.e != null) {
             HelperC v0 = new HelperC(0);
-            v0.a(this.c);
-            v0.a(this.e, 0);
-            v0_1 = Helper1.a(v0.a());
+            v0.setChart(this.chart);
+            v0.addMapData(this.e, 0);
+            v0_1 = Helper1.copyData(v0.getByteBuffer());
             LogUtil.d("get data cccc "+v0_1.length);
         }
         else {
@@ -80,10 +80,10 @@ public class OpertorC extends OperatorB {
     }
 
     public final Object b(String arg4, Object arg5) {
-        LogUtil.d("operator c:: b()");
+        LogUtil.d("operator chart:: getMarsrootSharePreferences()");
         Object v0 = null;
         if(this.e != null) {
-            LogUtil.d("operator c:: b()1");
+            LogUtil.d("operator chart:: getMarsrootSharePreferences()1");
             if(this.e.containsKey(arg4)) {
                 v0 = this.e.get(arg4);//数据在这里获取即可
 
@@ -91,14 +91,14 @@ public class OpertorC extends OperatorB {
                     v0 = this.g.get(arg4);
                 }
                 else {
-                    LogUtil.d("operator c:: b()2");
+                    LogUtil.d("operator chart:: getMarsrootSharePreferences()2");
                     v0 = this.e.get(arg4);
                     try {
                         this.f.sdk_gt18(((byte[])v0));//出现异常信息。这里直接关掉
-                        this.f.sdk_gt18(this.c);
+                        this.f.sdk_gt18(this.chart);
                         v0 = this.f.sdk_gt18(arg5, 0, true);
                         if(v0 != null) {
-                            this.c(arg4, v0);
+                            this.chart(arg4, v0);
                         }
                     }
                     catch(Exception v0_1) {
@@ -109,7 +109,7 @@ public class OpertorC extends OperatorB {
             }
         }
         else if(this.a.containsKey(arg4)) {
-            LogUtil.d("operator c:: b()3");
+            LogUtil.d("operator chart:: getMarsrootSharePreferences()3");
             if(this.g.containsKey(arg4)) {
                 v0 = this.g.get(arg4);
             }
@@ -128,7 +128,7 @@ public class OpertorC extends OperatorB {
 
                 try {
                     this.f.a(((byte[])v0));
-                    this.f.a(this.c);
+                    this.f.a(this.chart);
                     v0 = this.f.a(arg5, 0, true);
                     this.c(arg4, v0);
                 }
@@ -139,7 +139,7 @@ public class OpertorC extends OperatorB {
             }
         }
 
-        LogUtil.d("operator c:: b() end");
+        LogUtil.d("operator chart:: getMarsrootSharePreferences() end");
         return v0;
     }
 

@@ -77,73 +77,73 @@ public final class SUIKey extends JceStruct {
     }
 
     public final void writeTo(HelperC arg3) {
-        arg3.a(this.lc, 0);
-        arg3.a(this.name, 1);
-        arg3.a(this.version, 2);
-        arg3.a(this.imei, 3);
-        arg3.a(this.imsi, 4);
+        arg3.addStringData(this.lc, 0);
+        arg3.addStringData(this.name, 1);
+        arg3.addStringData(this.version, 2);
+        arg3.addStringData(this.imei, 3);
+        arg3.addStringData(this.imsi, 4);
         if(this.qq != null) {
-            arg3.a(this.qq, 5);
+            arg3.addStringData(this.qq, 5);
         }
 
         if(this.ip != null) {
-            arg3.a(this.ip, 6);
+            arg3.addStringData(this.ip, 6);
         }
 
         if(this.type != 0) {
-            arg3.a(this.type, 7);
+            arg3.addIntData(this.type, 7);
         }
 
         if(this.osversion != null) {
-            arg3.a(this.osversion, 8);
+            arg3.addStringData(this.osversion, 8);
         }
 
         if(this.machineuid != null) {
-            arg3.a(this.machineuid, 9);
+            arg3.addStringData(this.machineuid, 9);
         }
 
         if(this.machineconf != null) {
-            arg3.a(this.machineconf, 10);
+            arg3.addStringData(this.machineconf, 10);
         }
 
         if(this.phone != null) {
-            arg3.a(this.phone, 11);
+            arg3.addStringData(this.phone, 11);
         }
 
         if(this.subplatform != 0) {
-            arg3.a(this.subplatform, 12);
+            arg3.addIntData(this.subplatform, 12);
         }
 
         if(this.channelid != null) {
-            arg3.a(this.channelid, 13);
+            arg3.addStringData(this.channelid, 13);
         }
 
         if(this.isbuildin != 0) {
-            arg3.a(this.isbuildin, 14);
+            arg3.addIntData(this.isbuildin, 14);
         }
 
         if(this.uuid != null) {
-            arg3.a(this.uuid, 15);
+            arg3.addStringData(this.uuid, 15);
         }
 
         if(this.lang != 0) {
-            arg3.a(this.lang, 16);
+            arg3.addShortData(this.lang, 16);
         }
 
         if(this.guid != null) {
-            arg3.a(this.guid, 17);
+            arg3.addStringData(this.guid, 17);
         }
 
         if(this.sdk != null) {
-            arg3.a(this.sdk, 18);
+            arg3.addStringData(this.sdk, 18);
         }
 
         if(this.sid != null) {
-            arg3.a(this.sid, 19);
+            arg3.addStringData(this.sid, 19);
         }
 
         if(this.newguid != null) {
-            arg3.a(this.newguid, 20);
+            arg3.addStringData(this.newguid, 20);
         }
     }
 }

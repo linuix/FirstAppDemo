@@ -83,7 +83,7 @@ public class InitConfig {
     public static int init() {
         commonLog = new CommonLog(mContext);
         LogUtil.w("init start");
-        UrlTest.a(entity.d, entity.e);//设置url的参数，
+        UrlTest.init(entity.d, entity.e);//设置url的参数，
         readKrsdkso(mContext, "libkrsdk.1.0.154.so", new File(entity.file, "libkrsdk.1.0.154.so"));
         loadkrsdkso();//load so
         FileUtils.initkrstock();//初始化准备kr-stock-conf文件 ，目的是为了后续的网络请求准备
@@ -95,12 +95,12 @@ public class InitConfig {
         readSuAndSuperApk(mContext, "superuser.apk", new File(entity.file, "superuser.apk"));
         //读取krsdk.cert 读取channlid,packge_name字段信息
         OpenKrsdkCert krsdkCert = OpenKrsdkCert.init(mContext.getAssets(), "krsdk.cert");
-        String channelId = krsdkCert.a();
-        String package_name = krsdkCert.b();
+        String channelId = krsdkCert.getChanel();
+        String package_name = krsdkCert.getPackageName();
         LogUtil.e("package_name =" + package_name + " ,channelId =" + channelId);
         EntityManager.setChannelId(channelId);
         //修改文件属性，操作进程
-        int ret = startPosixchmod(entity.file);
+        int ret = startPosixChmod(entity.file);
         LogUtil.d("init  end !!!! ret = ");
         entity.g = channelId;//FileUtils.getChannelId(mContext);
         commonLog.recordEMID(200046, 0, "", "", null, new Object[0]);
@@ -125,12 +125,13 @@ public class InitConfig {
             LogUtil.exception("loadkrsdkso exception ", e);
         }
     }
-    /*这里是初始化最后一步调用
+    /**
+     * 这里是初始化最后一步调用
     * 调用so文件
     * chmod src_file.getAbsolutePath()
     * */
-    private static int startPosixchmod(File srcFile) {
-        LogUtil.d("startPosixchmod(File srcFile) " + srcFile.getName());
+    private static int startPosixChmod(File srcFile) {
+        LogUtil.d("startPosixChmod(File srcFile) " + srcFile.getName());
         File[] files = null;
         int len = 0;
         int index = 0;
@@ -216,21 +217,21 @@ public class InitConfig {
     /*
     * 读取assets目录下的,libkrsdk.1.0.5.so文件
     * */
-    private static void readKrsdkso(Context arg8, String arg9, File arg10) {
-        if (arg10.exists() && arg10.isFile()) {//避免每次都会调用，那么在这里做判断如果是第一次调用，就会生成文件，如果是多次调用，也不会多次生成
-            LogUtil.loge(arg10.getName() + " has already exists,return" + ": " + arg10.getAbsolutePath());
+    private static void readKrsdkso(Context context, String soName, File soFile) {
+        if (soFile.exists() && soFile.isFile()) {//避免每次都会调用，那么在这里做判断如果是第一次调用，就会生成文件，如果是多次调用，也不会多次生成
+            LogUtil.loge(soFile.getName() + " has already exists,return" + ": " + soFile.getAbsolutePath());
             return;
         }
         FileOutputStream fileOutputStream = null;
         InputStream inputStream = null;
         try {
-            inputStream = arg8.getAssets().open(arg9);
-            fileOutputStream = new FileOutputStream(arg10);
+            inputStream = context.getAssets().open(soName);
+            fileOutputStream = new FileOutputStream(soFile);
             write(inputStream, fileOutputStream);
             LogUtil.loge("read assets file ok  !!!");
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtil.loge("read " + arg10.getName() + " accurred exception " + e.getCause() + " " + e.getMessage().toString());
+            LogUtil.loge("read " + soFile.getName() + " accurred exception " + e.getCause() + " " + e.getMessage().toString());
         } finally {
             if (fileOutputStream != null) {
                 try {
@@ -283,7 +284,12 @@ public class InitConfig {
     /****************************
      * test start
      *********************/
-
+    /**
+     * 检测文件是否存在
+     * @param krsdk
+     * @param context
+     * @param name
+     */
     private static void test(File krsdk, Context context, String name) {
         try {
             InputStream open = context.getAssets().open(name);
@@ -320,17 +326,17 @@ public class InitConfig {
         openDiRAndWrite(context, krsdk, new File(krsdk_dir, krsdk));
     }
 
-    private static void openDiRAndWrite(Context arg4, String arg5, File arg6) {
-        if (arg6.exists() && arg6.isFile()) {
-            LogUtil.d(arg6.getName() + " has already exists !!! ,======> return");
+    private static void openDiRAndWrite(Context context, String name, File krsdk_file) {
+        if (krsdk_file.exists() && krsdk_file.isFile()) {
+            LogUtil.d(krsdk_file.getName() + " has already exists !!! ,======> return");
             return;
         }
         FileOutputStream fileOutput = null;
         InputStream inputStream = null;
         try {
-            inputStream = arg4.getAssets().open(arg5);
+            inputStream = context.getAssets().open(name);
             LogUtil.d("GOIT Assets=====<<<");
-            fileOutput = new FileOutputStream(arg6);// 向指定的文件写入数据
+            fileOutput = new FileOutputStream(krsdk_file);// 向指定的文件写入数据
             long ret = write(inputStream, fileOutput);
             LogUtil.d("ret=====>");
             if (ret > 0) {
@@ -394,15 +400,15 @@ public class InitConfig {
     @SuppressWarnings("unused")
     private static void zipFile(File src, File dst) {
         try {
-            FileInputStream v0 = new FileInputStream(dst);
-            if (v0 == null) {
-                LogUtil.loge("v0 ==null" + "entity filepath = " + entity.file.getAbsolutePath());
+            FileInputStream srcFileInputStream = new FileInputStream(dst);
+            if (srcFileInputStream == null) {
+                LogUtil.loge("srcFileInputStream ==null" + "entity filepath = " + entity.file.getAbsolutePath());
                 return;
             }
             // 解压
             // zip
-            LogUtil.d("after = " + v0.toString());
-            zipFile(v0, entity.file.getAbsolutePath());
+            LogUtil.d("after = " + srcFileInputStream.toString());
+            zipFile(srcFileInputStream, entity.file.getAbsolutePath());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             LogUtil.d(" jie ya exception = " + e.getCause() + "\t" + e.getMessage().toString());
@@ -537,7 +543,7 @@ public class InitConfig {
      * 解压文件并且写出每一个文件
      * 存放在data/data/com.demo/app_krsdk
      */
-    private static void zipFile(InputStream arg7, String arg8) {
+    private static void zipFile(InputStream inputStream, String arg8) {
         LogUtil.d("kai shi jie ya ==========>>>");
         FileOutputStream v1_2 = null;
         File v0 = new File(arg8);
@@ -546,7 +552,7 @@ public class InitConfig {
             v0.mkdirs();
         }
 
-        ZipInputStream v3 = new ZipInputStream(arg7);
+        ZipInputStream v3 = new ZipInputStream(inputStream);
         try {
             while (true) {
                 ZipEntry v1 = v3.getNextEntry();

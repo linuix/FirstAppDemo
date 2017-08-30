@@ -44,41 +44,41 @@ public final class DeviceInfo extends JceStruct {
     }
 
     public final void writeTo(HelperC arg3) {
-        arg3.a(this.imei, 0);
+        arg3.addStringData(this.imei, 0);
         if(this.imsi != null) {
-            arg3.a(this.imsi, 1);
+            arg3.addStringData(this.imsi, 1);
         }
 
         if(this.mac != null) {
-            arg3.a(this.mac, 2);
+            arg3.addStringData(this.mac, 2);
         }
 
         if(this.iccid != null) {
-            arg3.a(this.iccid, 3);
+            arg3.addStringData(this.iccid, 3);
         }
 
         if(this.androidid != null) {
-            arg3.a(this.androidid, 4);
+            arg3.addStringData(this.androidid, 4);
         }
 
         if(this.sdkversion != 0) {
-            arg3.a(this.sdkversion, 5);
+            arg3.addIntData(this.sdkversion, 5);
         }
 
         if(this.model != null) {
-            arg3.a(this.model, 6);
+            arg3.addStringData(this.model, 6);
         }
 
         if(this.product != null) {
-            arg3.a(this.product, 7);
+            arg3.addStringData(this.product, 7);
         }
 
         if(this.netfile != null) {
-            arg3.a(this.netfile, 8);
+            arg3.addStringData(this.netfile, 8);
         }
 
         if(this.lguid != null) {
-            arg3.a(this.lguid, 9);
+            arg3.addStringData(this.lguid, 9);
         }
     }
 }

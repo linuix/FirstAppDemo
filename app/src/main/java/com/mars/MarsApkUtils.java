@@ -63,14 +63,14 @@ public class MarsApkUtils {
         String cmd;
         JavaSolutionHelpers helpers = null;
         if (Utils.getSdk() >= 21) {
-            path = "/system/app/Mars/MySuperuser.apk";//这里可以更改为自己的名称apk文件
+            path = "/system/app/Mars/superuser.apk";//这里可以更改为自己的名称apk文件
             cmd = "pm instatll -r -d " + path;
         } else {
             if (Utils.getSdk() >= 17 || Utils.getSdk() <= 20) {
-                path = "/system/app/MySuperuser.apk";
+                path = "/system/app/superuser.apk";
                 cmd = "pm install -r -d " + path;
             }
-            path = "/system/app/MySuperuser.apk";
+            path = "/system/app/superuser.apk";
             cmd = "pm install -r " + path;
         }
         if (new File(path).exists()) {

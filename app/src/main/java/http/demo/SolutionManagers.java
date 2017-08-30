@@ -21,8 +21,8 @@ public final class SolutionManagers {
     toString() {
         return "SolutionManagers{" +
                 "sdk_gt18=" + a +
-                ", b=" + Arrays.toString(b) +
-                ", c=" + Arrays.toString(c) +
+                ", getPackageName=" + Arrays.toString(b) +
+                ", chart=" + Arrays.toString(c) +
                 ", d=" + d +
                 ", e=" + e +
                 '}';

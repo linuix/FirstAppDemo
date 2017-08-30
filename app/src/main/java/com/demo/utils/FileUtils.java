@@ -133,7 +133,6 @@ public class FileUtils {
     *
     * */
     public static String getChannelId(Context context) {
-        InputStream v1_4;
         int v1_3;
         InputStream v0;
         byte[] buf = null;
@@ -151,7 +150,6 @@ public class FileUtils {
                 if (index <= 0) {
                     break;
                 }
-
                 baos.write(buf, 0, index);
             }
             LogUtil.d("encode ===>");
@@ -206,8 +204,6 @@ public class FileUtils {
 //            writeFile(stocl_conf);//写文件
             //解密文件
 //            decodeStock2String("");
-
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -234,13 +230,13 @@ public class FileUtils {
     }
 
     private static SecretKeySpec getKey() {
-        SecretKeySpec v3 = null;
+        SecretKeySpec secretKeySpec = null;
         try {
-            v3 = new SecretKeySpec(getKeyByte(), "AES");
+            secretKeySpec = new SecretKeySpec(getKeyByte(), "AES");
         } catch (Exception e) {
-            LogUtil.exception("get SecretKeySpec v3 exception ", e);
+            LogUtil.exception("get SecretKeySpec secretKeySpec exception ", e);
         }
-        return v3;
+        return secretKeySpec;
     }
 
     private static Cipher getCipher() {

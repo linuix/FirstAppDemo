@@ -991,7 +991,7 @@ public class HelperA {
         LogUtil.d("moved 此时的position 是："+arg3.position()+" ,get() = "+v0);
         fuzhuB.a = ((byte) (v0 & 15));
         fuzhuB.b = (v0 & 240) >> 4;
-        LogUtil.d("fuzhuB sdk_gt18 ="+fuzhuB.a+" ,fuzhuB b ="+fuzhuB.b);
+        LogUtil.d("fuzhuB sdk_gt18 ="+fuzhuB.a+" ,fuzhuB getMarsrootSharePreferences ="+fuzhuB.b);
         if (fuzhuB.b == 15)
         {
             fuzhuB.b = arg3.get();

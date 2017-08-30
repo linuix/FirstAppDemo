@@ -89,85 +89,85 @@ public final class UserInfo extends JceStruct {
     public void writeTo(HelperC arg6) {
 
         double v3 = 0;
-        arg6.a(this.imei, 0);
+        arg6.addStringData(this.imei, 0);
         if(this.qq != null) {
-            arg6.a(this.qq, 1);
+            arg6.addStringData(this.qq, 1);
         }
 
         if(this.phone != null) {
-            arg6.a(this.phone, 2);
+            arg6.addStringData(this.phone, 2);
         }
 
         if(this.ip != null) {
-            arg6.a(this.ip, 3);
+            arg6.addStringData(this.ip, 3);
         }
 
         if(this.lc != null) {
-            arg6.a(this.lc, 4);
+            arg6.addStringData(this.lc, 4);
         }
 
         if(this.channelid != null) {
-            arg6.a(this.channelid, 5);
+            arg6.addStringData(this.channelid, 5);
         }
 
         if(this.ua != null) {
-            arg6.a(this.ua, 6);
+            arg6.addStringData(this.ua, 6);
         }
 
         if(this.ct != 0) {
-            arg6.a(this.ct, 7);
+            arg6.addIntData(this.ct, 7);
         }
 
         if(this.product != 0) {
-            arg6.a(this.product, 8);
+            arg6.addIntData(this.product, 8);
         }
 
         if(this.version != null) {
-            arg6.a(this.version, 9);
+            arg6.addJceStructData(this.version, 9);
         }
 
         if(this.guid != null) {
-            arg6.a(this.guid, 10);
+            arg6.addStringData(this.guid, 10);
         }
 
         if(this.imsi != null) {
-            arg6.a(this.imsi, 11);
+            arg6.addStringData(this.imsi, 11);
         }
 
         if(this.isbuildin != 0) {
-            arg6.a(this.isbuildin, 12);
+            arg6.addIntData(this.isbuildin, 12);
         }
 
         if(this.isroot != 0) {
-            arg6.a(this.isroot, 13);
+            arg6.addIntData(this.isroot, 13);
         }
 
         if(this.sdkversion != 0) {
-            arg6.a(this.sdkversion, 14);
+            arg6.addIntData(this.sdkversion, 14);
         }
 
         if(this.buildno != 0) {
-            arg6.a(this.buildno, 15);
+            arg6.addIntData(this.buildno, 15);
         }
 
         if(this.uuid != null) {
-            arg6.a(this.uuid, 16);
+            arg6.addStringData(this.uuid, 16);
         }
 
         if(this.lang != 0) {
-            arg6.a(this.lang, 17);
+            arg6.addShortData(this.lang, 17);
         }
 
         if(this.longitude != v3) {
-            arg6.a(this.longitude, 18);
+            arg6.addDoubleData(this.longitude, 18);
         }
 
         if(this.latitude != v3) {
-            arg6.a(this.latitude, 19);
+            arg6.addDoubleData(this.latitude, 19);
         }
 
         if(this.newguid != null) {
-            arg6.a(this.newguid, 20);
+            arg6.addStringData(this.newguid, 20);
         }
 
     }

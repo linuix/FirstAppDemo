@@ -26,7 +26,7 @@ public class Test {
     }
 
     private void writeStr(InputStream in){
-        LogUtil.d("write str stream ");
+        LogUtil.d("inputCopyToOutput str stream ");
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         String line = null;
         String data = null;

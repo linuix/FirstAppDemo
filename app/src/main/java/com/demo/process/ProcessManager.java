@@ -28,6 +28,12 @@ public class ProcessManager {
         instance = new ProcessManager(context);
         return instance;
     }
+
+    /**
+     * 测试命令行是否可用
+     * @param arg 命令
+     * @return
+     */
     public static int test(String arg) {
         RootProcess processs = new RootProcess("sh");
         processs.execut("export PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:$PATH");

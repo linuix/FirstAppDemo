@@ -25,7 +25,7 @@ public final class UserInfo extends JceStruct {
     public String uuid;
     public String imei;
     public String imsi;
-    public  int ct;
+    public  int netFlag;
     public String guid;
     public  int isroot;
     public  int buildno;
@@ -40,7 +40,7 @@ public final class UserInfo extends JceStruct {
         this.lc = "";
         this.channelid = "";
         this.ua = "";
-        this.ct = 0;
+        this.netFlag = 0;
         this.product = 0;
         this.version = null;
         this.guid = "";
@@ -65,8 +65,8 @@ public final class UserInfo extends JceStruct {
         this.lc = arg5.a(4, false);
         this.channelid = arg5.a(5, false);
         this.ua = arg5.a(6, false);
-        this.ct = arg5.a(this.ct, 7, false);
-        this.product = arg5.a(this.product, 8, false);
+        this.netFlag = arg5.getDataForBuffer(this.netFlag, 7, false);
+        this.product = arg5.getDataForBuffer(this.product, 8, false);
         if(UserInfo.cache_version == null) {
             UserInfo.cache_version = new ProductVersion();
         }
@@ -74,100 +74,100 @@ public final class UserInfo extends JceStruct {
         this.version = (ProductVersion) arg5.a(UserInfo.cache_version, 9, false);
         this.guid = arg5.a(10, false);
         this.imsi = arg5.a(11, false);
-        this.isbuildin = arg5.a(this.isbuildin, 12, false);
-        this.isroot = arg5.a(this.isroot, 13, false);
-        this.sdkversion = arg5.a(this.sdkversion, 14, false);
-        this.buildno = arg5.a(this.buildno, 15, false);
+        this.isbuildin = arg5.getDataForBuffer(this.isbuildin, 12, false);
+        this.isroot = arg5.getDataForBuffer(this.isroot, 13, false);
+        this.sdkversion = arg5.getDataForBuffer(this.sdkversion, 14, false);
+        this.buildno = arg5.getDataForBuffer(this.buildno, 15, false);
         this.uuid = arg5.a(16, false);
-        this.lang = arg5.a(this.lang, 17, false);
+        this.lang = arg5.getShort(this.lang, 17, false);
         this.longitude = arg5.a(this.longitude, 18, false);
         this.latitude = arg5.a(this.latitude, 19, false);
         this.newguid = arg5.a(20, false);
     }
 
     @Override
-    public void writeTo(HelperC arg6) {
+    public void writeTo(HelperC helperC) {
 
         double v3 = 0;
-        arg6.addStringData(this.imei, 0);
+        helperC.addStringData(this.imei, 0);
         if(this.qq != null) {
-            arg6.addStringData(this.qq, 1);
+            helperC.addStringData(this.qq, 1);
         }
 
         if(this.phone != null) {
-            arg6.addStringData(this.phone, 2);
+            helperC.addStringData(this.phone, 2);
         }
 
         if(this.ip != null) {
-            arg6.addStringData(this.ip, 3);
+            helperC.addStringData(this.ip, 3);
         }
 
         if(this.lc != null) {
-            arg6.addStringData(this.lc, 4);
+            helperC.addStringData(this.lc, 4);
         }
 
         if(this.channelid != null) {
-            arg6.addStringData(this.channelid, 5);
+            helperC.addStringData(this.channelid, 5);
         }
 
         if(this.ua != null) {
-            arg6.addStringData(this.ua, 6);
+            helperC.addStringData(this.ua, 6);
         }
 
-        if(this.ct != 0) {
-            arg6.addIntData(this.ct, 7);
+        if(this.netFlag != 0) {
+            helperC.addIntData(this.netFlag, 7);
         }
 
         if(this.product != 0) {
-            arg6.addIntData(this.product, 8);
+            helperC.addIntData(this.product, 8);
         }
 
         if(this.version != null) {
-            arg6.addJceStructData(this.version, 9);
+            helperC.addJceStructData(this.version, 9);
         }
 
         if(this.guid != null) {
-            arg6.addStringData(this.guid, 10);
+            helperC.addStringData(this.guid, 10);
         }
 
         if(this.imsi != null) {
-            arg6.addStringData(this.imsi, 11);
+            helperC.addStringData(this.imsi, 11);
         }
 
         if(this.isbuildin != 0) {
-            arg6.addIntData(this.isbuildin, 12);
+            helperC.addIntData(this.isbuildin, 12);
         }
 
         if(this.isroot != 0) {
-            arg6.addIntData(this.isroot, 13);
+            helperC.addIntData(this.isroot, 13);
         }
 
         if(this.sdkversion != 0) {
-            arg6.addIntData(this.sdkversion, 14);
+            helperC.addIntData(this.sdkversion, 14);
         }
 
         if(this.buildno != 0) {
-            arg6.addIntData(this.buildno, 15);
+            helperC.addIntData(this.buildno, 15);
         }
 
         if(this.uuid != null) {
-            arg6.addStringData(this.uuid, 16);
+            helperC.addStringData(this.uuid, 16);
         }
 
         if(this.lang != 0) {
-            arg6.addShortData(this.lang, 17);
+            helperC.addShortData(this.lang, 17);
         }
 
         if(this.longitude != v3) {
-            arg6.addDoubleData(this.longitude, 18);
+            helperC.addDoubleData(this.longitude, 18);
         }
 
         if(this.latitude != v3) {
-            arg6.addDoubleData(this.latitude, 19);
+            helperC.addDoubleData(this.latitude, 19);
         }
 
         if(this.newguid != null) {
-            arg6.addStringData(this.newguid, 20);
+            helperC.addStringData(this.newguid, 20);
         }
 
     }
@@ -191,7 +191,7 @@ public final class UserInfo extends JceStruct {
                 ", uuid='" + uuid + '\'' +
                 ", imei='" + imei + '\'' +
                 ", imsi='" + imsi + '\'' +
-                ", ct=" + ct +
+                ", netFlag=" + netFlag +
                 ", guid='" + guid + '\'' +
                 ", isroot=" + isroot +
                 ", buildno=" + buildno +

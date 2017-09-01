@@ -19,10 +19,10 @@ public final class RootExtInfo extends JceStruct {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.canRoot = arg4.a(this.canRoot, 0, false);
-        this.useTime = arg4.a(this.useTime, 1, false);
-        this.succUsers = arg4.a(this.succUsers, 2, false);
-        this.succRate = arg4.a(this.succRate, 3, false);
+        this.canRoot = arg4.getDataForBuffer(this.canRoot, 0, false);
+        this.useTime = arg4.getDataForBuffer(this.useTime, 1, false);
+        this.succUsers = arg4.getDataForBuffer(this.succUsers, 2, false);
+        this.succRate = arg4.getDataForBuffer(this.succRate, 3, false);
     }
 
     public final void writeTo(HelperC arg3) {

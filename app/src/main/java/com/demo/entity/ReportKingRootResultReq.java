@@ -21,16 +21,16 @@ public final class ReportKingRootResultReq extends JceStruct {
         this.prevSuVersion = "";
     }
 
-    public final void readFrom(HelperA arg5) {
-        this.sessionId = arg5.a(this.sessionId, 0, true);
+    public final void readFrom(HelperA helperA) {
+        this.sessionId = helperA.a(this.sessionId, 0, true);
         if(ReportKingRootResultReq.cache_kingRootResults == null) {
             ReportKingRootResultReq.cache_kingRootResults = new ArrayList();
             ReportKingRootResultReq.cache_kingRootResults.add(new KingRootResult());
         }
 
-        this.kingRootResults = (ArrayList) arg5.a(ReportKingRootResultReq.cache_kingRootResults, 1, true);
-        this.mac = arg5.a(2, false);
-        this.prevSuVersion = arg5.a(3, false);
+        this.kingRootResults = (ArrayList) helperA.a(ReportKingRootResultReq.cache_kingRootResults, 1, true);
+        this.mac = helperA.a(2, false);
+        this.prevSuVersion = helperA.a(3, false);
     }
 
     public final void writeTo(HelperC arg4) {

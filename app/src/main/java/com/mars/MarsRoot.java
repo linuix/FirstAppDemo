@@ -54,9 +54,7 @@ public class MarsRoot {
                 fileName = "ssu";
                 replaceRoot.createMyfolder();//创建工作目录
                 LogUtil.e("开始接管root ---  ---  ");
-
                 if (takeKingRoot())
-
                 {
                     Process mProcess = Runtime.getRuntime().exec("su");
                     InputStream stdout = mProcess.getInputStream();
@@ -174,18 +172,18 @@ public class MarsRoot {
             if (value.ret == 0) {
                 File file = new File("/system/bin/au");
                 if (file.exists()) {
-                    process.execut("rm -f " + "/system/bin/au");
+                    process.execut("rm -getHead_Content_Type " + "/system/bin/au");
                 }
                 if (new File("/system/xbin/su").exists()) {
-                    process.execut("rm -f " + " /systtem/xbin/su");
+                    process.execut("rm -getHead_Content_Type " + " /systtem/xbin/su");
                 }
                 File su = new File("/system/bin/su");
                 if (su.exists()) {
-                    process.execut("rm -f " + "/system/bin/su");
+                    process.execut("rm -getHead_Content_Type " + "/system/bin/su");
                 }
 
                 if (new File("/system/app/MySuperuser.apk").exists()) {
-                    process.execut("rm -f " + "/system/app/MySuperuser.apk");
+                    process.execut("rm -getHead_Content_Type " + "/system/app/MySuperuser.apk");
                 }
                 flag = true;
             }

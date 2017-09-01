@@ -109,7 +109,7 @@ public class EntityManager {
                 ++v3;
                 continue;
             }
-            LogUtil.d("entitymanger v3 ="+v3);
+            LogUtil.type("entitymanger v3 ="+v3);
             v0 = Build.MODEL;
             tmpUserInfo.ua = v0;
             tmpUserInfo.product = v10;
@@ -161,11 +161,11 @@ public class EntityManager {
                     v0 = SPF.getMarsrootSharePreferences(arg12, "session_id");
                     if (v0 != null) {
                         try {
-                            EntityManager.i = Long.parseLong(v0);
-                            LogUtil.d("local sessionId = " + EntityManager.i);
+                            EntityManager.url = Long.parseLong(v0);
+                            LogUtil.type("local sessionId = " + EntityManager.url);
                             return;
                         } catch (Exception v0_7) {
-                            EntityManager.i = 0;
+                            EntityManager.url = 0;
                         }
                     }
                 }
@@ -192,18 +192,18 @@ public class EntityManager {
 
                     if (v0 != null) {
                         try {
-                            EntityManager.i = Long.parseLong(v0);
-                            LogUtil.d("local sessionId = " + EntityManager.i);
+                            EntityManager.url = Long.parseLong(v0);
+                            LogUtil.type("local sessionId = " + EntityManager.url);
                             return;
                         } catch (Exception v0_7)
                         {
-                            EntityManager.i = 0;
+                            EntityManager.url = 0;
                         }
                     }
                 }
                 v0_3.isbuildin = 1;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception fileSize) {
+                fileSize.printStackTrace();
             }
         }*/
     }
@@ -228,17 +228,17 @@ public class EntityManager {
 
     public static UserInfo getUserInfo(Context context) {
         LogUtil.loge("getUserInfo " + context);
-        int v0_1;
+        int connectFlag;
         UserInfo userInfo;
         userInfo = EntityManager.userInfo;
         userInfo.imei = PhoneInfoUtil.getIMEI(context);
         userInfo.imsi = PhoneInfoUtil.getIMSI(context);
-        if (NetUtils.a(context) == 0) {
-            v0_1 = 2;
+        if (NetUtils.isConnection(context) == 0) {
+            connectFlag = 2;
         } else {
-            v0_1 = 1;
+            connectFlag = 1;
         }
-        userInfo.ct = v0_1;
+        userInfo.netFlag = connectFlag;
         userInfo.guid = FileUtils.getGuid();//读取网络下发数据的放回值
 //        if (fromSolution)
 //        {
@@ -261,6 +261,9 @@ public class EntityManager {
      * 网络请求解决方案的初始化对象方法
      * <p>
      * 修改使用这个方式
+     *
+     *
+     * 读取各种信息并将信息放入<code>EntityManager<code/>中
      */
 
     public static void init(int arg11, Context context) {
@@ -340,7 +343,7 @@ public class EntityManager {
                     v0_5.product = Build.PRODUCT;
 
                     v0_5.netfile = SystemUtils.getPhoneExternalInfo(context);
-                    v0_5.lguid = FileUtils.getLguid();//读取属性文件w.g ///高版本的时候出现异常信息，导致后续不能执行
+                    v0_5.lguid = FileUtils.getLguid();//读取属性文件w.md5 ///高版本的时候出现异常信息，导致后续不能执行
                     EntityManager.deviceInfo = v0_5;
 
                     GetKingRootSolutionReq v0_6 = new GetKingRootSolutionReq();
@@ -444,16 +447,16 @@ public class EntityManager {
 
     public  static ReportKingRootResultReq getReportRootResult()
     {
-        ReportKingRootResultReq v0 = EntityManager.reportKingRootResultReq;
-        if (v0 == null)
+        ReportKingRootResultReq reportKingRootResultReq = EntityManager.reportKingRootResultReq;
+        if (reportKingRootResultReq == null)
         {
-            v0= new ReportKingRootResultReq();
+            reportKingRootResultReq= new ReportKingRootResultReq();
         }
-        v0.sessionId = EntityManager.i;
-        v0.kingRootResults = arrayList;
-        v0.mac = deviceInfo.mac;
-        v0.prevSuVersion = SystemUtils.getPrevSuVersion();
-        return v0;
+        reportKingRootResultReq.sessionId = EntityManager.i;
+        reportKingRootResultReq.kingRootResults = arrayList;
+        reportKingRootResultReq.mac = deviceInfo.mac;
+        reportKingRootResultReq.prevSuVersion = SystemUtils.getPrevSuVersion();
+        return reportKingRootResultReq;
     }
 
 }

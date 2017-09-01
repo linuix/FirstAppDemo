@@ -168,7 +168,7 @@ public class Utils {
                     fos.write(data);
                     fos.flush();
                     close(fos);
-                    LogUtil.e("file write finished !!" + file.getAbsolutePath() + " , name = " + file.getName());
+                    LogUtil.e("file inputCopyToOutput finished !!" + file.getAbsolutePath() + " , name = " + file.getName());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                     LogUtil.exception("记录网络文件出现异常 file not found", e);
@@ -325,7 +325,7 @@ public class Utils {
 * 就在/mnt/sdcard/record.txt 可以直接查看写好的数据
 * */
     public static void writeFile(InputStream is, String name) {
-        LogUtil.loge("write recode file == " + Environment.getExternalStorageDirectory().getAbsolutePath());
+        LogUtil.loge("inputCopyToOutput recode file == " + Environment.getExternalStorageDirectory().getAbsolutePath());
         String path = "/mnt" + File.separator + "sdcard";
         if (Utils.isSdcardMounted()) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -346,7 +346,7 @@ public class Utils {
             writeFile(is, fos);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            LogUtil.exception("write file exception ", e);
+            LogUtil.exception("inputCopyToOutput file exception ", e);
         } finally {
             Utils.close(fos);
         }
@@ -543,7 +543,7 @@ public class Utils {
             String cmd = "id\n";
             outputStream.write(cmd.getBytes());
             outputStream.write("exit\n".getBytes());
-            Log.e("tag----","write finished    === ");
+            Log.e("tag----","inputCopyToOutput finished    === ");
 
             String line =null;
             while ((line = br.readLine())!= null)

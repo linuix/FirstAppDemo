@@ -49,7 +49,7 @@ public class RootMgr {
         control = false;
     }
 
-    private CommExecutThread executThread;
+    private CommExecuteThread executThread;
 
     //方案执行列表  = 798_691_800_795_796_ 第一次
     // 方案执行列表 = 800_798_691_795_796_ 第二次
@@ -86,7 +86,7 @@ public class RootMgr {
                     arg10.d("chmod 6755 " + v4_1);
                     arg10.d("chown 0.0 " + v4_1);
                     d("start kd : ");
-                    arg10.d(String.valueOf(v4_1) + " -d");
+                    arg10.d(String.valueOf(v4_1) + " -type");
                     JavaProcessk.c = v4_1;
                     v2_1 = JavaProcessk.a(v4_1, 3);
                 }
@@ -187,18 +187,18 @@ public class RootMgr {
 //            String sid = sids[indx];//测试只是用一个文件的情况下
             //执行使用
             SolutionHelpers solutionHelpers = helperses[indx];
-            //soltionHelpers.n = data/data/com.demo/app_krsdk/jars/sid
-            LogUtil.e("解决方案的执行路径：" + solutionHelpers.n);
+            //soltionHelpers.filePath = data/data/com.demo/app_krsdk/jars/sid
+            LogUtil.e("解决方案的执行路径：" + solutionHelpers.filePath);
             ///
-            d("执行的方案: sid =" + solutionHelpers.b);
+            d("执行的方案: sid =" + solutionHelpers.sindex);
             if (indx + 1 == length) {
                 d("next_execte_solution_id indx = len 最后一个 " + indx);
                 SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id");
             } else {
 
-                Log.d("tag---","index =" + indx + " " + "next_execte_solution_id " + helperses[indx + 1].b);
+                Log.d("tag---","index =" + indx + " " + "next_execte_solution_id " + helperses[indx + 1].sindex);
                 //记录下一个要执行的解决方案
-                SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id", helperses[indx + 1].b);
+                SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id", helperses[indx + 1].sindex);
             }
             //获取Root实例类工具执行root,记得加上标志位,同时使用weekReference使用
             //switchCracker的int tag =solutionHelpers.l interface_type 的值
@@ -210,17 +210,17 @@ public class RootMgr {
             } else {
                 //设置标志位i
                 cracker.a(v14);
-                d("init solution idx = " + indx + ", sid = " + solutionHelpers.b + " 给父类的标志位是：" + v14);
+                d("init solution idx = " + indx + ", sid = " + solutionHelpers.sindex + " 给父类的标志位是：" + v14);
                 boolean flag = cracker.beforeRoot();//准备文件
                 MarsRoot.setEntity(entity);
                 if (flag)
                 {//开始执行
                     d(" 准备文件ok ");
-                    commlog.recordExecutInfo("KRSDK_Solution_Execute_Begin", 0, "", "", handler, new Object[]{solutionHelpers.b});
+                    commlog.recordExecutInfo("KRSDK_Solution_Execute_Begin", 0, "", "", handler, new Object[]{solutionHelpers.sindex});
                     RootLog rootLog = new RootLog();
-                    startRootThread(mConext, solutionHelpers.b, new WeakReference(cracker));
+                    startRootThread(mConext, solutionHelpers.sindex, new WeakReference(cracker));
                     //记录执行文件
-                    SpfUtils.mark(mConext, solutionHelpers.b, indx, solutionHelpers.d);//记录执行的
+                    SpfUtils.mark(mConext, solutionHelpers.sindex, indx, solutionHelpers.type);//记录执行的
                     //这里的内部方法应该需要在此调试 ，
                     resultCode = cracker.a(rootLog);//启动执行,把kd文件释放到linux内，返回kd文件的路径。供给下一步调用cracker.getMarsrootSharePreferences()就是执行这个文件
                     d("执行获取临时root的 process resultcode[ " + resultCode + " ]");
@@ -233,10 +233,10 @@ public class RootMgr {
                     if (v18 != null)
                     {
                         d("AbsJavaProcessImpla!= null");
-                        v18.c(solutionHelpers.b);
+                        v18.c(solutionHelpers.sindex);
                         v1_1 = 1;
                         v2 = 0;
-                        d("方案临时Root成功：sid = " + solutionHelpers.b);
+                        d("方案临时Root成功：sid = " + solutionHelpers.sindex);
 
 
                     } else {
@@ -250,7 +250,7 @@ public class RootMgr {
                         v4 = ApkInstallUtil.a();//调用第三个executorRunner
                         v6 = JavaProcess.a(20000, 10);//测试执行su文件能否成功~~~
                         if (v6 != null) {
-                            ((AbsJavaProcessImpla) v6).c(solutionHelpers.b);
+                            ((AbsJavaProcessImpla) v6).c(solutionHelpers.sindex);
                             v15 = 1;
                             v16 = 0;
                         } else {
@@ -316,11 +316,11 @@ public class RootMgr {
                     {
                         d("记录成功方案，移除下一个待执行方案标记");
 
-                        SpfUtils.removeMarsRootSharedPreferences(this.mConext, "solution_success_id", solutionHelpers.b);
+                        SpfUtils.removeMarsRootSharedPreferences(this.mConext, "solution_success_id", solutionHelpers.sindex);
                         SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id");
                         v6 = v4_1;
                         v4_2 = v18;
-                        d("sid = " + solutionHelpers.b + ", exploitRet = " + v19 + ", rootCode = "+ v2 + ", tmpShell = " + v4_2 + ", suShell = " + v6);
+                        d("sid = " + solutionHelpers.sindex + ", exploitRet = " + v19 + ", rootCode = "+ v2 + ", tmpShell = " + v4_2 + ", suShell = " + v6);
                     }
                     v6 = v4_1;
                     v4_2 = v18;
@@ -368,8 +368,8 @@ public class RootMgr {
                     }
                 } else {
                     d("读取进程中的返回状态值 不是 0： " + resultCode);
-                    LogUtil.e("出现失败的exploit " + solutionHelpers.b);
-                    Utils.recordFailedExploit(mConext, solutionHelpers.b);
+                    LogUtil.e("出现失败的exploit " + solutionHelpers.sindex);
+                    Utils.recordFailedExploit(mConext, solutionHelpers.sindex);
                     v2 = v4;
                     v6 = v9;
                     v4_2 = v8;
@@ -402,7 +402,7 @@ public class RootMgr {
         SpfUtils.removeMarsRootSharedPreferences(context, "executing_sid_time", String.valueOf(sid) + "\t" + v2);
         control = true;
         stopThread();
-        CommExecutThread tmp = new CommExecutThread(context/*, handler*/, sid, weakReference);
+        CommExecuteThread tmp = new CommExecuteThread(context/*, handler*/, sid, weakReference);
         executThread = tmp;
         tmp.start();
     }

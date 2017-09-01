@@ -26,47 +26,47 @@ import java.util.zip.Inflater;
 
 public final class OpenKrsdkCert {
     private static RSAPublicKey rsaPublicKey;
-    private Properties b;
+    private Properties data;
     private static  char[] symbols;
 
     static {
         symbols = "0123456789abcdef".toCharArray();
     }
     static {
-        RSAPublicKey v2 = null;
+        RSAPublicKey publicKey = null;
         X509EncodedKeySpec v1 = new X509EncodedKeySpec(Base64.decode("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCTrqGfyNYDKZEFfvXuYOu9mSCNu6ri10PMG2xJ5sBuUN2OFBT1W5n/dyUkR+Xgnd6w9arSFnU/8fpiP4DRZPL7pkmgzJvjoPqrreXO4nGRQtVbp6sD/gWCKsTlJ9bk01W32gfSOrCNch8BQJO8nE01ffnWmyRiqVTbuh9KEGgcwIDAQAB", 0));
         try {
             OpenKrsdkCert.rsaPublicKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(((KeySpec)v1));
         }
         catch(NoSuchAlgorithmException v0) {
             v0.printStackTrace();
-            OpenKrsdkCert.rsaPublicKey = v2;
+            OpenKrsdkCert.rsaPublicKey = publicKey;
         }
         catch(InvalidKeySpecException v0_1) {
             v0_1.printStackTrace();
-            OpenKrsdkCert.rsaPublicKey = v2;
+            OpenKrsdkCert.rsaPublicKey = publicKey;
         }
     }
 
     private OpenKrsdkCert(Properties arg1) {
         super();
-        this.b = arg1;
+        this.data = arg1;
     }
 
-    public static OpenKrsdkCert init(AssetManager assetManager, String arg7) {
+    public static OpenKrsdkCert init(AssetManager assetManager, String fileName) {
         OpenKrsdkCert openKrsdkCert = null;
        LogUtil.d("KRSDKCertificate loadFromAsset >>>>>>>>>>");
         InputStream inputStream=null;
         try {
-             inputStream = assetManager.open(arg7, 1);
-            if(OpenKrsdkCert.readInt(inputStream) != 1413698123) {
+             inputStream = assetManager.open(fileName, 1);
+            if(OpenKrsdkCert.readInt(inputStream) != 1413698123) {//KRCT头部标识鉴定
                 throw new DataFormatException("Not sdk_gt18 kingroot sdk certification file");
             }
             int v0_1 = OpenKrsdkCert.readInt(inputStream);
             byte[] v2 = new byte[OpenKrsdkCert.readInt(inputStream)];
             byte[] v3 = new byte[v0_1];
             inputStream.read(v2);
-            Inflater decompresser = new Inflater();
+            Inflater decompresser = new Inflater();// 对byte[]进行解压，同时可以要解压的数据包中的某一段数据，就好像从zip中解压出某一个文件一样。
             decompresser.setInput(v2);
             if(v0_1 != decompresser.inflate(v3)) {
                 throw new DataFormatException("Unexpected data length");
@@ -79,7 +79,7 @@ public final class OpenKrsdkCert {
             Signature signature = Signature.getInstance("SHA1WithRSA");
             signature.initVerify(OpenKrsdkCert.rsaPublicKey);
             signature.update(v2);
-            if(!signature.verify(v3)) {
+            if(!signature.verify(v3)) {//签名验证-----cert文件长度0xde----后面为签名信息
                 throw new SignatureException("Bad signature");
             }
 
@@ -94,7 +94,7 @@ public final class OpenKrsdkCert {
     }
 
     public final String getChanel() {
-        return this.b.getProperty("channel_id");
+        return this.data.getProperty("channel_id");
     }
 
     public final boolean a(Context arg5) {
@@ -133,7 +133,7 @@ public final class OpenKrsdkCert {
     }
 
     public final String getPackageName() {
-        return this.b.getProperty("package_name");
+        return this.data.getProperty("package_name");
     }
 
     public static PackageInfo getChanel(Context arg3, String arg4) {
@@ -207,7 +207,7 @@ public final class OpenKrsdkCert {
     }
 
     public final String c() {
-        return this.b.getProperty("cert_md5");
+        return this.data.getProperty("cert_md5");
     }
 }
 

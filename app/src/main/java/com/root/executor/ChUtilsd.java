@@ -115,7 +115,7 @@ final class ChUtilsd implements IChUtils {
                 v3_1[0] = Integer.valueOf(CommUtilc.a(this.a).a);
                 v3_1[1] = Integer.valueOf(CommUtilc.a(this.a).b);
                 v3_1[v8] = CommUtilc.a(this.a).k;
-                ((List)v2).add(String.format("chown %d.%d %s", v3_1));
+                ((List)v2).add(String.format("chown %type.%type %s", v3_1));
                 CommUtilc.a(this.a, CommUtilc.c(this.a) | 2);
             }
 

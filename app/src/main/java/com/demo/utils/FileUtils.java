@@ -200,7 +200,7 @@ public class FileUtils {
             channelId = channel;
             //这里可以写kr-stock-conf
 //            String stocl_conf = properties.getProperty("kr-stock-conf");
-//            LogUtil.d("stock_conf = " + stocl_conf);//解密这个文件信息，看看是什么
+//            LogUtil.type("stock_conf = " + stocl_conf);//解密这个文件信息，看看是什么
 //            writeFile(stocl_conf);//写文件
             //解密文件
 //            decodeStock2String("");
@@ -332,7 +332,7 @@ public class FileUtils {
         }
         if (path != null && new File(path).exists()) {
             properties = getProperties(path);
-            storeData(properties, path);
+            cryptAndWriteDataToFile(properties, path);
         } else {
             if (properties == null) {
                 properties = new Properties();
@@ -342,23 +342,28 @@ public class FileUtils {
 
     public static void setKrsdkconfData(String data) {
         if (!TextUtils.isEmpty(data)) {
-            storeData("w.g", data);
+            storeData("w.md5", data);
         }
     }
 
-    private static void storeData(Properties properties1, String path) {
+    /**
+     * 将properties加密（AES）并写入指定的文件路径
+     * @param properties1
+     * @param path
+     */
+    private static void cryptAndWriteDataToFile(Properties properties1, String path) {
         try {
-            ByteArrayOutputStream v0_1 = new ByteArrayOutputStream();
-            properties1.store(((OutputStream) v0_1), "");
-            byte[] v1 = getKeyByte();
-            byte[] v2 = v0_1.toByteArray();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            properties1.store(((OutputStream) byteArrayOutputStream), "");
+            byte[] cryptData = getKeyByte();
+            byte[] data = byteArrayOutputStream.toByteArray();
             SecretKeySpec v3 = getKey();
-            Cipher v1_1 = getCipher();
-            v1_1.init(1, ((Key) v3));
-            v1 = v1_1.doFinal(v2);
-            v0_1.close();
+            Cipher cipher = getCipher();
+            cipher.init(1, ((Key) v3));
+            cryptData = cipher.doFinal(data);
+            byteArrayOutputStream.close();
             //写文件
-            writekrStockFile(v1, path);
+            writekrStockFile(cryptData, path);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
@@ -374,16 +379,16 @@ public class FileUtils {
     private static void storeData(String key, String value) {
         if (properties != null) {
             properties.setProperty(key, value);
-            storeData(properties, path);
+            cryptAndWriteDataToFile(properties, path);
         }
     }
 
 
-    private static void writekrStockFile(byte[] arg2, String arg3) {
+    private static void writekrStockFile(byte[] data, String path) {
         FileOutputStream v0 = null;
         try {
-            v0 = new FileOutputStream(arg3, false);
-            v0.write(arg2);
+            v0 = new FileOutputStream(path, false);
+            v0.write(data);
             v0.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -396,23 +401,23 @@ public class FileUtils {
      * 增加lguid，从网络请求的数据中读取
      */
     public static String getLguid() {
-        return get("w.g");
+        return get("w.md5");
     }
 
     /**
      * 读取网络反馈数据 guid
      */
     public static String getGuid() {
-        String ret = get("s.i");
-        if (TextUtils.isEmpty(ret)) {
-            ret = PhoneInfoUtil.getIMEI(context);
-            if (ret == null) {
-                ret = "";
-            } else if (ret != "00000000000001") {
-                storeData("s.i", ret);
+        String imie = get("s.url");
+        if (TextUtils.isEmpty(imie)) {
+            imie = PhoneInfoUtil.getIMEI(context);
+            if (imie == null) {
+                imie = "";
+            } else if (imie != "00000000000001") {
+                storeData("s.url", imie);
             }
         }
-        return ret;
+        return imie;
     }
 
     /*
@@ -526,11 +531,11 @@ public class FileUtils {
         FileInputStream fin = null;
         MessageDigest md5;
         int size = 1024;
-        File file = new File(solutionHelpers.n);
+        File file = new File(solutionHelpers.filePath);
         try {
             if (file.exists() && file.isFile()) {
 
-                if (file.length() == solutionHelpers.e) {
+                if (file.length() == solutionHelpers.fileSize) {
                     md5 = MessageDigest.getInstance("MD5");
                     fin = new FileInputStream(file);
                     byte[] buf = new byte[size];
@@ -543,7 +548,7 @@ public class FileUtils {
                         md5.update(buf, 0, len);
                     }
                     String checkSum = FileUtils.orginizatedMd5(md5.digest());
-                    if (checkSum.compareToIgnoreCase(solutionHelpers.g) == 0) {
+                    if (checkSum.compareToIgnoreCase(solutionHelpers.md5) == 0) {
                         Utils.close(fin);
                         LogUtil.e("md5 校验完成 !!");
                         return true;

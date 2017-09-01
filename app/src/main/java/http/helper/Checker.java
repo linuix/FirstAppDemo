@@ -39,7 +39,7 @@ public final class Checker {
                                                 v0_1 = "list";
                                             }
                                             else if(((String)v0).equals("java.util.Map")) {
-                                                v0_1 = "map";
+                                                v0_1 = "mapC";
                                             }
                                             else {
                                             }
@@ -80,7 +80,7 @@ public final class Checker {
                 arg6.set(v1 - 1, "<" + arg6.get(v1 - 1));
                 arg6.set(0, String.valueOf(arg6.get(0)) + ">");
             }
-            else if(((String)v0).equals("map")) {
+            else if(((String)v0).equals("mapC")) {
                 arg6.set(v1 - 1, "<" + arg6.get(v1 - 1) + ",");
                 arg6.set(0, String.valueOf(arg6.get(0)) + ">");
             }

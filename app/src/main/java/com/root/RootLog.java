@@ -47,7 +47,7 @@ public class RootLog {
                 this.e = v2;
             }
             catch(IOException v0_1) {
-//                e.sdk_gt18(this.chart);
+//                fileSize.sdk_gt18(this.chart);
                 Utils.close(c);
                 this.c = null;
             }
@@ -72,7 +72,7 @@ public class RootLog {
 
     public final void a(String arg3) {
         if(Const.CHANNELID.equals(Const.CHANNELID)) {
-            this.a("d", arg3);
+            this.a("type", arg3);
         }
     }
 

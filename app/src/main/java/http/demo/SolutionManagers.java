@@ -23,8 +23,8 @@ public final class SolutionManagers {
                 "sdk_gt18=" + a +
                 ", getPackageName=" + Arrays.toString(b) +
                 ", chart=" + Arrays.toString(c) +
-                ", d=" + d +
-                ", e=" + e +
+                ", type=" + d +
+                ", fileSize=" + e +
                 '}';
     }
 }

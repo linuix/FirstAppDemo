@@ -84,7 +84,7 @@ public class RootUtil {
      */
     public static boolean extract(SolutionHelpers helpers, String play) {
         boolean flag = true;
-        if (extract(new File(helpers.n), play, "777"))
+        if (extract(new File(helpers.filePath), play, "777"))
         {
             if (helpers.l == 1)
             {

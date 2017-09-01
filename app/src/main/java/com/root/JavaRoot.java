@@ -51,7 +51,7 @@ public class JavaRoot extends FooRoot {
         String vroot = String.valueOf(play) + "/vroot.jar";//vroot.jar
         RootProcess rootProcess = new RootProcess("sh");
         rootProcess.execut(Const.EXPORT_PATH);
-        rootProcess.execut("cat " + solutionHelpers.n + " > " + vroot);
+        rootProcess.execut("cat " + solutionHelpers.filePath + " > " + vroot);
         //load classes.dex文件
         rootProcess.closeAll();//关闭进程
         ThreadLocalWeakRef.createThreadLocal();
@@ -147,7 +147,7 @@ public class JavaRoot extends FooRoot {
         long v9 = System.nanoTime();
         Context context = mContext;
         String[] str_arr = new String[6];
-        str_arr[0] = this.solutionHelpers.b;
+        str_arr[0] = this.solutionHelpers.sindex;
         str_arr[1] = "154";
         str_arr[v4] = "";
         str_arr[v5] = new StringBuilder(String.valueOf(RootMgr.msg)).toString();
@@ -155,12 +155,12 @@ public class JavaRoot extends FooRoot {
         str_arr[v13] = "1";
         SpfUtils.a(context, "EMID_KRSDK_EXReport_Info", str_arr);
         try {
-            LogUtil.e("onRoot() start sid = " + this.solutionHelpers.b);
+            LogUtil.e("onRoot() start sid = " + this.solutionHelpers.sindex);
             this.ret = ((Integer) clzz.getMethod(this.rootHelper.root, this.rootHelper.e).invoke(this.obj, this.mContext)).intValue();
             CommonLog log = new CommonLog(context);
             String v1 = "CATCH_SOLUTION_RESULT";
             int v2_1 = this.ret == 0 ? 0 : 1;
-            log.recordExecutInfo(v1, v2_1, new StringBuilder(String.valueOf(this.ret)).toString(), "", this.handler, new Object[]{this.solutionHelpers.b});
+            log.recordExecutInfo(v1, v2_1, new StringBuilder(String.valueOf(this.ret)).toString(), "", this.handler, new Object[]{this.solutionHelpers.sindex});
             SpfUtils.markExploitRet(this.mContext, this.ret, new StringBuilder(String.valueOf(this.ret)).toString());
             String[] v11 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
             SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
@@ -172,7 +172,7 @@ public class JavaRoot extends FooRoot {
                 log.recordEMID(v1_1, v2_1, "0", "result=" + this.ret, this.handler, new Object[]{v11[0], v11[1], v11[2], v11[3], Long.valueOf(v9), Integer.valueOf(1)});
                 LogUtil.e("upload server ***********");
             }
-            LogUtil.e("onRoot() end sid = " + this.solutionHelpers.b + ", result = " + this.ret + ", childDuingTime = " + v9);
+            LogUtil.e("onRoot() end sid = " + this.solutionHelpers.sindex + ", result = " + this.ret + ", childDuingTime = " + v9);
             if (ret == 0) {
                 LogUtil.e("初始化成功 ！！ 准备获取javaCracker对象");
                 AbsJavaProcessImpla cracker = getCracker();

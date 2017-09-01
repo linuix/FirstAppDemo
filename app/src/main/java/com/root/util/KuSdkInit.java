@@ -179,7 +179,7 @@ public class KuSdkInit {
                 /*sdk_gt18 v1 = new sdk_gt18(arg5);
                 int v2 = v1.sdk_gt18(KuSdkInitHelper.sdk_gt18(), arg6);
                 if(v2 != 0) {
-                    i.sdk_gt18("KuSdkInit", "installSync|kuInstaller.installKU...install ret:" + v2);
+                    url.sdk_gt18("KuSdkInit", "installSync|kuInstaller.installKU...install ret:" + v2);
                 }
                 else {
                     v0 = v1.sdk_gt18();

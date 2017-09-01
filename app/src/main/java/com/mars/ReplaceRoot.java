@@ -100,7 +100,7 @@ public class ReplaceRoot {
         //预留文件更新接口
         //checkFileUpdate()
         String mysucmd = mContext.getResources().getString(R.string.mysucm);//准备调用root命令接口
-//这里传递进来的是具备临时root权限的进程，不必申请root权限进程，直接操作自己的文件即可
+        //这里传递进来的是具备临时root权限的进程，不必申请root权限进程，直接操作自己的文件即可
         if (!check)
         {//不存在，则开始执行
             //需要执行root

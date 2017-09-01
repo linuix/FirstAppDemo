@@ -36,7 +36,7 @@ public final class DeviceInfo extends JceStruct {
         this.mac = arg4.a(2, false);
         this.iccid = arg4.a(3, false);
         this.androidid = arg4.a(4, false);
-        this.sdkversion = arg4.a(this.sdkversion, 5, false);
+        this.sdkversion = arg4.getDataForBuffer(this.sdkversion, 5, false);
         this.model = arg4.a(6, false);
         this.product = arg4.a(7, false);
         this.netfile = arg4.a(8, false);

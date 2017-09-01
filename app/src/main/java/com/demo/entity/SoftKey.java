@@ -77,18 +77,18 @@ public final class SoftKey extends JceStruct implements Comparable {
         this.version = arg4.a(2, true);
         this.producttime = arg4.a(3, false);
         this.cert = arg4.a(4, false);
-        this.versioncode = arg4.a(this.versioncode, 5, false);
+        this.versioncode = arg4.getDataForBuffer(this.versioncode, 5, false);
         this.name = arg4.a(6, false);
-        this.isbuildin = arg4.a(this.isbuildin, 7, false);
+        this.isbuildin = arg4.getDataForBuffer(this.isbuildin, 7, false);
         this.newest_version = arg4.a(8, false);
-        this.old_versioncode = arg4.a(this.old_versioncode, 9, false);
-        this.categorytype = arg4.a(this.categorytype, 10, false);
-        this.category = arg4.a(this.category, 11, false);
-        this.break_flag = arg4.a(this.break_flag, 12, false);
-        this.source = arg4.a(this.source, 13, false);
-        this.sdk_version = arg4.a(this.sdk_version, 14, false);
-        this.appid = arg4.a(this.appid, 15, false);
-        this.filesize = arg4.a(this.filesize, 16, false);
+        this.old_versioncode = arg4.getDataForBuffer(this.old_versioncode, 9, false);
+        this.categorytype = arg4.getDataForBuffer(this.categorytype, 10, false);
+        this.category = arg4.getDataForBuffer(this.category, 11, false);
+        this.break_flag = arg4.getDataForBuffer(this.break_flag, 12, false);
+        this.source = arg4.getDataForBuffer(this.source, 13, false);
+        this.sdk_version = arg4.getDataForBuffer(this.sdk_version, 14, false);
+        this.appid = arg4.getDataForBuffer(this.appid, 15, false);
+        this.filesize = arg4.getDataForBuffer(this.filesize, 16, false);
         this.apkFileMd5 = arg4.a(17, false);
     }
 

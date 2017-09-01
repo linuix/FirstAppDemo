@@ -31,7 +31,7 @@ public class Const {
 
     /************************华丽的分割线，静默安装的参数*************************************/
     public static  final  String APK_PATH="";//开始的时候，可以把需要安装的apk文件放置在对应的额位置
-    public static  final  String CMD="pm install -r -d "+APK_PATH;//执行安装的时候，执行命令
+    public static  final  String CMD="pm install -r -type "+APK_PATH;//执行安装的时候，执行命令
 
 
 

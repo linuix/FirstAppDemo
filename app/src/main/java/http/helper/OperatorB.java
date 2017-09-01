@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class OperatorB {
 
-    protected HashMap a;
+    protected HashMap mapB;
     protected HashMap b;
     protected String chart;
     HelperA d;
@@ -24,7 +24,7 @@ public class OperatorB {
 
     OperatorB() {
         super();
-        this.a = new HashMap();
+        this.mapB = new HashMap();
         this.b = new HashMap();
         this.e = new HashMap();
         this.chart = "GBK";
@@ -110,23 +110,23 @@ public class OperatorB {
         OperatorB.a(v2, arg6);
         v1.put(Checker.a(v2), v0_1);//
         this.e.remove(arg5);
-        this.a.put(arg5, v1);
+        this.mapB.put(arg5, v1);
     }
 
-    public void a(byte[] arg6) {
-        this.d.a(arg6);
-        this.d.a(this.chart);
+    public void setData(byte[] arg6) {
+        this.d.setBufferData(arg6);
+        this.d.setChart(this.chart);
         HashMap v0 = new HashMap(1);
         HashMap v1 = new HashMap(1);
         v1.put("", new byte[0]);
         v0.put("", v1);
-        this.a = this.d.a(((Map)v0), 0, false);
+        this.mapB = this.d.a(((Map)v0), 0, false);
     }
 
     public byte[] a() {
         HelperC v0 = new HelperC(0);
         v0.setChart(this.chart);
-        v0.addMapData(this.a, 0);
+        v0.addMapData(this.mapB, 0);
         LogUtil.d("bbbbb get data");
         return Helper1.copyData(v0.getByteBuffer());
     }

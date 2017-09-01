@@ -24,7 +24,7 @@ public final class GetKingRootSolutionReq extends JceStruct {
         }
 
         this.phoneType = (PhoneType) arg4.a(GetKingRootSolutionReq.cache_phoneType, 1, false);
-        this.callerProduct = arg4.a(this.callerProduct, 2, false);
+        this.callerProduct = arg4.getDataForBuffer(this.callerProduct, 2, false);
     }
 
     @Override

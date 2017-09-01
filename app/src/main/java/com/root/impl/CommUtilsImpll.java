@@ -275,8 +275,8 @@ public class CommUtilsImpll extends AbsCommUtila {
         this.b = false;
         this.c = false;
         this.d = false;
-        String v3 = "/system/xbin/ku.sud -d";
-        String v4 = "/system/xbin/ku.sud -d &";
+        String v3 = "/system/xbin/ku.sud -type";
+        String v4 = "/system/xbin/ku.sud -type &";
         boolean v0 = CommUtilsImpll.a("/system/bin/ddexe", v4) ? false : true;
         this.a = v0;
         if (!this.a) {
@@ -379,8 +379,8 @@ public class CommUtilsImpll extends AbsCommUtila {
         boolean v0_1;
         int v7 = 493;
         boolean v1 = true;
-        String v3 = "/system/xbin/ku.sud -d";
-        String v4 = "/system/xbin/ku.sud -d &";
+        String v3 = "/system/xbin/ku.sud -type";
+        String v4 = "/system/xbin/ku.sud -type &";
         if(this.a) {
             LogUtil.d("check_su_files repair ddexe");
             File v0 = new File("/system/bin/ddexereal");

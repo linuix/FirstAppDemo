@@ -43,13 +43,13 @@ public class RecordRootSolution {
         }
         else
         {
-            if((arg7) && SpfUtils.c(arg5, "solution_crash_" + solutionHelpers.b) == 1) {
-                ThreadLocalWeakRef.a(7004, "sid=" + solutionHelpers.b);
+            if((arg7) && SpfUtils.c(arg5, "solution_crash_" + solutionHelpers.sindex) == 1) {
+                ThreadLocalWeakRef.a(7004, "sid=" + solutionHelpers.sindex);
                 return v0;
             }
-            int v2 = SpfUtils.c(arg5, "solution_fail_count_" + solutionHelpers.b);
+            int v2 = SpfUtils.c(arg5, "solution_fail_count_" + solutionHelpers.sindex);
             if(v2 >= 3) {
-                ThreadLocalWeakRef.a(7059, "sid = " + solutionHelpers.b + ", failcount=" + v2);
+                ThreadLocalWeakRef.a(7059, "sid = " + solutionHelpers.sindex + ", failcount=" + v2);
                 return v0;
             }
 
@@ -157,10 +157,10 @@ public class RecordRootSolution {
             if (TextUtils.isEmpty(((CharSequence) v1))) {
                 v1_3 = respSolutionHelpers;
             }
-            ArrayList v3_1 = new ArrayList();
-            v3_1.add(v1);
+            ArrayList arrayList = new ArrayList();
+            arrayList.add(v1);
             //新增加的方法
-            v1_3 = XmlFileSolute.getSolutionHelpers(v3_1);
+            v1_3 = XmlFileSolute.getSolutionHelpers(arrayList);
             //这里的返回值是空，需要注意一下
             if (v1_3 == null) {
                 v1_3 = respSolutionHelpers;
@@ -173,8 +173,8 @@ public class RecordRootSolution {
             int v3_2;
             for (v3_2 = 0; v3_2 < v4; ++v3_2)
             {
-                //这里赋值给solutionHelper.n = 文件的路径
-                v1_3[v3_2].n = String.valueOf(jars.getAbsolutePath()) + File.separator + v1_3[v3_2].b;
+                //这里赋值给solutionHelper.filePath = 文件的路径
+                v1_3[v3_2].filePath = String.valueOf(jars.getAbsolutePath()) + File.separator + v1_3[v3_2].sindex;
             }
             if (v1_3 == null) {
                 v4_1 = new SolutionHelpers[0];
@@ -255,12 +255,12 @@ public class RecordRootSolution {
             }
             for (int index =0;index<helpers.length;index++)
             {
-                helpers[index].n =String.valueOf(jars.getAbsoluteFile()+File.separator+helpers[index].b);
+                helpers[index].filePath =String.valueOf(jars.getAbsoluteFile()+File.separator+helpers[index].sindex);
             }
             solutionMgr = new SolutionManager();
             LogUtil.e("存在本地的方案，选择本地方案");
             solutionMgr.executorSolutionHelpers = helpers;
-//            LogUtil.e("本地方案赋值完成，可以直接调用root 功能");
+//            LogUtil.fileSize("本地方案赋值完成，可以直接调用root 功能");
 //            RootMgr.setSolutionHelpers(helpers);
             LogUtil.e("本地方案存在，已经赋值完成! 点击root按钮即可");
         }
@@ -287,7 +287,7 @@ public class RecordRootSolution {
                         while (true) {
                             if (v1_1 >= v11) {
                                 v1_1 = 0;
-                            } else if (solutionHelperses[v1_1].b.equals(v10)) {
+                            } else if (solutionHelperses[v1_1].sindex.equals(v10)) {
                                 v1_1 = 1;
                             } else {
                                 ++v1_1;
@@ -374,28 +374,28 @@ public class RecordRootSolution {
             return null;
         }
         if (solutionHelpers != null && solutionHelpers.length > 0) {
-            String[] v5 = new String[solutionHelpers.length];
+            String[] strS = new String[solutionHelpers.length];
             int solutionLength = solutionHelpers.length;
-            int v1;
-            for (v1 = 0; v1 < solutionLength; ++v1) {
-                SolutionHelpers SolutionHelpers = solutionHelpers[v1];
-                File v0 = new File(xmls, SolutionHelpers.b);
+            int i;
+            for (i = 0; i < solutionLength; ++i) {
+                SolutionHelpers SolutionHelpers = solutionHelpers[i];
+                File file = new File(xmls, SolutionHelpers.sindex);
                 try {
-                    if (!v0.exists() && v0.length()<0) {
+                    if (!file.exists() && file.length()<0) {
                         //*********记录文件
-                        Utils.writeSolutionFiles(SolutionHelpers.m.getBytes(), v0.getAbsolutePath());
+                        Utils.writeSolutionFiles(SolutionHelpers.m.getBytes(), file.getAbsolutePath());
                     }
                     //*******
-                    v5[v1] = SolutionHelpers.b;
+                    strS[i] = SolutionHelpers.sindex;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 /**
                  * 保存文件地址
                  * */
-                SolutionHelpers.n = String.valueOf(jars.getAbsolutePath()) + File.separator + SolutionHelpers.b;
+                SolutionHelpers.filePath = String.valueOf(jars.getAbsolutePath()) + File.separator + SolutionHelpers.sindex;
             }
-            if (v5.length == 0) {
+            if (strS.length == 0) {
                 LogUtil.loge("记录 yis_cfg.txt文件==== ");
                 File v1_1 = new File(entity.a(new String[]{"yis_cfg.txt"}));
                 v1_1.delete();
@@ -429,7 +429,7 @@ public class RecordRootSolution {
                 return solutionMgrNet;
             }
             LogUtil.loge("存储方案下发顺序列表 记录在spf中");
-            SpfUtils.removeMarsRootSharedPreferences(context, "solution_id_list", TextUtils.join(",", ((Object[]) v5)));
+            SpfUtils.removeMarsRootSharedPreferences(context, "solution_id_list", TextUtils.join(",", ((Object[]) strS)));
         }
         return  solutionMgrNet;
     }

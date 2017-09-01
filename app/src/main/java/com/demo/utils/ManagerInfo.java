@@ -162,7 +162,7 @@ public class ManagerInfo {
         else {
             v0_1 = 1;
         }
-        v2.ct = v0_1;
+        v2.netFlag = v0_1;
         v2.guid = "V2;99000479400232;24:4B:81:2D:FC:64";
         return v2;
 

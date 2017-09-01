@@ -28,7 +28,7 @@ public  final class ChUtilsImplh implements IChUtils {
                 v4[0] = Integer.valueOf(((ExecutorHelper)v1).a);
                 v4[1] = Integer.valueOf(((ExecutorHelper)v1).b);
                 v4[v9] = v0;
-                ((List)v2).add(String.format("chown %d.%d %s", v4));
+                ((List)v2).add(String.format("chown %type.%type %s", v4));
             }
 
             if(((ExecutorHelper)v1).c != v8) {

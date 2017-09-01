@@ -15,14 +15,14 @@ public final class PhoneType extends JceStruct {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.phonetype = arg4.a(this.phonetype, 0, true);
-        this.subplatform = arg4.a(this.subplatform, 1, false);
+        this.phonetype = arg4.getDataForBuffer(this.phonetype, 0, true);
+        this.subplatform = arg4.getDataForBuffer(this.subplatform, 1, false);
     }
 
-    public final void writeTo(HelperC arg3) {
-        arg3.addIntData(this.phonetype, 0);
+    public final void writeTo(HelperC helperC) {
+        helperC.addIntData(this.phonetype, 0);
         if(this.subplatform != 0) {
-            arg3.addIntData(this.subplatform, 1);
+            helperC.addIntData(this.subplatform, 1);
         }
     }
 

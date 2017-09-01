@@ -59,7 +59,7 @@ public class JavaRoot3 extends FooRoot {
         try {
             process = new RootProcess("sh");
             process.execut(Const.EXPORT_PATH);
-            process.execut("cat " + solutionHelpers.n + " > " + v3);
+            process.execut("cat " + solutionHelpers.filePath + " > " + v3);
             process.closeAll();
         } catch (Throwable v0) {
             LogUtil.exception("复制KU异常  - - ", v0);

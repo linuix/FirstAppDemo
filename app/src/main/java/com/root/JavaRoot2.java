@@ -60,9 +60,9 @@ public class JavaRoot2 extends FooRoot {
         try {
             this.process = new ProcessBuilder(new String[]{v2, "-k", this.cfg}).redirectErrorStream(true).directory(v4).start();
             new ExecutThread2(this, process).start();
-            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info", new String[]{solutionHelpers.b, "154", "", RootMgr.msg, "0", "1"});
-            arg17.a(" [ onRoot() start sid = " + solutionHelpers.b + " ]");
-            v9 = String.valueOf(solutionHelpers.b) + ".stdout : ";
+            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info", new String[]{solutionHelpers.sindex, "154", "", RootMgr.msg, "0", "1"});
+            arg17.a(" [ onRoot() start sid = " + solutionHelpers.sindex + " ]");
+            v9 = String.valueOf(solutionHelpers.sindex) + ".stdout : ";
             v13 = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
             while (true) {
                 v2_1 = v13.ready();
@@ -70,7 +70,7 @@ public class JavaRoot2 extends FooRoot {
                     LogUtil.d("[ v13.ready() = " + v2_1 + " ] ");
                     break;
                 } else if (this.i) {//这个值在process.waitFor()完成之后，就会改变为false,那么不会走这个位置
-                    LogUtil.loge("this.i " + this.i);
+                    LogUtil.loge("this.url " + this.i);
                     break;
                 } else {
                     v8 = v3;
@@ -108,7 +108,7 @@ public class JavaRoot2 extends FooRoot {
                         v9_1 = true;
                         v8 = v3;
                         v11 = (System.nanoTime() - v11) / 1000000;
-                        arg17.a("onRoot() end sid = " + solutionHelpers.b + ", catchResult = " + v9_1 + ", exploitRet = "
+                        arg17.a("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
                                 + v8 + ", childDuingTime = " + v11);
                         LogUtil.d("执行完成1！ catchResult = " + v9_1);
                         String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
@@ -136,7 +136,7 @@ public class JavaRoot2 extends FooRoot {
             }
             ///
             v11 = (System.nanoTime() - v11) / 1000000;
-            arg17.a("onRoot() end sid = " + solutionHelpers.b + ", catchResult = " + v9_1 + ", exploitRet = "
+            arg17.a("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
                     + v8 + ", childDuingTime = " + v11);
             LogUtil.loge("执行完成1！ catchResult = " + v9_1);
             String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
@@ -200,8 +200,8 @@ public class JavaRoot2 extends FooRoot {
             }
             ExecutThread2 thread2 = new ExecutThread2(this, process);//这里的线程是读取进程中的信息
             thread2.start();
-            LogUtil.d("onRoot() start sid =" + solutionHelpers.b);
-            v9 = String.valueOf(solutionHelpers.b) + ".stdout: ";
+            LogUtil.d("onRoot() start sid =" + solutionHelpers.sindex);
+            v9 = String.valueOf(solutionHelpers.sindex) + ".stdout: ";
             v13 = new BufferedReader(new InputStreamReader(process.getInputStream()));
             if (v13 == null) {
                 LogUtil.d("nullptr ");
@@ -278,7 +278,7 @@ public class JavaRoot2 extends FooRoot {
                     v9_1 = true;
                     v8 = 0;
                     time = (System.nanoTime() - time) / 1000000;
-                    LogUtil.d("onRoot() end sid = " + solutionHelpers.b + ", catchResult = " + v9_1 + ", exploitRet = "
+                    LogUtil.d("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
                             + v8 + ", childDuingTime = " + time);
                     LogUtil.d("执行完成！ catchResult = " + v9_1);
 
@@ -373,7 +373,7 @@ public class JavaRoot2 extends FooRoot {
                 this.i = false;
                 LogUtil.loge("ExeRootSolution.destroy() done");
             } catch (Throwable v0) {
-                LogUtil.exception("ExeRootSolution.destroy() throw e", (Exception) v0);
+                LogUtil.exception("ExeRootSolution.destroy() throw fileSize", (Exception) v0);
             }
         }
     }
@@ -408,9 +408,9 @@ public class JavaRoot2 extends FooRoot {
 
             new ExecutThread2(this, process).start();//这里的线程是读取进程中的信息
 
-            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.b, "154", "", RootMgr.msg, "0", "1"});
-            LogUtil.e("onRoot() start sid = " + this.solutionHelpers.b);
-            v9 = String.valueOf(this.solutionHelpers.b) + ".stdout : ";
+            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.sindex, "154", "", RootMgr.msg, "0", "1"});
+            LogUtil.e("onRoot() start sid = " + this.solutionHelpers.sindex);
+            v9 = String.valueOf(this.solutionHelpers.sindex) + ".stdout : ";
             br = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
             while (true) {
                 boolean v2_1 = br.ready();
@@ -420,11 +420,11 @@ public class JavaRoot2 extends FooRoot {
                     try {
                         String v5 = br.readLine().trim();
                         LogUtil.e(String.valueOf(v9) + v5);
-//                        LogUtil.e("读取到的信息 ： " + v5);
+//                        LogUtil.fileSize("读取到的信息 ： " + v5);
                         cmd = RootUtils2.a(v5, "[et] KRS|FT PARAMS:");
                         if (cmd != null)
                         {
-                            SpfUtils.a(this.mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.b, "154", cmd, new StringBuilder(String.valueOf(RootMgr.msg)).toString(), "0", "1"});
+                            SpfUtils.a(this.mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.sindex, "154", cmd, new StringBuilder(String.valueOf(RootMgr.msg)).toString(), "0", "1"});
                         }
                         cmd = RootUtils2.a(v5, "KRS|STAT|KD:");
                         if (cmd != null)
@@ -455,7 +455,7 @@ public class JavaRoot2 extends FooRoot {
 
                                     time = (System.nanoTime() - time) / 1000000;
 
-                                    LogUtil.e("onRoot() end sid = " + this.solutionHelpers.b + ", catchResult = " + v9_1 + ", exploitRet = " + v8 + ", childDuingTime = " + time);
+                                    LogUtil.e("onRoot() end sid = " + this.solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = " + v8 + ", childDuingTime = " + time);
 
                                     LogUtil.e("执行完成1！ catchResult = " + v9_1);
 
@@ -524,7 +524,7 @@ public class JavaRoot2 extends FooRoot {
         LogUtil.e("quit the while ,and ");
         try {
             time = (System.nanoTime() - time) / 1000000;
-            LogUtil.e("onRoot() end sid = " + this.solutionHelpers.b + ", catchResult = " + v9_1 + ", exploitRet = " + v8 + ", childDuingTime = " + time);
+            LogUtil.e("onRoot() end sid = " + this.solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = " + v8 + ", childDuingTime = " + time);
             LogUtil.e("执行完成1！ catchResult = " + v9_1);
             String[] v13_1 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
 

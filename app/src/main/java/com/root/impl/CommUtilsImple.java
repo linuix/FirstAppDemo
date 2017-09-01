@@ -29,7 +29,7 @@ public final class CommUtilsImple extends AbsCommUtila {
     public final boolean b(ICommUtil arg3) {
         LogUtil.d("check_su_files start daemon");
         if(arg3.a()) {
-            arg3.a("/system/xbin/ku.sud -d");
+            arg3.a("/system/xbin/ku.sud -type");
         }
         return true;
     }

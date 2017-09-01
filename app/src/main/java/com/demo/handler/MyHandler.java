@@ -73,11 +73,11 @@ public class MyHandler extends Handler {
                 /*int prepare = rootExcutor.prepare(3);
                 if (prepare ==0)
                 {
-                    LogUtil.e("可以请求解决方案 !!1 ");
+                    LogUtil.fileSize("可以请求解决方案 !!1 ");
                     boolean flag = rootExcutor.downloadSolution();
                     if (flag)
                     {
-                        LogUtil.e("download finished ");
+                        LogUtil.fileSize("download finished ");
                         String absolutePath = mEntity.file.getAbsolutePath()+ File.separator+"jars";
                         File file = new File(absolutePath);
                         if (file.exists() && file.isDirectory()&& file.length()>0)
@@ -85,7 +85,7 @@ public class MyHandler extends Handler {
                             File[] files = file.listFiles();
                             for (File tm: files)
                             {
-                                LogUtil.e("fileName ="+tm.getName()+", filePath ="+tm.getAbsolutePath() +" ,len ="+tm.length());
+                                LogUtil.fileSize("fileName ="+tm.getName()+", filePath ="+tm.getAbsolutePath() +" ,len ="+tm.length());
                             }
                         }
                     }

@@ -25,11 +25,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class HttpUtils {
     private static Context context;
-    private String b;
-    private String c;
-    private  HttpURLConnection d;
-    private byte[] e;
-    private int f;
+    private String urlStr;
+    private String type;
+    private  HttpURLConnection httpURLConnection;
+    private byte[] parameterData;
+    private int responseCode;
     private Hashtable g;
     private static boolean h;
     private boolean i;
@@ -38,24 +38,24 @@ public class HttpUtils {
 
     private HttpUtils(Context arg3, String arg4) {
         super();
-        this.c = "GET";
-        this.f = -1;
+        this.type = "GET";
+        this.responseCode = -1;
         this.g = new Hashtable(0);
         this.h = false;
         this.i = true;
         this.j = 0;
         this.k = 0;
         this.context = arg3;
-        this.b = arg4;
+        this.urlStr = arg4;
         connection(arg4);
     }
 
-    private void connection(String  arg7)
+    private void connection(String  urlStr)
     {
-        byte a1 = NetUtils.a(HttpUtils.context);
+        byte a1 = NetUtils.isConnection(HttpUtils.context);
         if (a1 != -1) {
             try {
-                a(new URL(arg7), (byte) 0);//初始化httpUrlConn
+                connectionOrProxy(new URL(urlStr), (byte) 0);//初始化httpUrlConn
             } catch (MalformedURLException e1) {
                 e1.printStackTrace();
             }
@@ -66,14 +66,14 @@ public class HttpUtils {
         }
     }
 
-    public InputStream b()
+    public InputStream getInputStream()
     {
         try {
-            if (d == null)
+            if (httpURLConnection == null)
             {
                 return  null;
             }
-            return d.getInputStream();
+            return httpURLConnection.getInputStream();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -85,7 +85,7 @@ public class HttpUtils {
      * respCode
      */
     public final int c() {
-        return this.f;
+        return this.responseCode;
     }
 
     /**
@@ -107,7 +107,7 @@ public class HttpUtils {
 
     private String b(String arg6) {
         try {
-            return this.d.getHeaderField(arg6);
+            return this.httpURLConnection.getHeaderField(arg6);
         } catch (Exception v0) {
             throw new IllegalArgumentException("-56, get header field: " + v0.getMessage());
         }
@@ -116,90 +116,76 @@ public class HttpUtils {
      * getInstance
      *
      */
-    public static HttpUtils a(Context arg6, String arg7) {
-        byte v2 = 0;//省略了网络的判断
+    public static HttpUtils getInstance(Context context, String arg7) {
         HttpUtils v0_1 = null;
-        v0_1 = new HttpUtils(arg6, arg7);
-
+        v0_1 = new HttpUtils(context, arg7);
         //初始化httpUrlConn的
-
         return v0_1;
     }
     /**
      * 请求方式的设置
      * method
      */
-    public final void a(String arg2) {
-        this.c = arg2;
+    public final void setRequestType(String arg2) {
+        this.type = arg2;
         if ("GET".equalsIgnoreCase(arg2)) {
-            this.c = "GET";
+            this.type = "GET";
         } else if ("POST".equalsIgnoreCase(arg2)) {
-            this.c = "POST";
+            this.type = "POST";
         }
     }
     /**
      * 请求网络
      */
-    public final int a() {
-        int v0_11 = 0;
-        byte v0_10;
-        int v1;
-        int v7 = 200;
-        boolean v2 = false;
-        int v6 = 2;
+    public final int execute() {
+        int responseCode = 0;
         try {
             while (true)
             {
-                this.d.setRequestProperty("Cookie", "");
-                this.d.setRequestProperty("Accept", "*/*");
-                this.d.setRequestProperty("Accept-Charset", "utf-8");
-                this.d.setRequestProperty("Content-Type", "application/octet-stream");
-                this.d.setInstanceFollowRedirects(true);
+                this.httpURLConnection.setRequestProperty("Cookie", "");
+                this.httpURLConnection.setRequestProperty("Accept", "*/*");
+                this.httpURLConnection.setRequestProperty("Accept-Charset", "utf-8");
+                this.httpURLConnection.setRequestProperty("Content-Type", "application/octet-stream");
+                this.httpURLConnection.setInstanceFollowRedirects(true);
                 System.setProperty("http.keepAlive", "false");
-                if (!"GET".equalsIgnoreCase(this.c)) {
+                if (!"GET".equalsIgnoreCase(this.type)) {
                     LogUtil.e("POST");
-                    v1 = -2000;
-                    this.d.setRequestMethod("POST");
-                    this.d.setDoOutput(true);
-                    this.d.setDoInput(true);
-                    this.d.setUseCaches(false);
-                    if (this.e != null) {
-                        this.d.setRequestProperty("Content-length", "" + this.e.length);
-                        OutputStream v0_9 = this.d.getOutputStream();
-                        v0_9.write(this.e);
-                        v0_9.flush();
-                        v0_9.close();
+                    this.httpURLConnection.setRequestMethod("POST");
+                    this.httpURLConnection.setDoOutput(true);
+                    this.httpURLConnection.setDoInput(true);
+                    this.httpURLConnection.setUseCaches(false);
+                    if (this.parameterData != null) {
+                        this.httpURLConnection.setRequestProperty("Content-length", "" + this.parameterData.length);
+                        OutputStream outputStream = this.httpURLConnection.getOutputStream();
+                        outputStream.write(this.parameterData);
+                        outputStream.flush();
+                        outputStream.close();
                         LogUtil.e("wite data over");
                     }
                 }
-
-
-                else if ("GET".equalsIgnoreCase(c))//GET方式
+                else if ("GET".equalsIgnoreCase(type))//GET方式
                 {
                     LogUtil.e("GET");
-                    LogUtil.e("准备求情第一次网络请求，charset ="+c);
-                    d.setRequestMethod("GET");
-                    v1 = -3000;
+                    LogUtil.e("准备求情第一次网络请求，charset ="+ type);
+                    httpURLConnection.setRequestMethod("GET");
                     /**
                      *
                      * 调用g()-->httpURLConnection 重新指向响应反馈回来的连接，直接请求
                      * */
-                    String redirectUrl = g();
+                    String redirectUrl = getHead_Location();
                     if(redirectUrl == null)
                     {
                          LogUtil.e("没有请求到下载地址 ，重定向url出现空值  ,但是，拿到了反馈回来的数据请求，准备写文件了 ！！");
-                        this.f = this.d.getResponseCode();
+                        this.responseCode = this.httpURLConnection.getResponseCode();
                         return 0;//直接写死这个值
                     }
                     LogUtil.d("redirect url =" + redirectUrl);
-                    d.disconnect();
-                    LogUtil.e("准备求情第二次网络请求，charset ="+c);
-                    a(new URL(redirectUrl), NetUtils.a(context));
-                    a(c);//添加编码格式
-                    a();//发送网络请求
+                    httpURLConnection.disconnect();
+                    LogUtil.e("准备第二次网络请求，charset ="+ type);
+                    connectionOrProxy(new URL(redirectUrl), NetUtils.isConnection(context));
+                    setRequestType(type);//添加编码格式
+                    execute();//发送网络请求
                 }
-
-
                 break;
             }
 
@@ -207,85 +193,82 @@ public class HttpUtils {
              * 除了请求时post的方法，现编 是采用的GET的方式请求，主要是针对的解压出请求得到的
              * solution文件之后，会解析出来对应的文件的url，会自动请求网络加载数据
              * */
-            this.f = this.d.getResponseCode();
-            LogUtil.d("response code = " + f);
-            if (f < 301 || f > 305) {
-                if (f != 200) {
-                    throw new RuntimeException("response code is unnormal = " + f + " != 200");
+            this.responseCode = this.httpURLConnection.getResponseCode();
+            LogUtil.d("response code = " + this.responseCode);
+            if (this.responseCode < 301 || this.responseCode > 305) {
+                if (this.responseCode != 200) {
+                    throw new RuntimeException("response code is unnormal = " + this.responseCode + " != 200");
                 }
-                String tag = f();
+                String tag = getHead_Content_Type();
                 LogUtil.e("content-type = "+tag);
             }
-            return f;
+            return this.responseCode;
         } catch (IOException e) {
             e.printStackTrace();
             LogUtil.exception("request http ", e);
         }
-        return v0_11;
+        return responseCode;
     }
 
     public void closeHttp() {
-        if (d != null) {
-            d.disconnect();
-            d = null;
+        if (httpURLConnection != null) {
+            httpURLConnection.disconnect();
+            httpURLConnection = null;
             LogUtil.e("close httpConn");
         }
     }
     /**
      * 获取网络返回数据
      */
-    public final int a(AtomicReference arg6) {
-        byte[] v1_1;
-        int v0 = 0;
-        if (this.d != null) {
-            int v1 = this.f == 200 || this.f == 206 ? 1 : 0;
+    public final int getData(AtomicReference atomicReference) {
+        byte[] data;
+        int stateCode = 0;
+        if (this.httpURLConnection != null) {
+            int v1 = this.responseCode == 200 || this.responseCode == 206 ? 1 : 0;
             if (v1 == 0) {
-                v0 = -4000;
+                stateCode = -4000;
             }
             try {
-
-                v1_1 = HttpUtils.a(this.d.getInputStream());
-
+                data = HttpUtils.getDataFromService(this.httpURLConnection.getInputStream());
             } catch (Exception v0_1) {
                 throw new IllegalArgumentException("-4002, get response exception : " + v0_1.getMessage());
             }
-            arg6.set(v1_1);
+            atomicReference.set(data);
         } else {
-            v0 = -4000;
+            stateCode = -4000;
         }
-        return v0;
+        return stateCode;
     }
     /**
      * 解析网络反馈回来的数据成byte[]
      */
-    private static byte[] a(InputStream arg6) {
-        int v3;
-        int v5 = -56;
-        BufferedInputStream v0 = new BufferedInputStream(arg6);
-        byte[] v1 = new byte[2048];
-        ByteArrayOutputStream v2 = new ByteArrayOutputStream();
+    private static byte[] getDataFromService(InputStream inputStream) {
+        int length;
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+        byte[] data = new byte[2048];
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             while (true)
             {
-                v3 = arg6.read(v1);
-                if (v3 != -1)
+                length = inputStream.read(data);
+                if (length != -1)
                 {
-                    v2.write(v1, 0, v3);
+                    byteArrayOutputStream.write(data, 0, length);
                 }
                 else {
                     break;
                 }
             }
-            v1 = v2.toByteArray();
-            v0.close();
-            v2.close();
-            LogUtil.e("deal response ok " + v1.length);
-            return v1;
+            data = byteArrayOutputStream.toByteArray();
+            bufferedInputStream.close();
+            byteArrayOutputStream.close();
+            LogUtil.e("deal response ok " + data.length);
+            return data;
         } catch (Exception e) {
             e.printStackTrace();
             LogUtil.exception("deal with http response exception", e);
         }
-        return v1;
+        return data;
     }
 
 
@@ -294,37 +277,37 @@ public class HttpUtils {
      */
     private int commo(boolean v2, int v7) {
         v2 = false;
-        if (this.f != 0 && this.f != v7) {
-            throw new IllegalArgumentException("response code is unnormal: " + this.f);
+        if (this.responseCode != 0 && this.responseCode != v7) {
+            throw new IllegalArgumentException("response code is unnormal: " + this.responseCode);
         }
-        return this.f;
+        return this.responseCode;
     }
 
     /**
      * 迭代请求的头部信息
      */
     private void a(Hashtable arg5) {
-        if (arg5 != null && arg5.size() != 0 && this.d != null) {
+        if (arg5 != null && arg5.size() != 0 && this.httpURLConnection != null) {
             Iterator v2 = arg5.entrySet().iterator();
             while (v2.hasNext()) {
                 Object v1 = v2.next();
-                this.d.setRequestProperty("" + ((Map.Entry) v1).getKey(), "" + ((Map.Entry) v1).getValue());
+                this.httpURLConnection.setRequestProperty("" + ((Map.Entry) v1).getKey(), "" + ((Map.Entry) v1).getValue());
             }
         }
     }
 
-    public final String f() {
+    public final String getHead_Content_Type() {
         try {
-            return this.d.getHeaderField("Content-Type");
+            return this.httpURLConnection.getHeaderField("Content-Type");
         } catch (Exception v0) {
             throw new IllegalArgumentException("-56, get content type: " + v0.getMessage());
         }
     }
 
 
-    private String g() {
+    private String getHead_Location() {
         try {
-            return this.d.getHeaderField("Location");
+            return this.httpURLConnection.getHeaderField("Location");
         } catch (Exception v0) {
             throw new IllegalArgumentException("-56, get redirect url: " + v0.getMessage());
         }
@@ -335,8 +318,8 @@ public class HttpUtils {
      * 设置请求的参数
      * data
      */
-    public final void a(byte[] arg1) {
-        this.e = arg1;
+    public final void setParameter(byte[] parameter) {
+        this.parameterData = parameter;
     }
 
     /**
@@ -344,22 +327,22 @@ public class HttpUtils {
      * <p>
      * arg7是用来区别的，需要代理的作用
      */
-    private  void a(URL arg6, byte arg7) {
+    private  void connectionOrProxy(URL url, byte arg7) {
 
         try {
             String v1 = null;
 
             if (-1 != arg7) {
                 if (2 == arg7) {
-                    setHttpProxy(v1, arg6);//设置网络的请求代理
+                    setHttpProxy(v1, url);//设置网络的请求代理
                 } else //不用设置网络的请求代理
                 {
                     LogUtil.d("no proxy ");
-                    d = (HttpURLConnection) arg6.openConnection();
+                    httpURLConnection = (HttpURLConnection) url.openConnection();
                     h = false;
                 }
-                d.setReadTimeout(30000);
-                d.setConnectTimeout(30000);
+                httpURLConnection.setReadTimeout(30000);
+                httpURLConnection.setConnectTimeout(30000);
                 LogUtil.d("http init ok --");
                 return;
             }
@@ -393,7 +376,7 @@ public class HttpUtils {
         }
 
         try {
-            d = (HttpURLConnection) arg6.openConnection(new Proxy(v3, new InetSocketAddress(v1, v0_5)));
+            httpURLConnection = (HttpURLConnection) arg6.openConnection(new Proxy(v3, new InetSocketAddress(v1, v0_5)));
             h = true;
         } catch (IOException e1) {
             e1.printStackTrace();

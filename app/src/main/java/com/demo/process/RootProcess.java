@@ -25,9 +25,9 @@ public class RootProcess {
     private RootThread stThread;
     private RootThread errThread;
 
-    public RootProcess(String arg) {
-        if (arg != null && arg.length() > 0) {
-            init(arg);
+    public RootProcess(String path) {
+        if (path != null && path.length() > 0) {
+            init(path);
         }
     }
 
@@ -35,21 +35,25 @@ public class RootProcess {
         return arg.locak;
     }
 
-    private void init(String arg) {
+    /**
+     * 设置执行命令的输出信息
+     * @param path
+     */
+    private void init(String path) {
         try {
             baos_err = new ByteArrayOutputStream();
             baos_str = new ByteArrayOutputStream();
             //判断sh文件是否存在，在执行
-            File file = new File(arg);
+            File file = new File(path);
             boolean flag = file.exists();
             LogUtil.loge("path = " + file.getAbsolutePath() + " , flag =" + flag);
-            if (arg != null && arg.length() != 0) {
-                if (arg.startsWith("/") && !(new File(arg).exists())) {
+            if (path != null && path.length() != 0) {
+                if (path.startsWith("/") && !(new File(path).exists())) {
                     LogUtil.loge("init processs not found ");
                     throw new FileNotFoundException();
                 }
             }
-            processBuilder = new ProcessBuilder(Arrays.asList(arg.split(" "))).start();
+            processBuilder = new ProcessBuilder(Arrays.asList(path.split(" "))).start();
             synchronized (locak) {
                 locak.wait(10);
             }
@@ -97,10 +101,10 @@ public class RootProcess {
         }
         /*if (data_out_put_stream != null) {
             try {
-                data_out_put_stream.write("exit\n".getBytes());
+                data_out_put_stream.inputCopyToOutput("exit\filePath".getBytes());
                 data_out_put_stream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException fileSize) {
+                fileSize.printStackTrace();
             } finally {
                 Utils.close(data_out_put_stream);
             }
@@ -163,7 +167,7 @@ public class RootProcess {
                  * 已经没有经过线程，导致baos_str_stream()读取不到信息
                  * */
                 data_out_put_stream.flush();//第一次读取到这里的时候，thread会读取到数据，这个时候。strstream会有数据
-//                LogUtil.loge("write RET over ");
+//                LogUtil.loge("inputCopyToOutput RET over ");
                 //但是第二次之后，就不能读取到数据,流信息在这里阻塞了。线程那边没有读取到
                 long sysTime = System.nanoTime();
                 long tmpTm = 0;
@@ -255,7 +259,7 @@ public class RootProcess {
 //                    LogUtil.loge("00001111");
 //                    LogUtil.loge("=0=  "+object.sdk_gt18+" - "+Integer.valueOf(0)+" - "+  str.substring(0, str.lastIndexOf(":RET="))+" - "+err);
 //                   result = new RetValue(object.cmd, Integer.valueOf(0), new String(str.substring(str.lastIndexOf(":RET="))), err);
-//                    LogUtil.d("return 0000  + "+result.toString());
+//                    LogUtil.type("return 0000  + "+result.toString());
                      value = new RetValue(object.a, Integer.valueOf(0), str.substring(0, str.lastIndexOf(":RET=")),err);
 
                     return value;
@@ -264,7 +268,7 @@ public class RootProcess {
 //                        LogUtil.loge("11111");
 //                        LogUtil.loge("=1=  "+object.sdk_gt18+" - "+Integer.valueOf(1)+" - "+  str.substring(0, str.lastIndexOf(":RET="))+" - "+err);
                         value = new RetValue(object.a, Integer.valueOf(1), new String(str.substring(str.lastIndexOf(":RET="))), err);
-//                        LogUtil.d("return !!!!  + "+value.toString());
+//                        LogUtil.type("return !!!!  + "+value.toString());
                         return value;
                     }
                 }

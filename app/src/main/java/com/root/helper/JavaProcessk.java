@@ -41,7 +41,7 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
      */
     static RootProcess process = null;
     static int v1 = 0;
-     static JavaProcessk retobj = null;
+    static JavaProcessk retobj = null;
     public static JavaProcessk a(String path, int arg) {
         ThreadLocalWeakRef.createThreadLocal();
         Context context = InitConfig.mContext;
@@ -91,15 +91,15 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
                 LogUtil.d("使用默认路径下kd文件");//data/data/xxxx/
             try
                 {
-                    RetValue v3_3 = processing( path);
-                    if (v3_3 == null)
+                    RetValue retValue = processing( path);
+                    if (retValue == null)
                     {
                         LogUtil.d("连接默认路径下的kd文件出现空值返回 1");
                     }
 
                     else
                     {
-                        if (v3_3.ret.intValue() == 0 && AbsJavaProcessImpla.b(v3_3.stdout))
+                        if (retValue.ret.intValue() == 0 && AbsJavaProcessImpla.b(retValue.stdout))
                         {
                             LogUtil.d("可以获取到javaprocess k");
                             retobj = new JavaProcessk(process);
@@ -207,7 +207,7 @@ private static  void mars()
     private static void sleep() {
         try {
             Thread.sleep(1000);
-            LogUtil.d("try again to get kd shell. i = " + v1);
+            LogUtil.d("try again to get kd shell. url = " + v1);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
@@ -255,7 +255,7 @@ private static  void mars()
         ThreadLocalWeakRef.createThreadLocal();
         arg5.a("chmod 6755 " + arg4);
         arg5.a("chown 0.0 " + arg4);
-        JavaSolutionHelpers javaSolutionHelpers = arg5.a(String.valueOf(arg4) + " -d");
+        JavaSolutionHelpers javaSolutionHelpers = arg5.a(String.valueOf(arg4) + " -type");
         if (!javaSolutionHelpers.a())
         {
             ThreadLocalWeakRef.a(7017, "ret=" + javaSolutionHelpers.a + ",stdout=" + javaSolutionHelpers.b);

@@ -29,9 +29,9 @@ public class RootReportThread implements Runnable {
 
         ArrayList v2 = new ArrayList();
 
-        NetConfigration v3 = new NetConfigration((byte) 0);
+        NetConfigration netCfgReq = new NetConfigration((byte) 0);
 
-        NetConfigration v4 =new NetConfigration((byte) 0);
+        NetConfigration netCfgResp =new NetConfigration((byte) 0);
 
         UserInfo userInfo  = EntityManager.getUserInfo(mContext);
 
@@ -41,15 +41,15 @@ public class RootReportThread implements Runnable {
 
         reportKingRootResultReq.kingRootResults = v2;
 
-        HttpMgr.init(16,v3,v4);
+        HttpMgr.init(16,netCfgReq,netCfgResp);
 
-        v3.setMapData("userinfo",userInfo);
+        netCfgReq.setMapData("userinfo",userInfo);
 
-        v3.setMapData("req",reportKingRootResultReq);
+        netCfgReq.setMapData("req",reportKingRootResultReq);
 
         LogUtil.e("report root result ------- ");
 
-        int ret = HttpMgr.reportRootResult(mContext,v3,v4);
+        int ret = HttpMgr.reportRootResult(mContext,netCfgReq,netCfgResp);
 
         LogUtil.e("root result 请求结果："+ret);
 

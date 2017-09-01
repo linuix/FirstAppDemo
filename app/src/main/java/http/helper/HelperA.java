@@ -17,20 +17,23 @@ import java.util.Map;
  * Created by Administrator on 2016/11/2.
  */
 
+/**
+ * 初步猜测是一个加强型的buff
+ */
 public class HelperA {
-    protected String a;//charset
+    protected String charset;//charset
     private ByteBuffer buffer;
 
     public HelperA() {
         super();
-        this.a = "GBK";
+        this.charset = "GBK";
     }
 
-    public HelperA(byte[] arg3, byte arg4) {
+    public HelperA(byte[] data, byte arg4) {
         super();
-        this.a = "GBK";
-        this.buffer = ByteBuffer.wrap(arg3);
-            this.buffer.position(4);
+        this.charset = "GBK";
+        this.buffer = ByteBuffer.wrap(data);
+        this.buffer.position(4);
         int limit = buffer.limit();
         int capacity = buffer.capacity();
         int position = buffer.position();
@@ -40,7 +43,7 @@ public class HelperA {
     public HelperA(byte[] arg2)
     {
         super();
-        this.a = "GBK";
+        this.charset = "GBK";
         //below phrase was tested
         this.buffer = ByteBuffer.wrap(arg2);
         int capacity = buffer.capacity();
@@ -64,16 +67,15 @@ public class HelperA {
     //
 
 
-    public final void a(byte[] arg2) {
+    public final void setBufferData(byte[] data) {
         if (this.buffer != null) {
             this.buffer.clear();
         }
-
-        this.buffer = ByteBuffer.wrap(arg2);
+        this.buffer = ByteBuffer.wrap(data);
     }
 
-    public final int a(String arg2) {
-        this.a = arg2;
+    public final int setChart(String charset) {
+        this.charset = charset;
         return 0;
     }
 
@@ -92,11 +94,11 @@ public class HelperA {
             if (this.b(arg11))
             {
                 FuzhuB fuzhuB = new FuzhuB();
-                this.a(fuzhuB);
-                switch (fuzhuB.a)
+                this.readBuffer(fuzhuB);
+                switch (fuzhuB.firstByte)
                 {
                     case 8:
-                        int v4 = this.a(0, 0, true);
+                        int v4 = this.getDataForBuffer(0, 0, true);
                         if (v4 < 0)
                         {
                             throw new IllegalArgumentException("size invalid: " + v4);
@@ -138,70 +140,64 @@ public class HelperA {
     /**
      * 操作Object類型
      */
-    public final Object a(Object arg5, int arg6, boolean arg7) {
+    public final Object a(Object obj, int arg6, boolean arg7) {
         boolean[] v0_13 = null;
-        ArrayList v0_11;
         int v0 = 0;
-        if ((arg5 instanceof Byte)) {
-            Byte v0_1 = Byte.valueOf(this.a((byte) 0, arg6, arg7));//獲取byte類型
-        } else if ((arg5 instanceof Boolean)) {
+        if ((obj instanceof Byte)) {
+            Byte v0_1 = Byte.valueOf(this.getByte((byte) 0, arg6, arg7));//獲取byte類型
+        } else if ((obj instanceof Boolean)) {
             Boolean v0_2 = Boolean.valueOf(this.c(arg6, arg7));//獲取boolean類型
-        } else if ((arg5 instanceof Short)) {
-            Short v0_3 = Short.valueOf(this.a((short) 0, arg6, arg7));//short类型
-        } else if ((arg5 instanceof Integer)) {
-            Integer v0_4 = Integer.valueOf(this.a(0, arg6, arg7));
-        } else if ((arg5 instanceof Long)) {
+        } else if ((obj instanceof Short)) {
+            Short v0_3 = Short.valueOf(this.getShort((short) 0, arg6, arg7));//short类型
+        } else if ((obj instanceof Integer)) {
+            Integer v0_4 = Integer.valueOf(this.getDataForBuffer(0, arg6, arg7));
+        } else if ((obj instanceof Long)) {
             Long v0_5 = Long.valueOf(this.a((long) 0, arg6, arg7));//获取long类型
-        } else if ((arg5 instanceof Float)) {
+        } else if ((obj instanceof Float)) {
             Float v0_6 = Float.valueOf(this.a(0f, arg6, arg7));//获取long类型
-        } else if ((arg5 instanceof Double)) {
+        } else if ((obj instanceof Double)) {
             Double v0_7 = Double.valueOf(this.a((double) 0, arg6, arg7));//double類型
-        } else if ((arg5 instanceof String)) {
+        } else if ((obj instanceof String)) {
             String v0_8 = String.valueOf(this.a(arg6, arg7));//获取String类型
-        } else if ((arg5 instanceof Map)) {
-            HashMap v0_9 = this.a(((Map) arg5), arg6, arg7);//获取Map类型的数据
-        }
-
-        /******************************************************/
-        else if ((arg5 instanceof List)) {
-            if (arg5 != null && !((List) arg5).isEmpty()) {
-                Object[] v2 = this.b(((List) arg5).get(0), arg6, arg7);//处理不同数据对象的函数
+        } else if ((obj instanceof Map)) {
+            HashMap v0_9 = this.a(((Map) obj), arg6, arg7);//获取Map类型的数据
+        } else if ((obj instanceof List)) {
+            if (obj != null && !((List) obj).isEmpty()) {
+                Object[] v2 = this.b(((List) obj).get(0), arg6, arg7);//处理不同数据对象的函数
                 if (v2 == null) {
                     Object v0_10 = null;
                 } else {
-                    ArrayList v1 = new ArrayList();
+                    ArrayList arrayList = new ArrayList();
                     while (v0 < v2.length) {
-                        v1.add(v2[v0]);
+                        arrayList.add(v2[v0]);
                         ++v0;
                     }
-                    v0_11 = v1;
                 }
                 return v0_13;
             }
-            v0_11 = new ArrayList();
         } else {
-            if ((arg5 instanceof JceStruct)) {
-                JceStruct v0_12 = this.a(((JceStruct) arg5), arg6, arg7);//获取JceStruct类型
+            if ((obj instanceof JceStruct)) {
+                JceStruct v0_12 = this.a(((JceStruct) obj), arg6, arg7);//获取JceStruct类型
                 return v0_13;
             }
-            if (!arg5.getClass().isArray()) {
+            if (!obj.getClass().isArray()) {
                 throw new IllegalArgumentException("read object error: unsupport type.");
             }
-            if (!(arg5 instanceof byte[]) && !(arg5 instanceof Byte[])) {
-                if ((arg5 instanceof boolean[])) {
+            if (!(obj instanceof byte[]) && !(obj instanceof Byte[])) {
+                if ((obj instanceof boolean[])) {
                     v0_13 = this.d(arg6, arg7);//获取booelan[]
-                } else if ((arg5 instanceof short[])) {
+                } else if ((obj instanceof short[])) {
                     short[] v0_14 = this.e(arg6, arg7);//获取short[]
-                } else if ((arg5 instanceof int[])) {
+                } else if ((obj instanceof int[])) {
                     int[] v0_15 = this.f(arg6, arg7);
-                } else if ((arg5 instanceof long[])) {
+                } else if ((obj instanceof long[])) {
                     long[] v0_16 = this.g(arg6, arg7);
-                } else if ((arg5 instanceof float[])) {
+                } else if ((obj instanceof float[])) {
                     float[] v0_17 = this.h(arg6, arg7);
-                } else if ((arg5 instanceof double[])) {
+                } else if ((obj instanceof double[])) {
                     double[] v0_18 = this.i(arg6, arg7);
                 } else {
-                    Object[] v0_19 = this.a(((Object[]) arg5), arg6, arg7);//对象数组
+                    Object[] v0_19 = this.a(((Object[]) obj), arg6, arg7);//对象数组
                 }
                 return v0_13;
             }
@@ -217,42 +213,42 @@ public class HelperA {
      * byte[]
      */
     public final byte[] b(int arg7, boolean arg8) {
-        byte[] v0 = null;
+        byte[] data = null;
         if (this.b(arg7)) {
-            FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
-            switch (v0_1.a) {
+            FuzhuB fuzhuB = new FuzhuB();
+            this.readBuffer(fuzhuB);
+            switch (fuzhuB.firstByte) {
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
-                        v0 = new byte[v3];
+                        data = new byte[v3];
                         int v1 = 0;
                         while (true) {
                             if (v1 < v3) {
-                                v0[v1] = this.a(v0[0], 0, true);
+                                data[v1] = this.getByte(data[0], 0, true);
                                 ++v1;
                                 continue;
                             }
-                            return v0;
+                            return data;
                         }
                     }
                 case 13:
-                    FuzhuB v1_1 = new FuzhuB();
-                    this.a(v1_1);
-                    if (v1_1.a != 0) {
-                        throw new IllegalArgumentException("type mismatch, tag: " + arg7 + ", type: " + v0_1.a
-                                + ", " + v1_1.a);
+                    FuzhuB fuzhuB1 = new FuzhuB();
+                    this.readBuffer(fuzhuB1);
+                    if (fuzhuB1.firstByte != 0) {
+                        throw new IllegalArgumentException("type mismatch, tag: " + arg7 + ", type: " + fuzhuB.firstByte
+                                + ", " + fuzhuB1.firstByte);
                     } else {
-                        int v2 = this.a(0, 0, true);
+                        int v2 = this.getDataForBuffer(0, 0, true);
 
                         if (v2 < 0) {
-                            throw new IllegalArgumentException("invalid size, tag: " + arg7 + ", type: " + v0_1
-                                    .a + ", " + v1_1.a + ", size: " + v2);
+                            throw new IllegalArgumentException("invalid size, tag: " + arg7 + ", type: " + fuzhuB
+                                    .firstByte + ", " + fuzhuB1.firstByte + ", size: " + v2);
                         } else {
-                            v0 = new byte[v2];
-                            this.buffer.get(v0);
+                            data = new byte[v2];
+                            this.buffer.get(data);
                         }
                     }
             }
@@ -261,7 +257,7 @@ public class HelperA {
             throw new IllegalArgumentException("require field not exist.");
 
         }
-        return v0;
+        return data;
     }
 
     /**
@@ -285,11 +281,11 @@ public class HelperA {
         double[] v0 = null;
         if (this.b(arg8)) {
             FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
-            switch (v0_1.a) {
+            this.readBuffer(v0_1);
+            switch (v0_1.firstByte) {
 
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -326,12 +322,12 @@ public class HelperA {
 
         if (this.b(arg7)) {
             FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
+            this.readBuffer(v0_1);
 
-            switch (v0_1.a) {
+            switch (v0_1.firstByte) {
 
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -368,10 +364,10 @@ public class HelperA {
         long[] v0 = null;
         if (this.b(arg8)) {
             FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
-            switch (v0_1.a) {
+            this.readBuffer(v0_1);
+            switch (v0_1.firstByte) {
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -410,12 +406,12 @@ public class HelperA {
 
         if (this.b(arg7)) {
             FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
+            this.readBuffer(v0_1);
 
-            switch (v0_1.a) {
+            switch (v0_1.firstByte) {
 
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -423,7 +419,7 @@ public class HelperA {
                         int v1 = 0;
                         while (true) {
                             if (v1 < v3) {
-                                v0[v1] = this.a(v0[0], 0, true);
+                                v0[v1] = this.getDataForBuffer(v0[0], 0, true);
                                 ++v1;
                                 continue;
                             }
@@ -452,10 +448,10 @@ public class HelperA {
 
         if (this.b(arg7)) {
             FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
-            switch (v0_1.a) {
+            this.readBuffer(v0_1);
+            switch (v0_1.firstByte) {
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -463,7 +459,7 @@ public class HelperA {
                         int v1 = 0;
                         while (true) {
                             if (v1 < v3) {
-                                v0[v1] = this.a(v0[0], 0, true);
+                                v0[v1] = this.getShort(v0[0], 0, true);
                                 ++v1;
                                 continue;
                             }
@@ -492,10 +488,10 @@ public class HelperA {
         boolean[] v0 = null;
         if (this.b(arg7)) {
             FuzhuB v0_1 = new FuzhuB();
-            this.a(v0_1);
-            switch (v0_1.a) {
+            this.readBuffer(v0_1);
+            switch (v0_1.firstByte) {
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -533,10 +529,10 @@ public class HelperA {
         Object v0_1[] = new Object[0];
         if (this.b(arg8)) {
             FuzhuB v0 = new FuzhuB();
-            this.a(v0);
-            switch (v0.a) {
+            this.readBuffer(v0);
+            switch (v0.firstByte) {
                 case 9:
-                    int v3 = this.a(0, 0, true);
+                    int v3 = this.getDataForBuffer(0, 0, true);
                     if (v3 < 0) {
                         throw new IllegalArgumentException("size invalid: " + v3);
                     } else {
@@ -587,8 +583,8 @@ public class HelperA {
             }
 
             FuzhuB v1 = new FuzhuB();
-            this.a(v1);
-            if (v1.a != 10) {
+            this.readBuffer(v1);
+            if (v1.firstByte != 10) {
                 throw new IllegalArgumentException("type mismatch.");
             } else {
                 ((JceStruct) v0_2).readFrom(this);
@@ -622,12 +618,12 @@ public class HelperA {
 
         }
 
-        FuzhuB v0_1 = new FuzhuB();
-        this.a(v0_1);
+        FuzhuB fuzhuB = new FuzhuB();
+        this.readBuffer(fuzhuB);
 
-        LogUtil.d("fuzhuB  sdk_gt18 = "+a);
+        LogUtil.d("fuzhuB  sdk_gt18 = "+ charset);
 
-        switch (v0_1.a)
+        switch (fuzhuB.firstByte)
         {
             case 6:
             {
@@ -643,7 +639,7 @@ public class HelperA {
                 try
                 {
 
-                    v0 = new String(v1, this.a);
+                    v0 = new String(v1, this.charset);
                     LogUtil.e("返回的字符串是: "+v0);
 
                 } catch (UnsupportedEncodingException v0_3)
@@ -660,7 +656,7 @@ public class HelperA {
                     v1 = new byte[index];
                     this.buffer.get(v1);
                     try {
-                        v0 = new String(v1, this.a);
+                        v0 = new String(v1, this.charset);
                     } catch (UnsupportedEncodingException v0_3) {
                         v0 = new String(v1);
                     }
@@ -681,8 +677,8 @@ public class HelperA {
     public final double a(double arg3, int arg5, boolean arg6) {
         if (this.b(arg5)) {
             FuzhuB v0 = new FuzhuB();
-            this.a(v0);
-            switch (v0.a) {
+            this.readBuffer(v0);
+            switch (v0.firstByte) {
                 case 4: {
                     arg3 = ((double) this.buffer.getFloat());
                     break;
@@ -710,8 +706,8 @@ public class HelperA {
     private float a(float arg3, int arg4, boolean arg5) {
         if (this.b(arg4)) {
             FuzhuB v0 = new FuzhuB();
-            this.a(v0);
-            switch (v0.a) {
+            this.readBuffer(v0);
+            switch (v0.firstByte) {
                 case 4: {
                     arg3 = this.buffer.getFloat();
                     break;
@@ -732,8 +728,8 @@ public class HelperA {
     public final long a(long arg3, int arg5, boolean arg6) {
         if (this.b(arg5)) {
             FuzhuB v0 = new FuzhuB();
-            this.a(v0);
-            switch (v0.a) {
+            this.readBuffer(v0);
+            switch (v0.firstByte) {
                 case 0: {
                     arg3 = ((long) this.buffer.get());
                     break;
@@ -760,14 +756,14 @@ public class HelperA {
     /**
      * 获取 short类型
      */
-    public final short a(short arg3, int arg4, boolean arg5) {
+    public final short getShort(short version, int arg4, boolean arg5) {
         if (this.b(arg4)) {
-            FuzhuB v0 = new FuzhuB();
-            this.a(v0);
-            switch (v0.a)
+            FuzhuB fuzhuB = new FuzhuB();
+            this.readBuffer(fuzhuB);
+            switch (fuzhuB.firstByte)
             {
                 case 0: {
-                    arg3 = ((short) this.buffer.get());
+                    version = ((short) this.buffer.get());
                     break;
                 }
                 case 1: {
@@ -777,12 +773,10 @@ public class HelperA {
                     return 0;
                 }
             }
-
-
         } else if (arg5) {
             throw new RuntimeException("require field not exist");
         }
-        return arg3;
+        return version;
     }
 
     /**
@@ -790,7 +784,7 @@ public class HelperA {
      */
     private boolean c(int arg3, boolean arg4) {
         boolean v0 = false;
-        if (this.a((byte) 0, arg3, arg4) != 0) {//调用获取byte类型
+        if (this.getByte((byte) 0, arg3, arg4) != 0) {//调用获取byte类型
             v0 = true;
         }
 
@@ -800,11 +794,11 @@ public class HelperA {
     /**
      * 獲取byte類型
      */
-    public final byte a(byte arg3, int arg4, boolean arg5) {
+    public final byte getByte(byte arg3, int arg4, boolean arg5) {
         if (this.b(arg4)) {
             FuzhuB v0 = new FuzhuB();
-            this.a(v0);
-            switch (v0.a) {
+            this.readBuffer(v0);
+            switch (v0.firstByte) {
                 case 0: {
                     arg3 = this.buffer.get();
                     LogUtil.e("ret byte = "+ String.valueOf(arg3));
@@ -826,19 +820,19 @@ public class HelperA {
     private boolean b(int arg6) {
         boolean v0 = false;
         try {
-            FuzhuB v1_2 = new FuzhuB();
+            FuzhuB fuzhuB = new FuzhuB();
             while (true) {
-                int v2 = HelperA.a(v1_2, this.buffer.duplicate());
-                if (arg6 > v1_2.b && v1_2.a != 11) {
-                    this.a(v2);//参数类型是int
-                    this.a(v1_2.a);//参数类型是byte
+                int v2 = HelperA.readBufferToFuzhuB(fuzhuB, this.buffer.duplicate());
+                if (arg6 > fuzhuB.secondByte && fuzhuB.firstByte != 11) {
+                    this.setPosition(v2);//参数类型是int
+                    this.setPositionByArg(fuzhuB.firstByte);//参数类型是byte
                     continue;
                 }
 
                 break;
             }
 
-            if (arg6 != v1_2.b) {
+            if (arg6 != fuzhuB.secondByte) {
                 return v0;
             }
 
@@ -852,33 +846,33 @@ public class HelperA {
     /**
      * 参数是byte类型
      */
-    private void a(byte arg5) {
+    private void setPositionByArg(byte arg5) {
         int v2 = 8;
         int v1 = 4;
         int v0 = 0;
         switch (arg5) {
             case 0: {
-                this.a(1);
+                this.setPosition(1);
                 return;
             }
             case 1: {
-                this.a(2);
+                this.setPosition(2);
                 return;
             }
             case 2: {
-                this.a(v1);
+                this.setPosition(v1);
                 return;
             }
             case 3: {
-                this.a(v2);
+                this.setPosition(v2);
                 return;
             }
             case 4: {
-                this.a(v1);
+                this.setPosition(v1);
                 return;
             }
             case 5: {
-                this.a(v2);
+                this.setPosition(v2);
                 return;
             }
             case 6: {
@@ -887,28 +881,28 @@ public class HelperA {
                     v0 += 256;
                 }
 
-                this.a(v0);
+                this.setPosition(v0);
                 return;
             }
             case 7: {
-                this.a(this.buffer.getInt());
+                this.setPosition(this.buffer.getInt());
                 return;
             }
             case 8: {
-                v1 = this.a(0, 0, true);//工具2
+                v1 = this.getDataForBuffer(0, 0, true);//工具2
                 while (v0 < v1 * 2) {
-                    this.b();//操作FuzhuB
+                    this.setPositionByBufferData();//操作FuzhuB
                     ++v0;
                 }
             }
             case 9: {
-                v1 = this.a(0, 0, true);//工具2
+                v1 = this.getDataForBuffer(0, 0, true);//工具2
                 while (true) {
                     if (v0 >= v1) {
                         return;
                     }
 
-                    this.b();
+                    this.setPositionByBufferData();
                     ++v0;
                 }
             }
@@ -922,12 +916,12 @@ public class HelperA {
             }
             case 13: {
                 FuzhuB v1_1 = new FuzhuB();
-                this.a(v1_1);
-                if (v1_1.a != 0) {
+                this.readBuffer(v1_1);
+                if (v1_1.firstByte != 0) {
                     throw new IllegalArgumentException("skipField with invalid type, type value: " + arg5 + ", " +
-                            v1_1.a);
+                            v1_1.firstByte);
                 }
-                this.a(this.a(0, 0, true));
+                this.setPosition(this.getDataForBuffer(0, 0, true));
                 return;
             }
         }
@@ -936,29 +930,29 @@ public class HelperA {
     private void a() {
         FuzhuB v0 = new FuzhuB();
         do {
-            this.a(v0);
-            this.a(v0.a);
+            this.readBuffer(v0);
+            this.setPositionByArg(v0.firstByte);
         }
-        while (v0.a != 11);
+        while (v0.firstByte != 11);
     }
 
     /**
      * 工具2
      */
-    public final int a(int arg3, int arg4, boolean arg5) {
+    public final int getDataForBuffer(int arg3, int arg4, boolean arg5) {
         if (this.b(arg4)) {
-            FuzhuB v0 = new FuzhuB();
-            a(v0);
-            switch (v0.a) {
+            FuzhuB fuzhuB = new FuzhuB();
+            readBuffer(fuzhuB);
+            switch (fuzhuB.firstByte) {
                 case 0:
                     arg3 = this.buffer.get();
-                    LogUtil.d(" index= "+v0.a+"return int ="+arg3);
+                    LogUtil.d(" index= "+fuzhuB.firstByte +"return int ="+arg3);
                     break;
                 case 1:
-                    LogUtil.d(" index= "+v0.a+"return short");
+                    LogUtil.d(" index= "+fuzhuB.firstByte +"return short");
                     return this.buffer.getShort();
                 case 2:
-                    LogUtil.d(" index= "+v0.a+"return int");
+                    LogUtil.d(" index= "+fuzhuB.firstByte +"return int");
                     return this.buffer.getInt();
                 case 12:
                     return 0;
@@ -970,31 +964,30 @@ public class HelperA {
         return arg3;
     }
 
-
-    private void b() {
-        FuzhuB v0 = new FuzhuB();
-        this.a(v0);
-        this.a(v0.a);//这里是调用的byte类型的函数
+    private void setPositionByBufferData() {
+        FuzhuB fuzhuB = new FuzhuB();
+        this.readBuffer(fuzhuB);
+        this.setPositionByArg(fuzhuB.firstByte);//这里是调用的byte类型的函数
     }
 
     //操作FuzhuB
-    private void a(FuzhuB arg2) {
-        HelperA.a(arg2, this.buffer);//操作FuzhuB
+    private void readBuffer(FuzhuB fuzhuB) {
+        HelperA.readBufferToFuzhuB(fuzhuB, this.buffer);//操作FuzhuB
     }
 
     /**
      * 操作FuzhuB
      */
-    private static int a(FuzhuB fuzhuB, ByteBuffer arg3) {
-        LogUtil.d("此时的position 是："+arg3.position());//这里出现了异常信息
-        int v0 = arg3.get();
-        LogUtil.d("moved 此时的position 是："+arg3.position()+" ,get() = "+v0);
-        fuzhuB.a = ((byte) (v0 & 15));
-        fuzhuB.b = (v0 & 240) >> 4;
-        LogUtil.d("fuzhuB sdk_gt18 ="+fuzhuB.a+" ,fuzhuB getMarsrootSharePreferences ="+fuzhuB.b);
-        if (fuzhuB.b == 15)
+    private static int readBufferToFuzhuB(FuzhuB fuzhuB, ByteBuffer byteBuffer) {
+        LogUtil.d("此时的position 是："+byteBuffer.position());//这里出现了异常信息
+        int v0 = byteBuffer.get();
+        LogUtil.d("moved 此时的position 是："+byteBuffer.position()+" ,get() = "+v0);
+        fuzhuB.firstByte = ((byte) (v0 & 15));//只保存了第一个byte
+        fuzhuB.secondByte = (v0 & 240) >> 4;//只保存了第二个byte
+        LogUtil.d("fuzhuB sdk_gt18 ="+fuzhuB.firstByte +" ,fuzhuB getMarsrootSharePreferences ="+fuzhuB.secondByte);
+        if (fuzhuB.secondByte == 15)
         {
-            fuzhuB.b = arg3.get();
+            fuzhuB.secondByte = byteBuffer.get();
             v0 = 2;
         }
         else
@@ -1007,11 +1000,9 @@ public class HelperA {
     /**
      * 设置ByteBuffer参数
      */
-    private void a(int arg3)
+    private void setPosition(int position)
     {
-
-        this.buffer.position(this.buffer.position() + arg3);
-
+        this.buffer.position(this.buffer.position() + position);
     }
 
 

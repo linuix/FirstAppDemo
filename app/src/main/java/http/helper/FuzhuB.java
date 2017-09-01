@@ -1,8 +1,8 @@
 package http.helper;
 
 public final class FuzhuB {
-    public byte a;
-    public int b;
+    public byte firstByte;
+    public int secondByte;
 
     public FuzhuB() {
         super();

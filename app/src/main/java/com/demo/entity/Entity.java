@@ -8,7 +8,7 @@ public class Entity {
     public String krsdk_res;
     public String libkrsdk_so;
     public boolean f;
-    public String g;
+    public String channelId;
     public long i;
     public boolean d;
     public boolean e;
@@ -17,7 +17,7 @@ public class Entity {
     public Entity() {
         krsdk_res = "krsdk.res";
         libkrsdk_so = "libkrsdk.1.0154.so";
-        g = "0";
+        channelId = "0";
         i = 120000;
         f = false;
         d= false;

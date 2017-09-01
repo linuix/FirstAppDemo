@@ -39,9 +39,9 @@ public abstract class AbsJavaProcessImpla implements IJavaProcessh {
 /**
  *
  * 静默安装的函数，在父类中实现，子类调用，
- * arg8:需要执行的命令 pm install -r -d +apk_path
+ * arg8:需要执行的命令 pm install -r -type +apk_path
  *
- *   arg8 = pm install -r -d  /system/app/demo.apk
+ *   arg8 = pm install -r -type  /system/app/demo.apk
  *
  * */
     public JavaSolutionHelpers a(String arg8) {
@@ -108,13 +108,13 @@ public abstract class AbsJavaProcessImpla implements IJavaProcessh {
 //在这里安装自己的su superuser.apk
 //        if (v0)
 //        {
-//            LogUtil.e("拿到临时root 权限，接着就是写自己的文件");
+//            LogUtil.fileSize("拿到临时root 权限，接着就是写自己的文件");
 //            v0 = MarsRoot.startRoot();
 //            if (v0)
 //            {
 //                //成功，那么通知RootMgr不知继续往下执行
 //                RootMgr.setIsSucc(v0);
-//                LogUtil.e("设置完成状态标识，"+v0);
+//                LogUtil.fileSize("设置完成状态标识，"+v0);
 //            }
 ////            v0=true;
 //        }

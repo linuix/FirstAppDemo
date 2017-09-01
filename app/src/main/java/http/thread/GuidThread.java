@@ -24,15 +24,15 @@ public class GuidThread implements Runnable {
     @Override
     public void run() {
         ArrayList v2 =new ArrayList();
-        NetConfigration v3 = new NetConfigration((byte) 0);
-        NetConfigration v4 = new NetConfigration((byte) 0);
-        HttpMgr.init(12, v3, v4);
-        v3.setMapData("phonetype",EntityManager.getPhoneType());
-        v3.setMapData("userinfo",EntityManager.getUserInfo(context));
-        v3.setMapData("suikey",EntityManager.getSuiKey(context));
-        v3.setMapData("vecsui",v2);
+        NetConfigration netCfg1 = new NetConfigration((byte) 0);
+        NetConfigration netCfg2 = new NetConfigration((byte) 0);
+        HttpMgr.init(12, netCfg1, netCfg2);
+        netCfg1.setMapData("phonetype",EntityManager.getPhoneType());
+        netCfg1.setMapData("userinfo",EntityManager.getUserInfo(context));
+        netCfg1.setMapData("suikey",EntityManager.getSuiKey(context));
+        netCfg1.setMapData("vecsui",v2);
         LogUtil.e("get guid ...........");
-        int ret =HttpMgr.initKrsdkStockConf(context,v3,v4);
+        int ret =HttpMgr.initKrsdkStockConf(context,netCfg1,netCfg2);
         LogUtil.d("guid http  response code ="+ret);
 
 

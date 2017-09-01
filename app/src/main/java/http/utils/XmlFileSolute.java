@@ -478,7 +478,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "name");
-            v1.a = arg5.nextText();
+            v1.jarName = arg5.nextText();
             arg5.require(3, "", "name");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -486,7 +486,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "sid");
-            v1.b = String.valueOf(Integer.parseInt(arg5.nextText()));
+            v1.sindex = String.valueOf(Integer.parseInt(arg5.nextText()));
             arg5.require(3, "", "sid");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -495,7 +495,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "version");
-            v1.c = arg5.nextText();
+            v1.version = arg5.nextText();
             arg5.require(3, "", "version");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -503,7 +503,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "type");
-            v1.d = checkInteger(arg5.nextText(), 1);
+            v1.type = checkInteger(arg5.nextText(), 1);
             arg5.require(3, "", "type");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -512,7 +512,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "size");
-            v1.e = checkLonger(arg5.nextText());
+            v1.fileSize = checkLonger(arg5.nextText());
             arg5.require(3, "", "size");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -521,7 +521,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "verified");
-            v1.f = checkInteger(arg5.nextText(), 1);
+            v1.veriFied = checkInteger(arg5.nextText(), 1);
             arg5.require(3, "", "verified");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -530,7 +530,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "md5");
-            v1.g = arg5.nextText();
+            v1.md5 = arg5.nextText();
             arg5.require(3, "", "md5");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -538,7 +538,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "encrypt");
-            v1.h = arg5.nextText();
+            v1.encrypt = arg5.nextText();
             arg5.require(3, "", "encrypt");
         } catch (Exception v0) {
             v0.printStackTrace();
@@ -547,7 +547,7 @@ public class XmlFileSolute {
         try {
             arg5.nextTag();
             arg5.require(2, "", "url");
-            v1.i = arg5.nextText();
+            v1.url = arg5.nextText();
             arg5.require(3, "", "url");
         } catch (Exception v0) {
             v0.printStackTrace();

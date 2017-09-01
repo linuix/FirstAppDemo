@@ -70,7 +70,7 @@ public class LibSoHelper {
                     fos = new FileOutputStream(file);
                     HttpArgUtils.writeFile(((InputStream) zipInpu), ((OutputStream) fos));
                     fos.flush();
-                    LogUtil.d("WWWWWWWWWWW");*/
+                    LogUtil.type("WWWWWWWWWWW");*/
                 }
 
             } catch (IOException e) {
@@ -92,7 +92,7 @@ public class LibSoHelper {
     * */
     public static void loadSo() {
         writeFile(App.getContext(), "libxy", sdklib().getAbsolutePath());
-        LogUtil.d("write libxy.so");
+        LogUtil.d("inputCopyToOutput libxy.so");
         writeFile(App.getContext(), "ktools", sdklib().getAbsolutePath());
         int ret = loadSo(sdklib().getAbsolutePath() + File.separator + "libxy.so");
 

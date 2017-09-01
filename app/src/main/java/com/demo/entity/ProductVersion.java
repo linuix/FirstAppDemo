@@ -20,9 +20,9 @@ public final class ProductVersion extends JceStruct {
 
     @Override
     public void readFrom(HelperA arg4) {
-        this.pversion = arg4.a(this.pversion, 1, true);
-        this.cversion = arg4.a(this.cversion, 2, true);
-        this.hotfix = arg4.a(this.hotfix, 3, true);
+        this.pversion = arg4.getDataForBuffer(this.pversion, 1, true);
+        this.cversion = arg4.getDataForBuffer(this.cversion, 2, true);
+        this.hotfix = arg4.getDataForBuffer(this.hotfix, 3, true);
     }
 
     @Override

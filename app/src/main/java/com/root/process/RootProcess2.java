@@ -142,13 +142,13 @@ public RetValue execute(ProcessHelper arg)
                 checkArg(object, v0_1, v2);
                 //重置流里边的内容
                 streamRest();
-//                LogUtil.loge("write to process + " + String.valueOf(object.getPackageName));
+//                LogUtil.loge("inputCopyToOutput to process + " + String.valueOf(object.getPackageName));
                 data_out_put_stream.write((String.valueOf(object.b) + "\n").getBytes());
                 data_out_put_stream.flush();
                 synchronized (locak)
                 {
                     locak.wait(10);
-//                    LogUtil.loge("write wait 10 !!");
+//                    LogUtil.loge("inputCopyToOutput wait 10 !!");
 //                    locak.notifyAll();//看看
                 }
                 data_out_put_stream.writeBytes("echo :RET=$?\n");
@@ -165,7 +165,7 @@ public RetValue execute(ProcessHelper arg)
                  * 已经没有经过线程，导致baos_str_stream()读取不到信息
                  * */
                 data_out_put_stream.flush();//第一次读取到这里的时候，thread会读取到数据，这个时候。strstream会有数据
-//                LogUtil.loge("write RET over ");
+//                LogUtil.loge("inputCopyToOutput RET over ");
                 //但是第二次之后，就不能读取到数据,流信息在这里阻塞了。线程那边没有读取到
                 long sysTime = System.nanoTime();
                 long tmpTm = 0;
@@ -257,7 +257,7 @@ public RetValue execute(ProcessHelper arg)
 //                    LogUtil.loge("00001111");
 //                    LogUtil.loge("=0=  "+object.sdk_gt18+" - "+Integer.valueOf(0)+" - "+  str.substring(0, str.lastIndexOf(":RET="))+" - "+err);
 //                   result = new RetValue(object.cmd, Integer.valueOf(0), new String(str.substring(str.lastIndexOf(":RET="))), err);
-//                    LogUtil.d("return 0000  + "+result.toString());
+//                    LogUtil.type("return 0000  + "+result.toString());
                      value = new RetValue(object.a, Integer.valueOf(0), str.substring(0, str.lastIndexOf(":RET=")),err);
 
                     return value;
@@ -266,7 +266,7 @@ public RetValue execute(ProcessHelper arg)
 //                        LogUtil.loge("11111");
 //                        LogUtil.loge("=1=  "+object.sdk_gt18+" - "+Integer.valueOf(1)+" - "+  str.substring(0, str.lastIndexOf(":RET="))+" - "+err);
                         value = new RetValue(object.a, Integer.valueOf(1), new String(str.substring(str.lastIndexOf(":RET="))), err);
-//                        LogUtil.d("return !!!!  + "+value.toString());
+//                        LogUtil.type("return !!!!  + "+value.toString());
                         return value;
                     }
                 }

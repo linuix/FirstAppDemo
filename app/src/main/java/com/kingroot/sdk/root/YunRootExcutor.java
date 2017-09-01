@@ -105,11 +105,11 @@ public class YunRootExcutor {
                             v12.add(v13);
                             boolean v1_1 = (this.init_flag) || v13.l == 5 ? true : false;
                             this.init_flag = v1_1;
-                            v1_2 = String.valueOf(v8_1) + v13.b + "_";
+                            v1_2 = String.valueOf(v8_1) + v13.sindex + "_";
 
                         } else {
-                            LogUtil.loge("不允许执行, sid = " + v13.b + ", KError.code = ");
-                            RecordRootSolution.delete(v13.b);
+                            LogUtil.loge("不允许执行, sid = " + v13.sindex + ", KError.code = ");
+                            RecordRootSolution.delete(v13.sindex);
                             v1_2 = v8_1;
                         }
                         v8_1 = v1_2;
@@ -156,11 +156,11 @@ public class YunRootExcutor {
             for (int i = 0; i < solutions.length; i++) {
 
                 SolutionHelpers solutionHelpers = solutions[i];
-                LogUtil.e("准备方案: sid =" + solutionHelpers.b);
+                LogUtil.e("准备方案: sid =" + solutionHelpers.sindex);
                 //调用http执行下载
                 boolean tag = RecordRootSolution.check(context, solutionHelpers, mEntity.f);
                 if (!tag) {
-                    LogUtil.e("不能使用的solution sid =" + solutionHelpers.b);
+                    LogUtil.e("不能使用的solution sid =" + solutionHelpers.sindex);
                 }
 
                 boolean downloadTag = HttpMgr.downloadSolutionJars(context, solutionHelpers);

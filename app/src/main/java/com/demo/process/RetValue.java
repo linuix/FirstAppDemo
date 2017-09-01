@@ -2,7 +2,7 @@ package com.demo.process;
 
 public final class RetValue {  // RetValue是我在demo中重新命名的类f
     public final String cmd;
-    public final String stdout;
+    public final String stdout;//命令执行后的结果
     public final String err;
     public final Integer ret;
 

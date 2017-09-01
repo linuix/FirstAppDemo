@@ -96,23 +96,23 @@ public final class RequestPacket extends JceStruct {
 
         return v0;
     }
-    public final void readFrom(HelperA arg5) {
+    public final void readFrom(HelperA helperA) {
         HashMap v0_1;
         try {
-            this.iVersion = arg5.a(this.iVersion, 1, true);
-            this.cPacketType = arg5.a(this.cPacketType, 2, true);
-            this.iMessageType = arg5.a(this.iMessageType, 3, true);
-            this.iRequestId = arg5.a(this.iRequestId, 4, true);
-            this.sServantName = arg5.a(5, true);
-            this.sFuncName = arg5.a(6, true);
+            this.iVersion = helperA.getShort(this.iVersion, 1, true);
+            this.cPacketType = helperA.getByte(this.cPacketType, 2, true);
+            this.iMessageType = helperA.getDataForBuffer(this.iMessageType, 3, true);
+            this.iRequestId = helperA.getDataForBuffer(this.iRequestId, 4, true);
+            this.sServantName = helperA.a(5, true);
+            this.sFuncName = helperA.a(6, true);
             if (RequestPacket.cache_sBuffer == null) {
                 RequestPacket.cache_sBuffer = new byte[1];
             }
 
-            this.sBuffer = arg5.b(7, true);
+            this.sBuffer = helperA.b(7, true);
 
             LogUtil.d("seconde buffer len ="+sBuffer.length);//取到的长度是48
-            this.iTimeout = arg5.a(this.iTimeout, 8, true);
+            this.iTimeout = helperA.getDataForBuffer(this.iTimeout, 8, true);
 
             if (RequestPacket.cache_context == null) {
                 v0_1 = new HashMap();
@@ -124,7 +124,7 @@ public final class RequestPacket extends JceStruct {
              * 需要在这里添加数据，才能读取到?????
              *
              * **/
-            this.context = arg5.a(RequestPacket.cache_context, 9, true);//
+            this.context = helperA.a(RequestPacket.cache_context, 9, true);//
             if (RequestPacket.cache_context == null)
             {
 
@@ -134,7 +134,7 @@ public final class RequestPacket extends JceStruct {
                 ((Map) v0_1).put("", "");
             }
 
-            this.status = arg5.a(RequestPacket.cache_context, 10, true);
+            this.status = helperA.a(RequestPacket.cache_context, 10, true);
             LogUtil.e("RequsetPackage: "+toString());
 
             return;

@@ -68,12 +68,12 @@ public class MainActivity extends Activity {
 //            String line =null;
 //            while ((line = br.readLine())!= null)
 //            {
-//                Log.d("tag----",line);
+//                Log.type("tag----",line);
 //            }
             String cmd = "id\n";
             outputStream.write(cmd.getBytes());
             outputStream.write("exit\n".getBytes());
-            Log.e("tag----","write finished    === ");
+            Log.e("tag----","inputCopyToOutput finished    === ");
 
             String line =null;
             while ((line = br.readLine())!= null)

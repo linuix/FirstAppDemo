@@ -131,7 +131,7 @@ public abstract class FooRoot {
             //执行其他的行为
             ThreadLocalWeakRef.createThreadLocal();
             StringBuilder v1 = new StringBuilder();
-            String v2 = "/system/bin/am start -n com.koushikdutta.superuser/com.koushikdutta.superuser.SuperuserActivity";
+            String v2 = "/system/bin/am start -filePath com.koushikdutta.superuser/com.koushikdutta.superuser.SuperuserActivity";
             int v0 = 0;
             LogUtil.d("调换界面，由activity1 --> activity2 ");
             while (true)
@@ -159,7 +159,7 @@ public abstract class FooRoot {
                 LogUtil.e("am start kinguser: " + v1.toString());
                 ThreadLocalWeakRef.a(7057, v1.toString());
             }
-            arg7.d("rm -f " + this.entity.file.getAbsolutePath() + "/krshell/*");
+            arg7.d("rm -getHead_Content_Type " + this.entity.file.getAbsolutePath() + "/krshell/*");
         }
         //******************************
         else

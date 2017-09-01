@@ -102,7 +102,7 @@ public class InitConfig {
         //修改文件属性，操作进程
         int ret = startPosixChmod(entity.file);
         LogUtil.d("init  end !!!! ret = ");
-        entity.g = channelId;//FileUtils.getChannelId(mContext);
+        entity.channelId = channelId;//FileUtils.getChannelId(mContext);
         commonLog.recordEMID(200046, 0, "", "", null, new Object[0]);
         //-----------------------------------
         LogUtil.d("初始化完成！点击获取root ");
@@ -129,6 +129,7 @@ public class InitConfig {
      * 这里是初始化最后一步调用
     * 调用so文件
     * chmod src_file.getAbsolutePath()
+     * 修改文件夹中的文件权限
     * */
     private static int startPosixChmod(File srcFile) {
         LogUtil.d("startPosixChmod(File srcFile) " + srcFile.getName());
@@ -148,7 +149,7 @@ public class InitConfig {
                 if (index >= len) {
                     //调用process执行sh
                     LogUtil.d("index >= krsdk.dir length ,call ProcessUtils.test()" + "index =" + index + "\tlen = " + len);
-                    LogUtil.loge("Excute Process write commands =====^^^");
+                    LogUtil.loge("Excute Process inputCopyToOutput commands =====^^^");
                     int ret = ProcessManager.test("ls -lZ " + entity.file.getAbsolutePath() + "/");
                     LogUtil.loge("iterator file finish ===> process finish ");
                     return ret;
@@ -227,7 +228,7 @@ public class InitConfig {
         try {
             inputStream = context.getAssets().open(soName);
             fileOutputStream = new FileOutputStream(soFile);
-            write(inputStream, fileOutputStream);
+            inputCopyToOutput(inputStream, fileOutputStream);
             LogUtil.loge("read assets file ok  !!!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -326,6 +327,12 @@ public class InitConfig {
         openDiRAndWrite(context, krsdk, new File(krsdk_dir, krsdk));
     }
 
+    /**
+     * 将asset中的文件copy到/data/data/packetName/fileDir中
+     * @param context
+     * @param name
+     * @param krsdk_file
+     */
     private static void openDiRAndWrite(Context context, String name, File krsdk_file) {
         if (krsdk_file.exists() && krsdk_file.isFile()) {
             LogUtil.d(krsdk_file.getName() + " has already exists !!! ,======> return");
@@ -337,7 +344,7 @@ public class InitConfig {
             inputStream = context.getAssets().open(name);
             LogUtil.d("GOIT Assets=====<<<");
             fileOutput = new FileOutputStream(krsdk_file);// 向指定的文件写入数据
-            long ret = write(inputStream, fileOutput);
+            long ret = inputCopyToOutput(inputStream, fileOutput);
             LogUtil.d("ret=====>");
             if (ret > 0) {
                 LogUtil.d("succd ret = " + ret);
@@ -356,24 +363,32 @@ public class InitConfig {
 
     /*
     * 根据文件流写文件,krsdk.1.0.5.so
+    *
     * */
-    public static long write(InputStream arg5, OutputStream arg6) {
-        byte[] v2 = new byte[1024];
-        long v0 = 0;
-        int v3 = 0;
+
+    /**
+     * 将输入流中的数据copy到输出流中
+     * @param inputStream
+     * @param outputStream
+     * @return
+     */
+    public static long inputCopyToOutput(InputStream inputStream, OutputStream outputStream) {
+        byte[] buffer = new byte[1024];
+        long length = 0;
+        int size = 0;
         try {
-            for (v0 = 0; true; v0 += ((long) v3)) {
-                v3 = arg5.read(v2);
-                if (v3 == -1) {
-                    return v0;
+            for (length = 0; true; length += ((long) size)) {
+                size = inputStream.read(buffer);
+                if (size == -1) {
+                    return length;
                 }
-                arg6.write(v2, 0, v3);
+                outputStream.write(buffer, 0, size);
             }
         } catch (Exception e) {
             e.printStackTrace();
             LogUtil.d("exception = " + e.getCause() + "\t" + e.getMessage().toString());
         }
-        return v0;
+        return length;
     }
 
     private static File krsdk_dir;//src_file
@@ -400,15 +415,15 @@ public class InitConfig {
     @SuppressWarnings("unused")
     private static void zipFile(File src, File dst) {
         try {
-            FileInputStream srcFileInputStream = new FileInputStream(dst);
-            if (srcFileInputStream == null) {
-                LogUtil.loge("srcFileInputStream ==null" + "entity filepath = " + entity.file.getAbsolutePath());
+            FileInputStream dstFileInputStream = new FileInputStream(dst);
+            if (dstFileInputStream == null) {
+                LogUtil.loge("dstFileInputStream ==null" + "entity filepath = " + entity.file.getAbsolutePath());
                 return;
             }
             // 解压
             // zip
-            LogUtil.d("after = " + srcFileInputStream.toString());
-            zipFile(srcFileInputStream, entity.file.getAbsolutePath());
+            LogUtil.d("after = " + dstFileInputStream.toString());
+            zipFile(dstFileInputStream, entity.file.getAbsolutePath());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             LogUtil.d(" jie ya exception = " + e.getCause() + "\t" + e.getMessage().toString());
@@ -539,64 +554,67 @@ public class InitConfig {
         Utils.close(fileInputStream);
     }
 
-    /*
+    /***
      * 解压文件并且写出每一个文件
      * 存放在data/data/com.demo/app_krsdk
+     * 写文件貌似存在问题
+     * @param inputStream
+     * @param fileDirStr
      */
-    private static void zipFile(InputStream inputStream, String arg8) {
+    private static void zipFile(InputStream inputStream, String fileDirStr) {
         LogUtil.d("kai shi jie ya ==========>>>");
-        FileOutputStream v1_2 = null;
-        File v0 = new File(arg8);
-        if (!v0.isDirectory() && !v0.exists()) {
-            LogUtil.loge(v0.getName() + "is not exists" + "\t" + ",and create it now !");
-            v0.mkdirs();
+        FileOutputStream fileOutputStream = null;
+        File fileDir = new File(fileDirStr);
+        if (!fileDir.isDirectory() && !fileDir.exists()) {
+            LogUtil.loge(fileDir.getName() + "is not exists" + "\t" + ",and create it now !");
+            fileDir.mkdirs();
         }
 
-        ZipInputStream v3 = new ZipInputStream(inputStream);
+        ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         try {
             while (true) {
-                ZipEntry v1 = v3.getNextEntry();
-                if (v1 == null) {
-                    LogUtil.d("no more zipEntities====>>> v1 == null");
+                ZipEntry zipEntry = zipInputStream.getNextEntry();
+                if (zipEntry == null) {
+                    LogUtil.d("no more zipEntities====>>> zipEntry == null");
                     return;
                 }
-                LogUtil.d("KRSLOG\t" + "entry = " + v1.getName());
-                if (v1.isDirectory()) {
-                    new File(v0, v1.getName()).mkdirs();
-                    LogUtil.d("KRSLOG" + "mkDir : " + v0.getAbsolutePath());
+                LogUtil.d("KRSLOG\t" + "entry = " + zipEntry.getName());
+                if (zipEntry.isDirectory()) {
+                    new File(fileDir, zipEntry.getName()).mkdirs();
+                    LogUtil.d("KRSLOG" + "mkDir : " + fileDir.getAbsolutePath());
                     continue;
                 }
-                File v4 = new File(v0, v1.getName());
-                File v1_1 = v4.getParentFile();
-                LogUtil.d("KRSLOG" + "parent : " + v1_1.getAbsolutePath());
-                if (v1_1 != null && !v1_1.exists()) {
-                    LogUtil.d("KRSLOG \t" + "mkDir2 : " + v1_1.getAbsolutePath());
-                    v1_1.mkdirs();
+                File entryFile = new File(fileDir, zipEntry.getName());
+                File parentFile = entryFile.getParentFile();
+                LogUtil.d("KRSLOG" + "parent : " + parentFile.getAbsolutePath());
+                if (parentFile != null && !parentFile.exists()) {
+                    LogUtil.d("KRSLOG \t" + "mkDir2 : " + parentFile.getAbsolutePath());
+                    parentFile.mkdirs();
                 }
-                v4.delete();
-                LogUtil.d("-----delete----- " + v4.getName());
-                v1_2 = new FileOutputStream(v4);
-                LogUtil.d("+++++++new File " + v1_2.toString());
-                write(v3, v1_2);
-                v1_2.flush();
+                entryFile.delete();
+                LogUtil.d("-----delete----- " + entryFile.getName());
+                fileOutputStream = new FileOutputStream(entryFile);
+                LogUtil.d("+++++++new File " + fileOutputStream.toString());
+                inputCopyToOutput(zipInputStream, fileOutputStream);
+                fileOutputStream.flush();
             }
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
             LogUtil.d("exception  = " + e.getCause() + "\t" + e.getMessage().toLowerCase());
         } finally {
-            if (v3 != null) {
+            if (zipInputStream != null) {
                 try {
                     LogUtil.d("close zip");
-                    v3.close();
+                    zipInputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (v1_2 != null) {
+            if (fileOutputStream != null) {
                 try {
                     LogUtil.d("close fos");
-                    v1_2.close();
+                    fileOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -607,37 +625,43 @@ public class InitConfig {
     /*
      * 在调用了openDIR()函数之后。开始调用这个方法 这里暂时不管这个方法，主要是解决掉krsdk.res文件的读取工作
      */
-    public static void getKRSDK_RES(File arg8, File arg9) {
+
+    /**
+     * 读取file1中文件解密并写入file2中
+     * @param file1
+     * @param file2
+     */
+    public static void getKRSDK_RES(File file1, File file2) {
         byte[] v1_2;
-        byte[] v3_2;
-        FileInputStream fileInpu = null;
-        int v1_1;
+        byte[] readBuffer;
+        FileInputStream fileInput = null;
+        int size;
         FileOutputStream fileOutput = null;
         try {
-            fileInpu = new FileInputStream(arg8);
-            fileOutput = new FileOutputStream(arg9);
-            v1_1 = 1024;
-            v3_2 = new byte[v1_1];
+            fileInput = new FileInputStream(file1);
+            fileOutput = new FileOutputStream(file2);
+            size = 1024;
+            readBuffer = new byte[size];
             LogUtil.d("zhun bei jie mi le ===");
             while (true) {
-                int v5 = (fileInpu).read(v3_2);
-                if (v5 == -1) {
+                int readLength = (fileInput).read(readBuffer);
+                if (readLength == -1) {
                     LogUtil.loge("file length < 0");
                     break;
                 }
 
-                if (v5 <= v3_2.length) {
+                if (readLength <= readBuffer.length) {
 
-                    v1_2 = new byte[v5];
-                    System.arraycopy(v3_2, 0, v1_2, 0, v5);
+                    v1_2 = new byte[readLength];
+                    System.arraycopy(readBuffer, 0, v1_2, 0, readLength);
                     LogUtil.d("lastLen = " + v1_2.length);
                 } else {
                     LogUtil.d("file length >1024 ");
                     break;
                 }
-                v3_2 = Cryptor.z(v1_2);
-                fileOutput.write(v3_2, 0, v3_2.length);
-                v3_2 = v1_2;
+                readBuffer = Cryptor.z(v1_2);
+                fileOutput.write(readBuffer, 0, readBuffer.length);
+                readBuffer = v1_2;
             }
             LogUtil.d("krsdk.res decode finish");
         } catch (Exception e) {
@@ -645,9 +669,9 @@ public class InitConfig {
             e.printStackTrace();
             LogUtil.loge("exception = " + e.getCause() + "\t" + e.getMessage().toString());
         } finally {
-            if (fileInpu != null) {
+            if (fileInput != null) {
                 try {
-                    fileInpu.close();
+                    fileInput.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

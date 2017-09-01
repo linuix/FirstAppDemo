@@ -8,7 +8,7 @@ import android.net.Proxy;
 import com.demo.utils.LogUtil;
 
 public final class NetUtils {
-    public static byte a(Context context) {
+    public static byte isConnection(Context context) {
         byte v0_3;
         NetworkInfo networkInfo;
         byte v2 = -1;
@@ -19,7 +19,7 @@ public final class NetUtils {
         }
         catch(Throwable v0_1)
         {
-            LogUtil.exception("NetworkUtil.getNetworkType() throw e", v0_1);
+            LogUtil.exception("NetworkUtil.getNetworkType() throw fileSize", v0_1);
             networkInfo = v3;
         }
 
@@ -55,9 +55,9 @@ public final class NetUtils {
         return v0_3;
     }
 
-    public static boolean b(Context arg2) {
+    public static boolean isConnected(Context context) {
         try {
-            ConnectivityManager systemService = (ConnectivityManager) arg2.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager systemService = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo v0_1= systemService.getActiveNetworkInfo();
             if(v0_1 != null) {
                 if(!v0_1.isConnected()) {

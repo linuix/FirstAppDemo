@@ -453,7 +453,7 @@ public class Utils {
      * 记录失败的solutions_id
      */
     public static void recordFailedExploit(Context context, String name) {
-        int v0 = SpfUtils.c(context, "solution_fail_count_" + name) + 1;
+        int v0 = SpfUtils.getIntFromMarsrootSharePreferences(context, "solution_fail_count_" + name) + 1;
         LogUtil.e("sid = " + name + ", failCount = " + v0);
         SpfUtils.a(context, "solution_fail_count_" + name, v0);
     }

@@ -35,7 +35,7 @@ public class RecordRootSolution {
     private RecordRootSolution() {
 
     }
-    public static boolean check(Context arg5, SolutionHelpers solutionHelpers, boolean arg7) {
+    public static boolean check(Context context, SolutionHelpers solutionHelpers, boolean arg7) {
         boolean v0 = false;
         ThreadLocalWeakRef.createThreadLocal();
         if(!a(solutionHelpers.l, new int[]{0, 1, 2, 3, 4, 5})) {
@@ -43,11 +43,11 @@ public class RecordRootSolution {
         }
         else
         {
-            if((arg7) && SpfUtils.c(arg5, "solution_crash_" + solutionHelpers.sindex) == 1) {
+            if((arg7) && SpfUtils.getIntFromMarsrootSharePreferences(context, "solution_crash_" + solutionHelpers.sindex) == 1) {
                 ThreadLocalWeakRef.a(7004, "sid=" + solutionHelpers.sindex);
                 return v0;
             }
-            int v2 = SpfUtils.c(arg5, "solution_fail_count_" + solutionHelpers.sindex);
+            int v2 = SpfUtils.getIntFromMarsrootSharePreferences(context, "solution_fail_count_" + solutionHelpers.sindex);
             if(v2 >= 3) {
                 ThreadLocalWeakRef.a(7059, "sid = " + solutionHelpers.sindex + ", failcount=" + v2);
                 return v0;

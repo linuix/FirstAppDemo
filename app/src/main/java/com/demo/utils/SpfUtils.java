@@ -97,8 +97,8 @@ public class SpfUtils {
         return context.getSharedPreferences("marsroot", 0).getString(key, null);
     }
 
-    public static int c(Context arg2, String arg3) {
-        return arg2.getSharedPreferences("marsroot", 0).getInt(arg3, 0);
+    public static int getIntFromMarsrootSharePreferences(Context arg2, String key) {
+        return arg2.getSharedPreferences("marsroot", 0).getInt(key, 0);
     }
 
     public static long d(Context arg3, String arg4) {

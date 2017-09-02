@@ -24,10 +24,10 @@ public final class ChannelInfo extends JceStruct {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.id = arg4.a(0, true);
+        this.id = arg4.getStringFromBuffer(0, true);
         this.product = arg4.getDataForBuffer(this.product, 1, false);
         this.isbuildin = arg4.getDataForBuffer(this.isbuildin, 2, false);
-        this.token = arg4.a(3, false);
+        this.token = arg4.getStringFromBuffer(3, false);
         if(ChannelInfo.cache_checksoft == null) {
             ChannelInfo.cache_checksoft = new ArrayList();
             ChannelInfo.cache_checksoft.add(new SoftKey());

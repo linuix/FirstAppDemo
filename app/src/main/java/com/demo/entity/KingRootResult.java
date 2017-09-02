@@ -47,11 +47,11 @@ public final class KingRootResult extends JceStruct implements SolutionInterface
     }
 
     public final void readFrom(HelperA arg5) {
-        this.solutionId = arg5.a(0, true);
+        this.solutionId = arg5.getStringFromBuffer(0, true);
         this.index = arg5.getDataForBuffer(this.index, 1, true);
         this.startTime = arg5.getDataForBuffer(this.startTime, 2, true);
         this.endTime = arg5.getDataForBuffer(this.endTime, 3, true);
-        this.resultCode = arg5.a(this.resultCode, 4, true);
+        this.resultCode = arg5.getLongFromBuffer(this.resultCode, 4, true);
     }
 
     public final void writeTo(HelperC arg4) {

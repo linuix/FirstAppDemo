@@ -53,7 +53,7 @@ public class RebootUtils {
 //        }
 //        ArrayList list1 = ParseDataHelper.getmList();
 //        if (list == null || list.length() < 0) {
-//            LogUtil.e("本地方案没有，不执行root");
+//            LogUtil.getContentLength("本地方案没有，不执行root");
 //            return;
 //        }
 //        setList(list1);

@@ -72,15 +72,15 @@ public final class SoftKey extends JceStruct implements Comparable {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.uid = arg4.a(0, true);
-        this.softname = arg4.a(1, true);
-        this.version = arg4.a(2, true);
-        this.producttime = arg4.a(3, false);
-        this.cert = arg4.a(4, false);
+        this.uid = arg4.getStringFromBuffer(0, true);
+        this.softname = arg4.getStringFromBuffer(1, true);
+        this.version = arg4.getStringFromBuffer(2, true);
+        this.producttime = arg4.getStringFromBuffer(3, false);
+        this.cert = arg4.getStringFromBuffer(4, false);
         this.versioncode = arg4.getDataForBuffer(this.versioncode, 5, false);
-        this.name = arg4.a(6, false);
+        this.name = arg4.getStringFromBuffer(6, false);
         this.isbuildin = arg4.getDataForBuffer(this.isbuildin, 7, false);
-        this.newest_version = arg4.a(8, false);
+        this.newest_version = arg4.getStringFromBuffer(8, false);
         this.old_versioncode = arg4.getDataForBuffer(this.old_versioncode, 9, false);
         this.categorytype = arg4.getDataForBuffer(this.categorytype, 10, false);
         this.category = arg4.getDataForBuffer(this.category, 11, false);
@@ -89,7 +89,7 @@ public final class SoftKey extends JceStruct implements Comparable {
         this.sdk_version = arg4.getDataForBuffer(this.sdk_version, 14, false);
         this.appid = arg4.getDataForBuffer(this.appid, 15, false);
         this.filesize = arg4.getDataForBuffer(this.filesize, 16, false);
-        this.apkFileMd5 = arg4.a(17, false);
+        this.apkFileMd5 = arg4.getStringFromBuffer(17, false);
     }
 
     public final void writeTo(HelperC arg3) {

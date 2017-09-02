@@ -24,7 +24,7 @@ public final class GetKingRootSolutionResp extends JceStruct {
     }
 
     public final void readFrom(HelperA arg5) {
-        this.sessionId = arg5.a(this.sessionId, 0, true);
+        this.sessionId = arg5.getLongFromBuffer(this.sessionId, 0, true);
         if(GetKingRootSolutionResp.cache_solutionsXmls == null) {
             GetKingRootSolutionResp.cache_solutionsXmls = new ArrayList();
             GetKingRootSolutionResp.cache_solutionsXmls.add("");
@@ -35,12 +35,12 @@ public final class GetKingRootSolutionResp extends JceStruct {
             GetKingRootSolutionResp.cache_pcRootInfo = new RootExtInfo();
         }
 
-        this.pcRootInfo = (RootExtInfo) arg5.a(GetKingRootSolutionResp.cache_pcRootInfo, 2, false);
+        this.pcRootInfo = (RootExtInfo) arg5.getJceStructFromBuffer(GetKingRootSolutionResp.cache_pcRootInfo, 2, false);
         if(GetKingRootSolutionResp.cache_mobileRootInfo == null) {
             GetKingRootSolutionResp.cache_mobileRootInfo = new RootExtInfo();
         }
 
-        this.mobileRootInfo = (RootExtInfo) arg5.a(GetKingRootSolutionResp.cache_mobileRootInfo, 3, false);
+        this.mobileRootInfo = (RootExtInfo) arg5.getJceStructFromBuffer(GetKingRootSolutionResp.cache_mobileRootInfo, 3, false);
     }
 
     public final void writeTo(HelperC arg4) {

@@ -18,12 +18,12 @@ public final class GetKingRootSolutionReq extends JceStruct {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.deviceInfoXml = arg4.a(0, true);
+        this.deviceInfoXml = arg4.getStringFromBuffer(0, true);
         if(GetKingRootSolutionReq.cache_phoneType == null) {
             GetKingRootSolutionReq.cache_phoneType = new PhoneType();
         }
 
-        this.phoneType = (PhoneType) arg4.a(GetKingRootSolutionReq.cache_phoneType, 1, false);
+        this.phoneType = (PhoneType) arg4.getJceStructFromBuffer(GetKingRootSolutionReq.cache_phoneType, 1, false);
         this.callerProduct = arg4.getDataForBuffer(this.callerProduct, 2, false);
     }
 

@@ -100,11 +100,11 @@ public final class RequestPacket extends JceStruct {
         HashMap v0_1;
         try {
             this.iVersion = helperA.getShort(this.iVersion, 1, true);
-            this.cPacketType = helperA.getByte(this.cPacketType, 2, true);
+            this.cPacketType = helperA.getByteFromBuffer(this.cPacketType, 2, true);
             this.iMessageType = helperA.getDataForBuffer(this.iMessageType, 3, true);
             this.iRequestId = helperA.getDataForBuffer(this.iRequestId, 4, true);
-            this.sServantName = helperA.a(5, true);
-            this.sFuncName = helperA.a(6, true);
+            this.sServantName = helperA.getStringFromBuffer(5, true);
+            this.sFuncName = helperA.getStringFromBuffer(6, true);
             if (RequestPacket.cache_sBuffer == null) {
                 RequestPacket.cache_sBuffer = new byte[1];
             }

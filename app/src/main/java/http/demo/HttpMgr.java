@@ -218,7 +218,7 @@ public class HttpMgr {
         //发送请求，获取请求的反馈
         LogUtil.d("waiting for http request !!" + url);
         int ret = httpUtils.execute();
-        LogUtil.d("WupSession.reponseCode = " + httpUtils.c() + ", contentLength = " + httpUtils.e() + ", contentType = " + httpUtils.getHead_Content_Type());
+        LogUtil.d("WupSession.reponseCode = " + httpUtils.getRespCode() + ", contentLength = " + httpUtils.getContentLength() + ", contentType = " + httpUtils.getHead_Content_Type());
         LogUtil.d("responseCode = " + ret);
         atomicReference = new AtomicReference();
         flagCode = httpUtils.getData(atomicReference);
@@ -292,7 +292,7 @@ public class HttpMgr {
         }
         httpUtils.setRequestType("GET");
         httpUtils.execute();//启动网络请求
-        LogUtil.d("下载jar网络响应 状态 responseCode : "+httpUtils.c());
+        LogUtil.d("下载jar网络响应 状态 responseCode : "+httpUtils.getRespCode());
         inputStream = httpUtils.getInputStream();
         if (inputStream == null) {
             LogUtil.e("网络下载jar异常，不能获取到InputStream");

@@ -22,15 +22,15 @@ public final class ReportKingRootResultReq extends JceStruct {
     }
 
     public final void readFrom(HelperA helperA) {
-        this.sessionId = helperA.a(this.sessionId, 0, true);
+        this.sessionId = helperA.getLongFromBuffer(this.sessionId, 0, true);
         if(ReportKingRootResultReq.cache_kingRootResults == null) {
             ReportKingRootResultReq.cache_kingRootResults = new ArrayList();
             ReportKingRootResultReq.cache_kingRootResults.add(new KingRootResult());
         }
 
         this.kingRootResults = (ArrayList) helperA.a(ReportKingRootResultReq.cache_kingRootResults, 1, true);
-        this.mac = helperA.a(2, false);
-        this.prevSuVersion = helperA.a(3, false);
+        this.mac = helperA.getStringFromBuffer(2, false);
+        this.prevSuVersion = helperA.getStringFromBuffer(3, false);
     }
 
     public final void writeTo(HelperC arg4) {

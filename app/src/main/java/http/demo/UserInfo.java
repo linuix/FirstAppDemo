@@ -58,31 +58,31 @@ public final class UserInfo extends JceStruct {
 
     @Override
     public void readFrom(HelperA arg5) {
-        this.imei = arg5.a(0, true);
-        this.qq = arg5.a(1, false);
-        this.phone = arg5.a(2, false);
-        this.ip = arg5.a(3, false);
-        this.lc = arg5.a(4, false);
-        this.channelid = arg5.a(5, false);
-        this.ua = arg5.a(6, false);
+        this.imei = arg5.getStringFromBuffer(0, true);
+        this.qq = arg5.getStringFromBuffer(1, false);
+        this.phone = arg5.getStringFromBuffer(2, false);
+        this.ip = arg5.getStringFromBuffer(3, false);
+        this.lc = arg5.getStringFromBuffer(4, false);
+        this.channelid = arg5.getStringFromBuffer(5, false);
+        this.ua = arg5.getStringFromBuffer(6, false);
         this.netFlag = arg5.getDataForBuffer(this.netFlag, 7, false);
         this.product = arg5.getDataForBuffer(this.product, 8, false);
         if(UserInfo.cache_version == null) {
             UserInfo.cache_version = new ProductVersion();
         }
 
-        this.version = (ProductVersion) arg5.a(UserInfo.cache_version, 9, false);
-        this.guid = arg5.a(10, false);
-        this.imsi = arg5.a(11, false);
+        this.version = (ProductVersion) arg5.getJceStructFromBuffer(UserInfo.cache_version, 9, false);
+        this.guid = arg5.getStringFromBuffer(10, false);
+        this.imsi = arg5.getStringFromBuffer(11, false);
         this.isbuildin = arg5.getDataForBuffer(this.isbuildin, 12, false);
         this.isroot = arg5.getDataForBuffer(this.isroot, 13, false);
         this.sdkversion = arg5.getDataForBuffer(this.sdkversion, 14, false);
         this.buildno = arg5.getDataForBuffer(this.buildno, 15, false);
-        this.uuid = arg5.a(16, false);
+        this.uuid = arg5.getStringFromBuffer(16, false);
         this.lang = arg5.getShort(this.lang, 17, false);
-        this.longitude = arg5.a(this.longitude, 18, false);
-        this.latitude = arg5.a(this.latitude, 19, false);
-        this.newguid = arg5.a(20, false);
+        this.longitude = arg5.getDoubleFromBuffer(this.longitude, 18, false);
+        this.latitude = arg5.getDoubleFromBuffer(this.latitude, 19, false);
+        this.newguid = arg5.getStringFromBuffer(20, false);
     }
 
     @Override

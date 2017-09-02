@@ -53,27 +53,27 @@ public final class SUIKey extends JceStruct {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.lc = arg4.a(0, true);
-        this.name = arg4.a(1, true);
-        this.version = arg4.a(2, true);
-        this.imei = arg4.a(3, true);
-        this.imsi = arg4.a(4, true);
-        this.qq = arg4.a(5, false);
-        this.ip = arg4.a(6, false);
+        this.lc = arg4.getStringFromBuffer(0, true);
+        this.name = arg4.getStringFromBuffer(1, true);
+        this.version = arg4.getStringFromBuffer(2, true);
+        this.imei = arg4.getStringFromBuffer(3, true);
+        this.imsi = arg4.getStringFromBuffer(4, true);
+        this.qq = arg4.getStringFromBuffer(5, false);
+        this.ip = arg4.getStringFromBuffer(6, false);
         this.type = arg4.getDataForBuffer(this.type, 7, false);
-        this.osversion = arg4.a(8, false);
-        this.machineuid = arg4.a(9, false);
-        this.machineconf = arg4.a(10, false);
-        this.phone = arg4.a(11, false);
+        this.osversion = arg4.getStringFromBuffer(8, false);
+        this.machineuid = arg4.getStringFromBuffer(9, false);
+        this.machineconf = arg4.getStringFromBuffer(10, false);
+        this.phone = arg4.getStringFromBuffer(11, false);
         this.subplatform = arg4.getDataForBuffer(this.subplatform, 12, false);
-        this.channelid = arg4.a(13, false);
+        this.channelid = arg4.getStringFromBuffer(13, false);
         this.isbuildin = arg4.getDataForBuffer(this.isbuildin, 14, false);
-        this.uuid = arg4.a(15, false);
+        this.uuid = arg4.getStringFromBuffer(15, false);
         this.lang = arg4.getShort(this.lang, 16, false);
-        this.guid = arg4.a(17, false);
-        this.sdk = arg4.a(18, false);
-        this.sid = arg4.a(19, false);
-        this.newguid = arg4.a(20, false);
+        this.guid = arg4.getStringFromBuffer(17, false);
+        this.sdk = arg4.getStringFromBuffer(18, false);
+        this.sid = arg4.getStringFromBuffer(19, false);
+        this.newguid = arg4.getStringFromBuffer(20, false);
     }
 
     public final void writeTo(HelperC arg3) {

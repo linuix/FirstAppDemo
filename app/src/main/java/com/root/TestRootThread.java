@@ -36,13 +36,13 @@ public class TestRootThread implements Runnable
         }
     }
 
- /**
-  * 获取判断的返回值
-  * */
-public static  int getFlag()
-{
-    return flag;
-}
+     /**
+      * 获取判断的返回值
+      * */
+    public static  int getFlag()
+    {
+        return flag;
+    }
     /**
      * 停止线程
      * */

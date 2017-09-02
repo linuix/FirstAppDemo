@@ -31,16 +31,16 @@ public final class DeviceInfo extends JceStruct {
     }
 
     public final void readFrom(HelperA arg4) {
-        this.imei = arg4.a(0, true);
-        this.imsi = arg4.a(1, false);
-        this.mac = arg4.a(2, false);
-        this.iccid = arg4.a(3, false);
-        this.androidid = arg4.a(4, false);
+        this.imei = arg4.getStringFromBuffer(0, true);
+        this.imsi = arg4.getStringFromBuffer(1, false);
+        this.mac = arg4.getStringFromBuffer(2, false);
+        this.iccid = arg4.getStringFromBuffer(3, false);
+        this.androidid = arg4.getStringFromBuffer(4, false);
         this.sdkversion = arg4.getDataForBuffer(this.sdkversion, 5, false);
-        this.model = arg4.a(6, false);
-        this.product = arg4.a(7, false);
-        this.netfile = arg4.a(8, false);
-        this.lguid = arg4.a(9, false);
+        this.model = arg4.getStringFromBuffer(6, false);
+        this.product = arg4.getStringFromBuffer(7, false);
+        this.netfile = arg4.getStringFromBuffer(8, false);
+        this.lguid = arg4.getStringFromBuffer(9, false);
     }
 
     public final void writeTo(HelperC arg3) {

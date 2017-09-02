@@ -84,16 +84,16 @@ public class HttpUtils {
     /**
      * respCode
      */
-    public final int c() {
+    public final int getRespCode() {
         return this.responseCode;
     }
 
     /**
      * content-length
      */
-    public final long e() {
+    public final long getContentLength() {
         long v0 = -1;
-        String v2 = this.b("content-length");
+        String v2 = this.getHead("content-length");
         if (v2 != null) {
             try {
                 v0 = Long.parseLong(v2.trim());
@@ -105,7 +105,7 @@ public class HttpUtils {
         return v0;
     }
 
-    private String b(String arg6) {
+    private String getHead(String arg6) {
         try {
             return this.httpURLConnection.getHeaderField(arg6);
         } catch (Exception v0) {

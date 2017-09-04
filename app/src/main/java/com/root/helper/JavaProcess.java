@@ -97,7 +97,7 @@ public final class JavaProcess extends JavaProcessImplw implements IJavaProcessh
         RetValue v2_2 = v1_1.execute("su -v", 5000);
         LogUtil.d("checkIfKuSu : ret = " + v2_2.ret + ", stdout = " + v2_2.stdout + ", stderr = " + v2_2
                 .err);
-        if ((v2_2.a()) && v2_2.stdout != null) {
+        if ((v2_2.isSuccess()) && v2_2.stdout != null) {
            /* if (!v2_2.stdout.contains("kinguser")) {
                 v1_1.closeAll();
                 return v0;

@@ -64,7 +64,7 @@ private static  int tag = Const.kingroot_tag;//默认属性
         if((v2.exists()) && !Utils.c(v2)) {
             if(v2_2 != 0) {
                 RetValue v2_3 = SDKLibProcessMgr.a("sh", String.valueOf("su") + " -v");
-                if (!v2_3.a() || v2_3.stdout == null || !v2_3.stdout.contains("kinguser_su")) {
+                if (!v2_3.isSuccess() || v2_3.stdout == null || !v2_3.stdout.contains("kinguser_su")) {
                     v0 = 0;
                 }
 
@@ -79,7 +79,7 @@ private static  int tag = Const.kingroot_tag;//默认属性
         if((v3.exists()) && !Utils.c(v3)) {
             if(v2_2 != 0) {
                 RetValue v2_3 = SDKLibProcessMgr.a("sh", String.valueOf("su") + " -v");
-                if (!v2_3.a() || v2_3.stdout == null || !v2_3.stdout.contains("kinguser_su")) {
+                if (!v2_3.isSuccess() || v2_3.stdout == null || !v2_3.stdout.contains("kinguser_su")) {
                     v0 = 0;
                 }
 
@@ -110,7 +110,7 @@ private static  int tag = Const.kingroot_tag;//默认属性
         if((v2.exists()) && !Utils.c(v2)) {
             if(v2_2 != 0) {
                 RetValue v2_3 = SDKLibProcessMgr.a("sh", String.valueOf("mysu") + " -v");
-                if (!v2_3.a() || v2_3.stdout == null ) {
+                if (!v2_3.isSuccess() || v2_3.stdout == null ) {
                     v0 = 0;
                 }
 
@@ -125,7 +125,7 @@ private static  int tag = Const.kingroot_tag;//默认属性
         if((v3.exists()) && !Utils.c(v3)) {
             if(v2_2 != 0) {
                 RetValue v2_3 = SDKLibProcessMgr.a("sh", String.valueOf("mysu") + " -v");
-                if (!v2_3.a() || v2_3.stdout == null ) {
+                if (!v2_3.isSuccess() || v2_3.stdout == null ) {
                     v0 = 0;
                 }
 

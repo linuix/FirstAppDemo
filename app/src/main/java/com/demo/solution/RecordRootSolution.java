@@ -38,7 +38,7 @@ public class RecordRootSolution {
     public static boolean check(Context context, SolutionHelpers solutionHelpers, boolean arg7) {
         boolean v0 = false;
         ThreadLocalWeakRef.createThreadLocal();
-        if(!a(solutionHelpers.l, new int[]{0, 1, 2, 3, 4, 5})) {
+        if(!checkInArray(solutionHelpers.l, new int[]{0, 1, 2, 3, 4, 5})) {
             ThreadLocalWeakRef.a(7003, "interface_type=" + solutionHelpers.l);
         }
         else
@@ -63,7 +63,7 @@ public class RecordRootSolution {
  *
  * 这的check函数调用
  * */
-    public static boolean a(int arg4, int[] arg5) {
+    public static boolean checkInArray(int arg4, int[] arg5) {
         boolean v0 = false;
         int v2 = arg5.length;
         int v1 = 0;
@@ -109,11 +109,11 @@ public class RecordRootSolution {
         SolutionHelpers[] v1_3 =null;
         int v1_1;
         SolutionManager solutionManager = null;
-        File xmls = new File(entity.a(new String[]{"xmls"}));
+        File xmls = new File(entity.getPathByName(new String[]{"xmls"}));
         if (!xmls.exists()) {
             xmls.mkdirs();
         }
-        File jars = new File(entity.a(new String[]{"jars"}));
+        File jars = new File(entity.getPathByName(new String[]{"jars"}));
 
         if (!jars.exists())
         {
@@ -129,7 +129,7 @@ public class RecordRootSolution {
         //获取本地解决方案，
         if((arg15 & 4) == 4)
         {
-            solutionManager = getLocalSolution(context, entity, xmls, jars);//本地获取解决方案，如果没有 ，在请求网络获取
+            solutionManager = getLocalSolution(context, entity, xmls, jars);//本地获取解决方案，如果没有 ，再请求网络获取
             if (solutionManager != null)
             {
                 return solutionManager;
@@ -310,8 +310,8 @@ public class RecordRootSolution {
 
 
     public static void delete(String arg6) {
-        FileUtils.isDelete(entity.a(new String[]{"jars", arg6}));
-        FileUtils.isDelete(entity.a(new String[]{"xmls", arg6}));
+        FileUtils.isDelete(entity.getPathByName(new String[]{"jars", arg6}));
+        FileUtils.isDelete(entity.getPathByName(new String[]{"xmls", arg6}));
     }
 
 
@@ -319,7 +319,7 @@ public class RecordRootSolution {
      * 创建yis_cfg.txt文件
      */
     private static void createYISConfi(Entity arg5, SolutionManager arg6) {
-        File v1 = new File(arg5.a(new String[]{"yis_cfg.txt"}));
+        File v1 = new File(arg5.getPathByName(new String[]{"yis_cfg.txt"}));
         if (v1.exists()) {
             arg6.pcRootInfo = new RootExtInfo();
             arg6.mobileRootInfo = new RootExtInfo();
@@ -397,7 +397,7 @@ public class RecordRootSolution {
             }
             if (strS.length == 0) {
                 LogUtil.loge("记录 yis_cfg.txt文件==== ");
-                File v1_1 = new File(entity.a(new String[]{"yis_cfg.txt"}));
+                File v1_1 = new File(entity.getPathByName(new String[]{"yis_cfg.txt"}));
                 v1_1.delete();
                 if (solutionMgrNet != null && solutionMgrNet.pcRootInfo != null && solutionMgrNet.mobileRootInfo != null) {
                     JSONObject v0_2 = new JSONObject();
@@ -429,7 +429,7 @@ public class RecordRootSolution {
                 return solutionMgrNet;
             }
             LogUtil.loge("存储方案下发顺序列表 记录在spf中");
-            SpfUtils.removeMarsRootSharedPreferences(context, "solution_id_list", TextUtils.join(",", ((Object[]) strS)));
+            SpfUtils.putMarsRootSharedPreferences(context, "solution_id_list", TextUtils.join(",", ((Object[]) strS)));
         }
         return  solutionMgrNet;
     }

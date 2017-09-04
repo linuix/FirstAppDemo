@@ -106,22 +106,22 @@ public class HttpMgr {
         //准备网络请求
         int v0_1 = HttpMgr.getDataFromServer(context, netCfg1, netCfg2, true);
         if (v0_1 == 0) {
-            GetKingRootSolutionResp v0_3 = (GetKingRootSolutionResp) netCfg2.getDataFromMap("resp", new GetKingRootSolutionResp());
-            LogUtil.e("vvvv " + v0_3);
-            if (v0_3 != null)
+            GetKingRootSolutionResp getKingRootSolutionResp = (GetKingRootSolutionResp) netCfg2.getDataFromMap("resp", new GetKingRootSolutionResp());
+            LogUtil.e("vvvv " + getKingRootSolutionResp);
+            if (getKingRootSolutionResp != null)
             {
                 //有没有找到sessionId，那么这里就不管
-//            EntityManager.sdk_gt18(((GetKingRootSolutionResp)v0_3).sessionId);
+//            EntityManager.sdk_gt18(((GetKingRootSolutionResp)getKingRootSolutionResp).sessionId);
                 try
                 {
-                    LogUtil.e("((GetKingRootSolutionResp)v0_3).solutionsXmls " + ((GetKingRootSolutionResp) v0_3).solutionsXmls);
-                    managers.respSolutionHelpers = XmlFileSolute.getSolutionHelpers(((GetKingRootSolutionResp) v0_3).solutionsXmls);
-                    managers.pcRootInfo = v0_3.pcRootInfo;
-                    managers.mobileRootInfo = v0_3.mobileRootInfo;
+                    LogUtil.e("((GetKingRootSolutionResp)getKingRootSolutionResp).solutionsXmls " +  getKingRootSolutionResp.solutionsXmls);
+                    managers.respSolutionHelpers = XmlFileSolute.getSolutionHelpers(getKingRootSolutionResp.solutionsXmls);
+                    managers.pcRootInfo = getKingRootSolutionResp.pcRootInfo;
+                    managers.mobileRootInfo = getKingRootSolutionResp.mobileRootInfo;
                     managers.a = 0;//写死掉这个值，网络加载还是没有，后续可再次修改这个程序
-                } catch (Exception v2_1)
+                } catch (Exception e)
                 {
-                    v2_1.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         }

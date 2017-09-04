@@ -198,7 +198,7 @@ public class RootMgr {
 
                 Log.d("tag---","index =" + indx + " " + "next_execte_solution_id " + helperses[indx + 1].sindex);
                 //记录下一个要执行的解决方案
-                SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id", helperses[indx + 1].sindex);
+                SpfUtils.putMarsRootSharedPreferences(this.mConext, "next_execute_solution_id", helperses[indx + 1].sindex);
             }
             //获取Root实例类工具执行root,记得加上标志位,同时使用weekReference使用
             //switchCracker的int tag =solutionHelpers.l interface_type 的值
@@ -316,7 +316,7 @@ public class RootMgr {
                     {
                         d("记录成功方案，移除下一个待执行方案标记");
 
-                        SpfUtils.removeMarsRootSharedPreferences(this.mConext, "solution_success_id", solutionHelpers.sindex);
+                        SpfUtils.putMarsRootSharedPreferences(this.mConext, "solution_success_id", solutionHelpers.sindex);
                         SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id");
                         v6 = v4_1;
                         v4_2 = v18;
@@ -399,7 +399,7 @@ public class RootMgr {
     private void startRootThread(Context context/*, Handler handler*/, String sid, WeakReference weakReference) {
         long v2 = System.currentTimeMillis() - SystemClock.elapsedRealtime();
         d("bootTime = " + v2);
-        SpfUtils.removeMarsRootSharedPreferences(context, "executing_sid_time", String.valueOf(sid) + "\t" + v2);
+        SpfUtils.putMarsRootSharedPreferences(context, "executing_sid_time", String.valueOf(sid) + "\t" + v2);
         control = true;
         stopThread();
         CommExecuteThread tmp = new CommExecuteThread(context/*, handler*/, sid, weakReference);

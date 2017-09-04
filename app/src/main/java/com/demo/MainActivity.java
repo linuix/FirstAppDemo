@@ -120,9 +120,9 @@ public class MainActivity extends Activity {
 
 
 
-    public  static void setHandler(Handler arg)
+    public  static void setHandler(Handler handler)
     {
-        handler = arg;
+        MainActivity.handler = handler;
     }
 
     /**

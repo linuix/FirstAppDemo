@@ -67,7 +67,7 @@ public  final class ChPropertyUtils implements IChUtils {
             List v2_1 = arg10.a(((List)v5));
             int v1_2;
             for(v1_2 = 0; v1_2 < v2_1.size(); ++v1_2) {
-                if(!((RetValue)v2_1.get(v1_2)).a()) {
+                if(!((RetValue)v2_1.get(v1_2)).isSuccess()) {
                     String v0_1 = ((RetValue)v2_1.get(v1_2)).cmd;
                     if(!v0_1.startsWith("rm ") && !v0_1.startsWith("mount")) {
                         if(v0_1.startsWith("mkdir ")) {

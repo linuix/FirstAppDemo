@@ -38,28 +38,28 @@ public class CommonLog {
         return instanc;
     }
 
-    public final void recordExecutInfo(String arg7, int arg8, String arg9, String arg10, Handler arg11, Object[] arg12) {
+    public final void recordExecutInfo(String arg7, int arg8, String arg9, String arg10, Handler arg11, Object[] objects) {
         char v5 = '|';
-        StringBuilder v2 = new StringBuilder();
-        v2.append(commonlog_a(1, 154, arg8, arg9, arg10));
-        v2.append(v5).append(arg7);
-        int v3 = arg12.length;
-        int v0;
-        for(v0 = 0; v0 < v3; ++v0) {
-            Object v4 = arg12[v0];
-            v2.append(v5);
-            if(v4 != null) {
-                v2.append(v4.toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(commonlog_a(1, 154, arg8, arg9, arg10));
+        stringBuilder.append(v5).append(arg7);
+        int v3 = objects.length;
+        int i;
+        for(i = 0; i < v3; ++i) {
+            Object object = objects[i];
+            stringBuilder.append(v5);
+            if(object != null) {
+                stringBuilder.append(object.toString());
             }
         }
 
-        for(v0 = arg12.length + 1; v0 < 10; ++v0) {
-            v2.append(v5);
+        for(i = objects.length + 1; i < 10; ++i) {
+            stringBuilder.append(v5);
         }
 
-        v2.append(Const.CHANNELID);
-        String v0_1 = v2.toString();
-        v2.delete(0, v2.length());
+        stringBuilder.append(Const.CHANNELID);
+        String v0_1 = stringBuilder.toString();
+        stringBuilder.delete(0, stringBuilder.length());
 //        this.sdk_gt18(200034, v0_1, arg11);
         LogUtil.e("[Trace] " + arg7 + " : " + v0_1);
     }
@@ -82,7 +82,7 @@ public class CommonLog {
             Object v4 = arg12[v0];
             v2.append(v5);
             if (v4 != null) {
-                v2.append(common_logb(v4.toString()));
+                v2.append(urlEncode(v4.toString()));
             }
         }
 
@@ -250,13 +250,13 @@ public class CommonLog {
         StringBuilder v1 = new StringBuilder();
         v1.append(commonlog_a(2, 0, 0, "0", ""));
         v1.append(v4);
-        v1.append(String.valueOf(common_logb(SystemProperties.get("ro.board.platform") + "")) + ';' + common_logb("" + SystemProperties.get("ro.mtk.hardware")) + ';' + common_logb("" + SystemProperties.get("ro.hardware")));
+        v1.append(String.valueOf(urlEncode(SystemProperties.get("ro.board.platform") + "")) + ';' + urlEncode("" + SystemProperties.get("ro.mtk.hardware")) + ';' + urlEncode("" + SystemProperties.get("ro.hardware")));
         v1.append(v4);
-        v1.append(String.valueOf(common_logb(SystemProperties.get("ro.miui.ui.version.code"))) + ';' + common_logb("" + SystemProperties.get("ro.miui.ui.version.name")));
+        v1.append(String.valueOf(urlEncode(SystemProperties.get("ro.miui.ui.version.code"))) + ';' + urlEncode("" + SystemProperties.get("ro.miui.ui.version.name")));
         v1.append(v4);
-        v1.append(String.valueOf(common_logb(SystemProperties.get("ro.cm.device"))) + ';' + common_logb("" + SystemProperties.get("ro.cm.version")));
+        v1.append(String.valueOf(urlEncode(SystemProperties.get("ro.cm.device"))) + ';' + urlEncode("" + SystemProperties.get("ro.cm.version")));
         v1.append(v4);
-        v1.append(common_logb(SystemProperties.get("ro.build.version.opporom")));
+        v1.append(urlEncode(SystemProperties.get("ro.build.version.opporom")));
         v1.append(v4);
         v1.append(14);
         v1.append(v4);
@@ -273,10 +273,10 @@ public class CommonLog {
     private static String commonlog_a(int arg4, int arg5, int arg6, String arg7, String arg8) {
         char v3 = '|';
         if (arg8 != null) {
-            arg8 = common_logb(arg8);
+            arg8 = urlEncode(arg8);
             LogUtil.loge("a8 = " + arg8);
         }
-        String v1 = "" + arg4 + v3 + 1 + v3 + common_logb(Build.FINGERPRINT) + v3 + common_logb(getLinxeVersion()) + v3 + Build.BRAND + v3 + Build.MODEL + v3 + Build.VERSION.SDK + v3 + System.currentTimeMillis() + v3 + arg5 + v3 + Const.CHANNELID + v3 + arg6 + v3 + arg7 + v3 + arg8;
+        String v1 = "" + arg4 + v3 + 1 + v3 + urlEncode(Build.FINGERPRINT) + v3 + urlEncode(getLinxeVersion()) + v3 + Build.BRAND + v3 + Build.MODEL + v3 + Build.VERSION.SDK + v3 + System.currentTimeMillis() + v3 + arg5 + v3 + Const.CHANNELID + v3 + arg6 + v3 + arg7 + v3 + arg8;
         LogUtil.loge("v1===== = " + v1);
         return v1;
     }
@@ -343,17 +343,17 @@ public class CommonLog {
         return "";
     }
 
-    private static String common_logb(String arg3) {
-        return a("\t", "%09", a("\n", "%0A", a("|", "%7C", a(";", "%3B", arg3))));
+    private static String urlEncode(String arg3) {
+        return strReplace("\t", "%09", strReplace("\n", "%0A", strReplace("|", "%7C", strReplace(";", "%3B", arg3))));
     }
 
 
-    private static String a(String arg1, String arg2, String arg3) {
-        if (!TextUtils.isEmpty(((CharSequence) arg3))) {
-            arg3 = arg3.replace(((CharSequence) arg1), ((CharSequence) arg2));
+    private static String strReplace(String srcStr, String objStr, String str) {
+        if (!TextUtils.isEmpty(str)) {
+            str = str.replace(srcStr,objStr);
         }
 
-        return arg3;
+        return str;
     }
 
 

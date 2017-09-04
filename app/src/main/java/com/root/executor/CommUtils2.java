@@ -124,7 +124,7 @@ public class CommUtils2 {
         ExecutorHelper v0 = null;
         ExecutorHelper v1 = new ExecutorHelper();
         RetValue v2 = arg5.a(String.valueOf(KToolsUtils.a()) + " zls " + arg6);
-        if((v2.a()) && !v2.stdout.trim().equals("Hehe")) {
+        if((v2.isSuccess()) && !v2.stdout.trim().equals("Hehe")) {
             String[] v2_1 = v2.stdout.split(" ");
             if(v2_1.length >= 5)
             {

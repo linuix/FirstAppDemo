@@ -53,7 +53,7 @@ public class SDKLibProcessMgr {
     public static boolean a(String arg3) {
         LogUtil.e("调用进程执行ping 命令");
         RetValue v0 = SDKLibProcessMgr.a("sh", String.valueOf(arg3) + " --ping");
-        boolean v0_1 = !v0.a() /*|| !v0.stdout.trim().equals("kinguser_su") ?*/ ?false : true;
+        boolean v0_1 = !v0.isSuccess() /*|| !v0.stdout.trim().equals("kinguser_su") ?*/ ?false : true;
         return v0_1;
     }
 }

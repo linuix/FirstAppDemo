@@ -31,7 +31,7 @@ public class MarsApkUtils {
             process.execut(Const.EXPORT_PATH);
             RetValue value = process.execute("pm path com.koushikdutta.superuser", 10000);
             LogUtil.e("cmd: pm path com.koushikdutta.superuser, ret = " + value.ret + ", stdout = " + value.stdout + ", stderr = " + value.err);
-            if (value.a()) {
+            if (value.isSuccess()) {
                 process.closeAll();
             }
             if (value.stdout == null) {

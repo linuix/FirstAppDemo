@@ -179,11 +179,11 @@ public class JavaRoot extends FooRoot {
                 if (cracker != null) {
                     LogUtil.e("获取到了 cracker ,继续执行");
                     LogUtil.e("Vroot.startSuc.ret = ");
-                    boolean kd_is_link = JavaProcessk.a(entity.a(new String[]{"kd"}), cracker);
+                    boolean kd_is_link = JavaProcessk.a(entity.getPathByName(new String[]{"kd"}), cracker);
                     LogUtil.e("Vroot.startSuc.ret = "+kd_is_link);
                     if (f)
                     {
-                        LogUtil.e("Vroot.installKu.ret = " + RootUtils3.a(this.mContext, cracker, this.entity.a(new String[]{"play", "su"}), this.entity.a(new String[]{"play", "Kinguser.apk"})));
+                        LogUtil.e("Vroot.installKu.ret = " + RootUtils3.a(this.mContext, cracker, this.entity.getPathByName(new String[]{"play", "su"}), this.entity.getPathByName(new String[]{"play", "Kinguser.apk"})));
                     }
                 }
             } else {

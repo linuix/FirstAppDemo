@@ -19,23 +19,23 @@ public class RootUtils2 {
     /**
      * 读取包内的文件
      * */
-    public static void a(File arg5, String[] arg6)
+    public static void writDataToFile(File file, String[] datas)
     {
-        BufferedWriter v1 = null;
+        BufferedWriter bufferedWriter = null;
         Closeable v2 = null;
         try {
-            v1 = new BufferedWriter(new FileWriter(arg5));
-            int v2_1 = arg6.length;
-            int v0_1;
-            for (v0_1 = 0; v0_1 < v2_1; ++v0_1) {
-                v1.write(String.valueOf(arg6[v0_1]) + "\n");
-                v1.flush();
+            bufferedWriter = new BufferedWriter(new FileWriter(file));
+            int v2_1 = datas.length;
+            int i;
+            for (i = 0; i < v2_1; ++i) {
+                bufferedWriter.write(String.valueOf(datas[i]) + "\n");
+                bufferedWriter.flush();
             }
-            Utils.close(v1);
+            Utils.close(bufferedWriter);
 
         } catch (IOException e) {
             e.printStackTrace();
-            Utils.close(((Closeable) v1));
+            Utils.close( bufferedWriter);
             LogUtil.exception("rootUtils2 excepiton", e);
 
         }

@@ -21,8 +21,8 @@ public class App extends Application {
         String ret = FileUtils.getChannelId(mContext);//105006
         LogUtil.w("***channelId = " + ret);
         //mgrInfo
-        ManagerInfo.init(mContext);//info
-        InitConfig.readKRSDK_RES(App.getContext());  //准备krsdk文件目录
+        ManagerInfo.init(mContext);//准备信息
+        InitConfig.readKRSDK_RES(App.getContext());  //准备krsdk文件目录、并将su，superuser.apk等文件复制到/data/data/packageName目录
         LogUtil.w("ready ===============");
         InitConfig.initSdk();//初始化assetes目录下的文件
         //CheckRoot.excuteSuAndSh();

@@ -25,13 +25,13 @@ public class Entity {
         c = false;
     }
 
-    public final String a(String[] arg4) {
-        String v1 = this.file.getAbsolutePath();
-        int v0;
-        for (v0 = 0; v0 < arg4.length; ++v0) {
-            v1 = String.valueOf(v1) + File.separator + arg4[v0];
+    public final String getPathByName(String[] arg4) {
+        String filePath = this.file.getAbsolutePath();
+        int i;
+        for (i = 0; i < arg4.length; ++i) {
+            filePath = String.valueOf(filePath) + File.separator + arg4[i];
         }
 
-        return v1;
+        return filePath;
     }
 }

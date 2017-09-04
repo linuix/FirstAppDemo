@@ -116,11 +116,11 @@ public class HttpUtils {
      * getInstance
      *
      */
-    public static HttpUtils getInstance(Context context, String arg7) {
-        HttpUtils v0_1 = null;
-        v0_1 = new HttpUtils(context, arg7);
+    public static HttpUtils getInstance(Context context, String url) {
+        HttpUtils httpUtils = null;
+        httpUtils = new HttpUtils(context, url);
         //初始化httpUrlConn的
-        return v0_1;
+        return httpUtils;
     }
     /**
      * 请求方式的设置

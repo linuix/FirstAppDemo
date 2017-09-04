@@ -102,27 +102,27 @@ public class RootUtil {
 
 
     /***
-     * 读取压缩文件内的root解决方案
+     * 读取压缩文件内的root解决方案,并将play目录中的所有文件复制到sdcard中
      */
     private static boolean extract(File solutionFile, String workdir, String chmod) {
 //        File arg9;
-        byte[] v6_1 = new byte[1024];
+        byte[] dataBuffer = new byte[1024];
         int v6;
-        FileOutputStream v2_2 = null;
-        File v5;
-        ZipEntry v2_1;
-        ZipInputStream v4_1 = null;
+        FileOutputStream fileOutputStream = null;
+        File file;
+        ZipEntry zipEntry;
+        ZipInputStream zipInputStream = null;
         Closeable v3 = null;
         int v2 = 8;
         int v4 = 7007;
         boolean v0 = false;
 //        if ( open())
 //        {
-        File v1 = new File(workdir);
+        File fileDir = new File(workdir);
 //        arg9 = new File(dir.getAbsolutePath() + File.separator + name);
         LogUtil.loge("path = " + solutionFile.getAbsolutePath());
-        if (!v1.exists() && !v1.isDirectory()) {
-            v1.mkdirs();
+        if (!fileDir.exists() && !fileDir.isDirectory()) {
+            fileDir.mkdirs();
         }
 
         if (chmod != null) {
@@ -136,51 +136,51 @@ public class RootUtil {
 
         LogUtil.d("chmod ok  play " + workdir + "  retcode = " + v2);
         try {
-            v4_1 = new ZipInputStream(new FileInputStream(solutionFile));
+            zipInputStream = new ZipInputStream(new FileInputStream(solutionFile));
             while (true) {
-                v2_1 = v4_1.getNextEntry();
-                if (v2_1 == null) {
-                    Utils.close(((Closeable) v4_1));
+                zipEntry = zipInputStream.getNextEntry();
+                if (zipEntry == null) {
+                    Utils.close(((Closeable) zipInputStream));
                     return true;
                 }
-                if (!v2_1.isDirectory()) {
+                if (!zipEntry.isDirectory()) {
                     break;
                 }
-                new File(v1, v2_1.getName()).mkdir();
-                LogUtil.loge("mkDir : " + v1.getAbsolutePath());
+                new File(fileDir, zipEntry.getName()).mkdir();
+                LogUtil.loge("mkDir : " + fileDir.getAbsolutePath());
             }
-            v5 = new File(v1, v2_1.getName());
-            v5.delete();
-            v2_2 = new FileOutputStream(v5);
+            file = new File(fileDir, zipEntry.getName());
+            file.delete();
+            fileOutputStream = new FileOutputStream(file);
             while (true) {
-                int v7 = v4_1.read(v6_1);
+                int v7 = zipInputStream.read(dataBuffer);
                 if (v7 == -1) {
                     break;
                 }
-                v2_2.write(v6_1, 0, v7);
-                v2_2.flush();
+                fileOutputStream.write(dataBuffer, 0, v7);
+                fileOutputStream.flush();
             }
-            v2_2.close();
+            fileOutputStream.close();
             if (chmod != null) {
-                String v2_3 = v5.getAbsolutePath();
+                String v2_3 = file.getAbsolutePath();
                 v6 = Posix.chmod(v2_3, Integer.parseInt(chmod, 8));
                 if (v6 != 0) {
                     LogUtil.loge("7007," + String.valueOf(v2_3) + " chmod fail rc = " + v6);
-                    Utils.close(((Closeable) v4_1));
+                    Utils.close(((Closeable) zipInputStream));
                     return v0;
                 }
             }
-            LogUtil.d("extract " + v5.getAbsolutePath());
+            LogUtil.d("extract " + file.getAbsolutePath());
             //测试
-            scanFile(v1.getAbsolutePath());//测试目录下的文件是否存在
+            scanFile(fileDir.getAbsolutePath());//测试目录下的文件是否存在
             v0 = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            Utils.close(v4_1);
-            Utils.close(v2_2);
+            Utils.close(zipInputStream);
+            Utils.close(fileOutputStream);
         }
 //        }
         return v0;
@@ -243,18 +243,18 @@ public class RootUtil {
         try {
             rootMgr = new RootProcess("sh");
             rootMgr.execut(Const.EXPORT_PATH);
-            RetValue v1_2 = rootMgr.execute("mysu -v", 3000);
-            LogUtil.d("RootUtil.getSuInfo mysu -v r.success() = " + v1_2.a() + ", r.mStdOut = " + v1_2.stdout + ", r.mStdErr = " + v1_2.err);
-            if (!v1_2.a()) {
+            RetValue retValue = rootMgr.execute("mysu -v", 3000);
+            LogUtil.d("RootUtil.getSuInfo mysu -v r.success() = " + retValue.isSuccess() + ", r.mStdOut = " + retValue.stdout + ", r.mStdErr = " + retValue.err);
+            if (!retValue.isSuccess()) {
                 rootMgr.closeAll();
                 return "";
             }
-            if (v1_2.stdout == null) {
+            if (retValue.stdout == null) {
                 rootMgr.closeAll();
                 return "";
             }
             rootMgr.closeAll();
-            return v1_2.stdout.trim();
+            return retValue.stdout.trim();
 
         } catch (Exception e) {
             e.printStackTrace();

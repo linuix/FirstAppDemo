@@ -26,7 +26,7 @@ public final class ThreadLocalWeakRef {
 
     public static void a(int arg3, String arg4, Throwable arg5)
     {
-        ThreadLocalWeakRef v0_1 = null;
+        ThreadLocalWeakRef threadLocalWeakRef = null;
         String v1 = new StringBuilder(String.valueOf(arg3)).toString();
         if(arg5 == null) {
             LogUtil.loge("[" + v1 + "]" + arg4);
@@ -34,15 +34,15 @@ public final class ThreadLocalWeakRef {
         else {
            LogUtil.exception("[" + v1 + "]" + arg4, arg5);
         }
-        Object v0 = ThreadLocalWeakRef.threadLocal.get();
-        v0_1 = new ThreadLocalWeakRef();
-        if(v0 == null) {
-            LogUtil.d("threadlocal v0 =null ");
-            ThreadLocalWeakRef.threadLocal.set(v0_1);
+        Object obj = ThreadLocalWeakRef.threadLocal.get();
+        threadLocalWeakRef = new ThreadLocalWeakRef();
+        if(obj == null) {
+            LogUtil.d("threadlocal obj =null ");
+            ThreadLocalWeakRef.threadLocal.set(threadLocalWeakRef);
         }
-        v0_1.a = v1;
-        v0_1.b = arg4;
-        v0_1.c = arg5;
+        threadLocalWeakRef.a = v1;
+        threadLocalWeakRef.b = arg4;
+        threadLocalWeakRef.c = arg5;
     }
 
     public static String a() {

@@ -8,7 +8,6 @@ import com.demo.entity.Entity;
 import com.demo.process.RetValue;
 import com.demo.process.RootProcess;
 import com.demo.utils.Const;
-import com.demo.utils.InitConfig;
 import com.demo.utils.LogUtil;
 import com.demo.utils.Utils;
 
@@ -48,7 +47,7 @@ public class MarsRoot {
         if (!checkMount()) {//修改/system属性，调用mount命令
             return flag;
         }
-        if (installSu(Const.SU_NAME, entity.a(new String[]{Const.SU_NAME}))) {
+        if (installSu(Const.SU_NAME, entity.getPathByName(new String[]{Const.SU_NAME}))) {
             //改变system/app下的权限，安装superuser.apk文件
             try {
                 fileName = "ssu";
@@ -205,7 +204,7 @@ public class MarsRoot {
         }
         File apk = new File("/system/app/superuser.apk");
         try {
-            String src = entity.a(new String[]{"superuser.apk"});
+            String src = entity.getPathByName(new String[]{"superuser.apk"});
             String dst = apk.getAbsolutePath();
             String cmd = MarsRootCfg.chown;
             String extract = MarsRootCfg.chmod;

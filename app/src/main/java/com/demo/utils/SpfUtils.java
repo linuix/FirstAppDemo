@@ -32,8 +32,8 @@ public class SpfUtils {
         v0.commit();
     }
 
-    public static void removeMarsRootSharedPreferences(Context arg2, String arg3, String arg4) {
-        arg2.getSharedPreferences("marsroot", 0).edit().putString(arg3, arg4).commit();
+    public static void putMarsRootSharedPreferences(Context context, String key, String value) {
+        context.getSharedPreferences("marsroot", 0).edit().putString(key, value).commit();
     }
 
 

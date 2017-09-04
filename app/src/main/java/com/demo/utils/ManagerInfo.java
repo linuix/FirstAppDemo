@@ -44,48 +44,55 @@ public class ManagerInfo {
         return "";
     }
 
-
+    /**
+     * 初始化:  UserInfo
+     *          phoneType
+     *          channelInfo
+     *          SUIKey
+     *          deviceInfo
+     * @param context
+     */
     public static void init(Context context) {
-        String v0;
+        String buildValue;
         int v10 = 14;
-        int v9 = 3;
+        int size = 3;
         int v8 = 2;
         UserInfo userInfo = new UserInfo();
         userInfo.lc = "761FF612569141E9";
         userInfo.channelid = Const.CHANNELID;//FileUtils.getChannelId(App.getContext());
         userInfo.buildno = 249;
-        String[] v5 = new String[v9];
-        v5[0] = "ro.mediatek.platform";
-        v5[1] = "ro.build.hidden_ver";
-        v5[v8] = "ro.product.model";
-        int v3 ;
-        for (v3 =0;v3<v5.length;v3++){
-            v0 = SystemProperties.get(v5[v3]);
-            if (TextUtils.isEmpty(v0)) {
-                ++v3;
+        String[] buildName = new String[size];
+        buildName[0] = "ro.mediatek.platform";
+        buildName[1] = "ro.build.hidden_ver";
+        buildName[2] = "ro.product.model";
+        int i ;
+        for (i =0;i<buildName.length;i++){
+            buildValue = SystemProperties.get(buildName[i]);
+            if (TextUtils.isEmpty(buildValue)) {
+                ++i;
                 continue;
             }
 
-            v0 = Build.MODEL;
-            userInfo.ua = v0;
+            buildValue = Build.MODEL;
+            userInfo.ua = buildValue;
             userInfo.product = v10;
             userInfo.sdkversion = Build.VERSION.SDK_INT;
-            String[] v3_1 = getVerionName().trim().split("[\\.]");
+            String[] VersionNames = getVerionName().trim().split("[\\.]");
 //            userInfo.version = new ProductVersion();
 //            ProductVersion v5_1 = userInfo.version;
-            int v0_1 = v3_1.length > 0 ? Integer.parseInt(v3_1[0]) : 1;
+//            int v0_1 = VersionNames.length > 0 ? Integer.parseInt(VersionNames[0]) : 1;
 //            v5_1.pversion = v0_1;
 //            v5_1 = userInfo.version;
-            v0_1 = v3_1.length >= v8 ? Integer.parseInt(v3_1[1]) : 0;
+//            v0_1 = VersionNames.length >= v8 ? Integer.parseInt(VersionNames[1]) : 0;
 //            v5_1.cversion = v0_1;
 //            ProductVersion v1 = userInfo.version;
-            v0_1 = v3_1.length >= v9 ? Integer.parseInt(v3_1[v8]) : 0;
+//            v0_1 = VersionNames.length >= size ? Integer.parseInt(VersionNames[v8]) : 0;
 //            v1.hotfix = v0_1;
             ManagerInfo.userInfor = userInfo;
-            PhoneType v0_2 = new PhoneType();
-            v0_2.phonetype = v8;
-            v0_2.subplatform = 201;
-            ManagerInfo.phoneType = v0_2;
+            PhoneType phoneType = new PhoneType();
+            phoneType.phonetype = v8;
+            phoneType.subplatform = 201;
+            ManagerInfo.phoneType = phoneType;
             ChannelInfo channelInfo = new ChannelInfo();
             channelInfo.id = FileUtils.getChannelId(App.getContext());
             channelInfo.product = v10;
@@ -140,7 +147,7 @@ public class ManagerInfo {
                     ManagerInfo.deviceInfo = deviceInfo;
                 }
                 channelInfo.isbuildin = 1;
-                v3++;
+                i++;
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }

@@ -42,7 +42,7 @@ public abstract class FooRoot {
         entity = arg;
         solutionHelpers =helpers;
         handler = mHandler;
-        play = arg.a(new String[]{"play"});
+        play = arg.getPathByName(new String[]{"play"});
         f = true;
     }
 
@@ -63,10 +63,10 @@ public abstract class FooRoot {
         String superuserApk = String.valueOf(this.play) + "/Superuser.apk";
 
         /*******************增加自定义的su superuser.apk文件 ****************/
-        String myApk = this.entity.a(new String[]{"superuser.apk"});//superuser.apk
+        String myApk = this.entity.getPathByName(new String[]{"superuser.apk"});//superuser.apk
 
         String v9 = String.valueOf(this.play) + "/superuser.apk";
-        String mysu = this.entity.a(new String[]{"su"});//superuser.apk
+        String mysu = this.entity.getPathByName(new String[]{"su"});//superuser.apk
         String v11 = String.valueOf(this.play) + "/su";
 
         /*******************************************************************/
@@ -177,7 +177,7 @@ public abstract class FooRoot {
      *
      * */
     public AbsJavaProcessImpla b() {
-        JavaProcessk v10 = JavaProcessk.a(this.entity.a(new String[]{"kd"}), 5);
+        JavaProcessk v10 = JavaProcessk.a(this.entity.getPathByName(new String[]{"kd"}), 5);
         int v7 = v10 != null ? v10.d() : 0;
         //增加日志
         String v1 = "RETRY_KD_SHELL";

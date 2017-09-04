@@ -83,7 +83,7 @@ public class InitConfig {
     public static int init() {
         commonLog = new CommonLog(mContext);
         LogUtil.w("init start");
-        UrlTest.init(entity.d, entity.e);//设置url的参数，
+        UrlTest.init(entity.d, entity.e);//设置url的参数，false,false
         readKrsdkso(mContext, "libkrsdk.1.0.154.so", new File(entity.file, "libkrsdk.1.0.154.so"));
         loadkrsdkso();//load so
         FileUtils.initkrstock();//初始化准备kr-stock-conf文件 ，目的是为了后续的网络请求准备

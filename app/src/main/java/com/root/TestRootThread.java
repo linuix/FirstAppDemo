@@ -28,10 +28,10 @@ public class TestRootThread implements Runnable
     {
         if (isRunning)
         {
-            boolean tag = excutor.downloadSolution();
+            boolean tag = excutor.downloadSolution();//下载解决方案
             if (mgr != null && tag)
             {
-               flag= mgr.execteRoot(3);
+               flag= mgr.execteRoot(3);//执行解决方案
             }
         }
     }

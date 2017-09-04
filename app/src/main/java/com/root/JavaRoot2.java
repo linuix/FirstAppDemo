@@ -54,7 +54,7 @@ public class JavaRoot2 extends FooRoot {
         int v8 = v3;
         StringBuilder v10 = new StringBuilder();
         long v11 = System.nanoTime();
-        String v2 = this.entity.a(new String[]{"play", "krmain"});
+        String v2 = this.entity.getPathByName(new String[]{"play", "krmain"});
         File v4 = new File(this.play);
         boolean v2_1;
         try {
@@ -175,7 +175,7 @@ public class JavaRoot2 extends FooRoot {
 
         long time = System.nanoTime();
 
-        String cmd = entity.a(new String[]{"play", "krmain"});
+        String cmd = entity.getPathByName(new String[]{"play", "krmain"});
 
         File v4 = new File(play);
         String v9 = null;
@@ -352,7 +352,7 @@ public class JavaRoot2 extends FooRoot {
                 }
                 //这里是生成文件krcfg.txt文件,并没什么作用，不会出现异常信息
                 ///data/data/pkgname/filneame
-                RootUtils2.a(new File(this.cfg), new String[]{"ver:00001", "chart:" + this.play +
+                RootUtils2.writDataToFile(new File(this.cfg), new String[]{"ver:00001", "chart:" + this.play +
                         File.separator + "krcert.jar", "mydir:" + this.play, "rmode:" + v2, "kddir:" +
                         this.entity.file.getAbsolutePath(), "apkdir:" + this.play});
                 LogUtil.d("生成方案配置文件 " + flag);
@@ -401,7 +401,7 @@ public class JavaRoot2 extends FooRoot {
         int v3 = 0;
         StringBuilder sb = new StringBuilder();
         long time = System.nanoTime();
-        String cmd = entity.a(new String[]{"play", "krmain"});
+        String cmd = entity.getPathByName(new String[]{"play", "krmain"});
         File play_dir = new File(play);
         try {
             process = new ProcessBuilder(new String[]{cmd, "-k", cfg}).redirectErrorStream(true).directory(play_dir).start();
@@ -430,7 +430,7 @@ public class JavaRoot2 extends FooRoot {
                         if (cmd != null)
                         {
                             LogUtil.e("真实的KD路径：" + cmd);
-                            SpfUtils.removeMarsRootSharedPreferences(this.mContext, "REAL_KD_PATH", cmd);
+                            SpfUtils.putMarsRootSharedPreferences(this.mContext, "REAL_KD_PATH", cmd);
                         }
                         String v4_2 = RootUtils2.a(v5, "krerrcode:");
                         if (v4_2 != null) {

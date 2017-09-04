@@ -16,7 +16,7 @@ public final class CommUtilsImple extends AbsCommUtila {
         boolean v0 = true;
         if(SelinuxUtils.sdk() >= 14) {
             RetValue v1 = arg4.a("ku.sud --ping");
-            if((v1.a()) && (v1.stdout.trim().equals("kinguser_su"))) {
+            if((v1.isSuccess()) && (v1.stdout.trim().equals("kinguser_su"))) {
                 return v0;
             }
 

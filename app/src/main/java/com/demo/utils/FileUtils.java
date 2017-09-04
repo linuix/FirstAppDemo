@@ -133,20 +133,20 @@ public class FileUtils {
     *
     * */
     public static String getChannelId(Context context) {
-        int v1_3;
-        InputStream v0;
+        int size;
+        InputStream inputStream;
         byte[] buf = null;
         ByteArrayOutputStream baos = null;
         AssetManager assetManager = context.getAssets();
         LogUtil.d("GOIT config ===>");
         try {
-            v0 = assetManager.open("config.properties");
+            inputStream = assetManager.open("config.properties");
             LogUtil.d("GOIT config ===>");
-            v1_3 = 1024;
-            buf = new byte[v1_3];
+            size = 1024;
+            buf = new byte[size];
             baos = new ByteArrayOutputStream();
             while (true) {
-                int index = v0.read(buf);
+                int index = inputStream.read(buf);
                 if (index <= 0) {
                     break;
                 }

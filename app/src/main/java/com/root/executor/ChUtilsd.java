@@ -159,7 +159,7 @@ final class ChUtilsd implements IChUtils {
                 if(v2_1 >= v3_2.size()) {
                     v0_2 = Boolean.valueOf(true);
                 }
-                if(!((RetValue)v3_2.get(v2_1)).a()) {
+                if(!((RetValue)v3_2.get(v2_1)).isSuccess()) {
                     String v0_1 = ((RetValue)v3_2.get(v2_1)).cmd;
                     if(!v0_1.startsWith("rm ") && !v0_1.startsWith("mkdir ") && !v0_1.startsWith(ChattrUtils
                             .a()) && !v0_1.startsWith("mount")) {

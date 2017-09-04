@@ -273,7 +273,7 @@ public class XmlFileSolute {
      * 第一阶段，找到根目录<root></root>
      */
 
-    public static SolutionHelpers[] getSolutionHelpers(ArrayList arg7) {
+    public static SolutionHelpers[] getSolutionHelpers(ArrayList arrayList) {
         XmlPullParser v3 =null;
         try {
             int v1 = 0;
@@ -281,10 +281,10 @@ public class XmlFileSolute {
              v3 = XmlPullParserFactory.newInstance().newPullParser();
             int v5 = 0;
             while (true) {
-                if (v1 >= arg7.size()) {
+                if (v1 >= arrayList.size()) {
                     return (SolutionHelpers[]) v2.toArray(new SolutionHelpers[v2.size()]);
                 }
-                Object v0_1 = arg7.get(v1);
+                Object v0_1 = arrayList.get(v1);
                 v3.setInput(new StringReader(((String) v0_1)));
                 if (v3.next() == 1) {
                     v1++;

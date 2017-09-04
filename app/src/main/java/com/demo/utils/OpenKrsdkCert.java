@@ -53,7 +53,7 @@ public final class OpenKrsdkCert {
         this.data = arg1;
     }
 
-    public static OpenKrsdkCert init(AssetManager assetManager, String fileName) {
+    public static OpenKrsdkCert init(AssetManager assetManager, String fileName) {//解析KrsdkCert文件
         OpenKrsdkCert openKrsdkCert = null;
        LogUtil.d("KRSDKCertificate loadFromAsset >>>>>>>>>>");
         InputStream inputStream=null;

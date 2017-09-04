@@ -140,7 +140,7 @@ public final class CommUtilsq extends AbsCommUtila {
         if(v4 != null && v4.size() == ((List)v0).size()) {
             int v1;
             for(v1 = 0; v1 < v4.size(); ++v1) {
-                if(!((RetValue)v4.get(v1)).a()) {
+                if(!((RetValue)v4.get(v1)).isSuccess()) {
                     String v0_1 = ((RetValue)v4.get(v1)).stdout;
                     if(!v0_1.startsWith("rm ") && !v0_1.startsWith("mount")) {
                         if(v0_1.startsWith(ChattrUtils.a())) {

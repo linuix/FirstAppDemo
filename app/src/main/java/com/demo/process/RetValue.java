@@ -14,7 +14,7 @@ public final class RetValue {  // RetValue是我在demo中重新命名的类f
         this.err = arg4;
     }
 
-    public final boolean a() {
+    public final boolean isSuccess() {
         boolean v0 = this.ret == null || this.ret.intValue() != 0 ? false : true;
         return v0;
     }

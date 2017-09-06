@@ -17,12 +17,11 @@ import java.io.IOException;
 public class RootUtils2 {
 
     /**
-     * 读取包内的文件
+     *
      * */
     public static void writDataToFile(File file, String[] datas)
     {
         BufferedWriter bufferedWriter = null;
-        Closeable v2 = null;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(file));
             int v2_1 = datas.length;
@@ -41,10 +40,9 @@ public class RootUtils2 {
         }
     }
 
-    public static String a(String arg2, String arg3) {
-        String v0 = arg2 == null || !arg2.contains(((CharSequence)arg3)) ? null : arg2.substring(arg2
-                .indexOf(arg3) + arg3.length()).trim();
-        return v0;
+    public static String isContains(String src, String dst) {
+        String result = src == null || !src.contains(dst) ? null : src.substring(src.indexOf(dst) + dst.length()).trim();
+        return result;
     }
 
 }

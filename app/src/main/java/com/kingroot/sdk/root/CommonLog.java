@@ -38,7 +38,15 @@ public class CommonLog {
         return instanc;
     }
 
-    public final void recordExecutInfo(String arg7, int arg8, String arg9, String arg10, Handler arg11, Object[] objects) {
+    /**
+     * 感觉没什么卵用
+     * @param arg7
+     * @param arg8
+     * @param arg9
+     * @param arg10
+     * @param objects
+     */
+    public final void recordExecutInfo(String arg7, int arg8, String arg9, String arg10, Object[] objects) {
         char v5 = '|';
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(commonlog_a(1, 154, arg8, arg9, arg10));

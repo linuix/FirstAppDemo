@@ -1,6 +1,8 @@
 package http.demo;
 
-public final class SolutionHelpers {
+import java.io.Serializable;
+
+public final class SolutionHelpers implements Serializable{
 
 
     /**

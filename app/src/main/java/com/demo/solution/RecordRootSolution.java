@@ -104,9 +104,9 @@ public class RecordRootSolution {
      */
     public static SolutionManager prepareXmlAndJarsDir(Context context, Entity entity, int arg15) {
         LogUtil.loge("准备xml ,jars文件夹 ");
-        SolutionHelpers[] v3_3;
-        SolutionHelpers[] v4_1;
-        SolutionHelpers[] v1_3 =null;
+        SolutionHelpers[] solutionHelperses1;
+        SolutionHelpers[] solutionHelperses2;
+        SolutionHelpers[] solutionHelperses3;
         int v1_1;
         SolutionManager solutionManager = null;
         File xmls = new File(entity.getPathByName(new String[]{"xmls"}));
@@ -127,9 +127,9 @@ public class RecordRootSolution {
             return solutionManager;
         }
         //获取本地解决方案，
-        if((arg15 & 4) == 4)
+        if((4 & 4) == 4)
         {
-            solutionManager = getLocalSolution(context, entity, xmls, jars);//本地获取解决方案，如果没有 ，再请求网络获取
+            solutionManager = getLocalSolutionFromLocal(context, entity, xmls, jars);//本地获取解决方案，如果没有 ，再请求网络获取
             if (solutionManager != null)
             {
                 return solutionManager;
@@ -148,53 +148,53 @@ public class RecordRootSolution {
          v1 = SpfUtils.getMarsrootSharePreferences(context, "solution_success_id");//取出solution_success_id
         if (!TextUtils.isEmpty(((CharSequence) v1)))
         {
-            File v3 = new File(xmls, v1);
-            if (!v3.exists())
+            File file = new File(xmls, v1);
+            if (!file.exists())
             {
-                v1_3 = respSolutionHelpers;
+                solutionHelperses3 = respSolutionHelpers;
             }
-            v1 = CommonLog.getkernelInfo(v3.getAbsolutePath());
+            v1 = CommonLog.getkernelInfo(file.getAbsolutePath());
             if (TextUtils.isEmpty(((CharSequence) v1))) {
-                v1_3 = respSolutionHelpers;
+                solutionHelperses3 = respSolutionHelpers;
             }
             ArrayList arrayList = new ArrayList();
             arrayList.add(v1);
             //新增加的方法
-            v1_3 = XmlFileSolute.getSolutionHelpers(arrayList);
+            solutionHelperses3 = XmlFileSolute.getSolutionHelpers(arrayList);
             //这里的返回值是空，需要注意一下
-            if (v1_3 == null) {
-                v1_3 = respSolutionHelpers;
+            if (solutionHelperses3 == null) {
+                solutionHelperses3 = respSolutionHelpers;
             }
-            if (v1_3.length <= 0)
+            if (solutionHelperses3.length <= 0)
             {
-                v1_3 = respSolutionHelpers;
+                solutionHelperses3 = respSolutionHelpers;
             }
-            v4 = v1_3.length;
-            int v3_2;
-            for (v3_2 = 0; v3_2 < v4; ++v3_2)
+            v4 = solutionHelperses3.length;
+            int i;
+            for (i = 0; i < v4; ++i)
             {
                 //这里赋值给solutionHelper.filePath = 文件的路径
-                v1_3[v3_2].filePath = String.valueOf(jars.getAbsolutePath()) + File.separator + v1_3[v3_2].sindex;
+                solutionHelperses3[i].filePath = String.valueOf(jars.getAbsolutePath()) + File.separator + solutionHelperses3[i].sindex;
             }
-            if (v1_3 == null) {
-                v4_1 = new SolutionHelpers[0];
+            if (solutionHelperses3 == null) {
+                solutionHelperses2 = new SolutionHelpers[0];
             } else {
-                v4_1 = v1_3;
+                solutionHelperses2 = solutionHelperses3;
             }
             if (respSolutionHelpers == null) {
-                v3_3 = new SolutionHelpers[0];
+                solutionHelperses1 = new SolutionHelpers[0];
             } else {
-                v3_3 = respSolutionHelpers;
+                solutionHelperses1 = respSolutionHelpers;
             }
-            v1_3 = new SolutionHelpers[v4_1.length + v3_3.length];
-            System.arraycopy(v4_1, 0, v1_3, 0, v4_1.length);
-            System.arraycopy(v3_3, 0, v1_3, v4_1.length, v3_3.length);
-            if (v1_3 == null) {
-                v1_3 = new SolutionHelpers[0];
+            solutionHelperses3 = new SolutionHelpers[solutionHelperses2.length + solutionHelperses1.length];
+            System.arraycopy(solutionHelperses2, 0, solutionHelperses3, 0, solutionHelperses2.length);
+            System.arraycopy(solutionHelperses1, 0, solutionHelperses3, solutionHelperses2.length, solutionHelperses1.length);
+            if (solutionHelperses3 == null) {
+                solutionHelperses3 = new SolutionHelpers[0];
             }
             LogUtil.loge("完成solution");
 
-            solutionManager.respSolutionHelpers =v1_3;
+            solutionManager.respSolutionHelpers =solutionHelperses3;
 
             return solutionManager;
         }
@@ -225,7 +225,7 @@ public class RecordRootSolution {
     /**
      * 获取本地方案
      * */
-    private static SolutionManager getLocalSolution(Context context, Entity entity, File xmls, File jars) {
+    private static SolutionManager getLocalSolutionFromLocal(Context context, Entity entity, File xmls, File jars) {
 
         LogUtil.e("查找本地方案是否存在可以用");
         SolutionManager solutionMgr =null;
@@ -269,40 +269,40 @@ public class RecordRootSolution {
     }
 
     private static void iteratorJars(File jars, SolutionHelpers[] solutionHelperses) {
-        int v4;
-        int v1_1;
+        int i;
+        int j;
         if (jars.isDirectory()) {
-            File[] v8 = jars.listFiles();
-            if (v8 == null)
+            File[] files = jars.listFiles();
+            if (files == null)
             {
                 return;
             }
-            int v9 = v8.length;
-            for (v4 = 0; v4 < v9; ++v4) {
-                String v10 = v8[v4].getName();
-                if (!v10.equals("131")) {
+            int v9 = files.length;
+            for (i = 0; i < v9; ++i) {
+                String fileName = files[i].getName();
+                if (!fileName.equals("131")) {
                     if (solutionHelperses != null) {
                         int v11 = solutionHelperses.length;
-                        v1_1 = 0;
+                        j = 0;
                         while (true) {
-                            if (v1_1 >= v11) {
-                                v1_1 = 0;
-                            } else if (solutionHelperses[v1_1].sindex.equals(v10)) {
-                                v1_1 = 1;
+                            if (j >= v11) {
+                                j = 0;
+                            } else if (solutionHelperses[j].sindex.equals(fileName)) {
+                                j = 1;
                             } else {
-                                ++v1_1;
+                                ++j;
                                 continue;
                             }
 
                             break;
                         }
                     } else {
-                        v1_1 = 0;
+                        j = 0;
                     }
-                    if (v1_1 != 0) {
+                    if (j != 0) {
                         break;
                     }
-                    delete(v10);
+                    delete(fileName);
                 }
             }
         }
@@ -367,6 +367,7 @@ public class RecordRootSolution {
         solutionMgrNet= getSolutionMgr(context,jars,xmls,solutionMgrNet.respSolutionHelpers);
         return solutionMgrNet;
     }
+
     private static SolutionManager getSolutionMgr(Context context,File jars,File xmls, SolutionHelpers[] solutionHelpers)
     {
         if (solutionHelpers == null)
@@ -397,27 +398,27 @@ public class RecordRootSolution {
             }
             if (strS.length == 0) {
                 LogUtil.loge("记录 yis_cfg.txt文件==== ");
-                File v1_1 = new File(entity.getPathByName(new String[]{"yis_cfg.txt"}));
-                v1_1.delete();
+                File yis_cfgFile = new File(entity.getPathByName(new String[]{"yis_cfg.txt"}));
+                yis_cfgFile.delete();
                 if (solutionMgrNet != null && solutionMgrNet.pcRootInfo != null && solutionMgrNet.mobileRootInfo != null) {
-                    JSONObject v0_2 = new JSONObject();
-                    JSONObject v2 = new JSONObject();
-                    JSONObject v4_1 = new JSONObject();
+                    JSONObject jsonObject = new JSONObject();
+                    JSONObject jsonObject1 = new JSONObject();
+                    JSONObject jsonObject2 = new JSONObject();
                     try {
-                        v2.put("canRoot", solutionMgrNet.pcRootInfo.canRoot);
-                        v2.put("useTime", solutionMgrNet.pcRootInfo.useTime);
-                        v2.put("succUsers", solutionMgrNet.pcRootInfo.succUsers);
-                        v2.put("succRate", solutionMgrNet.pcRootInfo.succRate);
-                        v4_1.put("canRoot", solutionMgrNet.mobileRootInfo.canRoot);
-                        v4_1.put("useTime", solutionMgrNet.mobileRootInfo.useTime);
-                        v4_1.put("succUsers", solutionMgrNet.mobileRootInfo.succUsers);
-                        v4_1.put("succRate", solutionMgrNet.mobileRootInfo.succRate);
-                        v0_2.put("pcRootInfo", v2);
-                        v0_2.put("mobileRootInfo", v4_1);
-                        String v0_3 = v0_2.toString();
-                        LogUtil.e("saveRootExtInfo.json = " + v0_3);
+                        jsonObject1.put("canRoot", solutionMgrNet.pcRootInfo.canRoot);
+                        jsonObject1.put("useTime", solutionMgrNet.pcRootInfo.useTime);
+                        jsonObject1.put("succUsers", solutionMgrNet.pcRootInfo.succUsers);
+                        jsonObject1.put("succRate", solutionMgrNet.pcRootInfo.succRate);
+                        jsonObject2.put("canRoot", solutionMgrNet.mobileRootInfo.canRoot);
+                        jsonObject2.put("useTime", solutionMgrNet.mobileRootInfo.useTime);
+                        jsonObject2.put("succUsers", solutionMgrNet.mobileRootInfo.succUsers);
+                        jsonObject2.put("succRate", solutionMgrNet.mobileRootInfo.succRate);
+                        jsonObject.put("pcRootInfo", jsonObject1);
+                        jsonObject.put("mobileRootInfo", jsonObject2);
+                        String rootInfo = jsonObject.toString();
+                        LogUtil.e("saveRootExtInfo.json = " + rootInfo);
                         //写文件*******写入获取的文件信息
-                        Utils.writeSolutionFiles(v1_1, new String[]{v0_3});
+                        Utils.writeSolutionFiles(yis_cfgFile, new String[]{rootInfo});
                         //*****
                     } catch (Exception e) {
                         e.getMessage();

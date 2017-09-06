@@ -25,7 +25,7 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
     private JavaProcessk(RootProcess arg2) {
         super();
         this.e = 0;
-        ((JavaProcessImplw) this).d = arg2;
+        ((JavaProcessImplw) this).rootProcess = arg2;
         ((JavaProcessImplw) this).a = 2;
     }
     /**
@@ -99,7 +99,7 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
 
                     else
                     {
-                        if (retValue.ret.intValue() == 0 && AbsJavaProcessImpla.b(retValue.stdout))
+                        if (retValue.ret.intValue() == 0 && AbsJavaProcessImpla.checkRoot(retValue.stdout))
                         {
                             LogUtil.d("可以获取到javaprocess k");
                             retobj = new JavaProcessk(process);
@@ -131,7 +131,7 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
                         process = null;
                     }
                     LogUtil.d("尝试连接另一个kd文件 ");
-                    RetValue retValue = processing( real_kd_path);
+                    RetValue retValue = processing(real_kd_path);
                     if (retValue == null)
                     {
                         LogUtil.d("读取连接kd文件出现空值返回 2，");
@@ -139,7 +139,7 @@ public class JavaProcessk extends JavaProcessImplw implements IJavaProcessh {
                     //----------------------------
                    else
                     {
-                        if (retValue.ret.intValue() == 0 && AbsJavaProcessImpla.b(retValue.stdout))
+                        if (retValue.ret.intValue() == 0 && AbsJavaProcessImpla.checkRoot(retValue.stdout))
                         {//获取到临时root权限，那么就该继续使用这个进程操纵
                             /**
                              * 在这里根据得到临时root身份的process，操作进程
@@ -233,7 +233,7 @@ private static  void mars()
             LogUtil.e("getKDRootShell() javaprocessk processing realPath ret = " + ret.ret + ", stdout = " + ret.stdout + ", stderr = " + ret.err);
             if (ret != null)
             {
-               if( AbsJavaProcessImpla.b(ret.stdout))//判断临时root
+               if( AbsJavaProcessImpla.checkRoot(ret.stdout))//判断临时root
                {
                    mars();//在这里调用这个进程 接管
                }

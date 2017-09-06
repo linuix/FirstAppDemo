@@ -13,7 +13,7 @@ import com.demo.utils.LogUtil;
 public class JavaProcessImplw extends AbsJavaProcessImpla
 {
 
-    protected RootProcess d;
+    protected RootProcess rootProcess;
     public JavaProcessImplw()
     {
         super();
@@ -27,7 +27,7 @@ public class JavaProcessImplw extends AbsJavaProcessImpla
         JavaSolutionHelpers v2 = new JavaSolutionHelpers();
         try
         {
-            RetValue v0_1 = this.d.execute(arg5, arg6);
+            RetValue v0_1 = this.rootProcess.execute(arg5, arg6);
             v2.a = v0_1.ret.intValue();
             if (v0_1.ret.intValue() == 0)
             {
@@ -59,22 +59,22 @@ public class JavaProcessImplw extends AbsJavaProcessImpla
 
     @Override
     public void c() {
-        if (this.d != null) {
-            this.d.closeAll();
+        if (this.rootProcess != null) {
+            this.rootProcess.closeAll();
         }
     }
 
     @Override
-    public String d(String arg5) {
-        String v0 = null;
+    public String d(String cmd) {
+        String result = null;
         ThreadLocalWeakRef.createThreadLocal();
         try {
-            v0 = this.d.execut(arg5).stdout;
+            result = this.rootProcess.execut(cmd).stdout;
         } catch (Throwable v1) {
-            LogUtil.exception("KD(SU)RootShell.executeCommand:" + arg5, v1);
+            LogUtil.exception("KD(SU)RootShell.executeCommand:" + cmd, v1);
             ThreadLocalWeakRef.a(7016, "kd(su)shell throw exception", v1);
         }
-        LogUtil.d("cmd: " + arg5 + ", ret: " + v0);
-        return v0;
+        LogUtil.d("cmd: " + cmd + ", ret: " + result);
+        return result;
     }
 }

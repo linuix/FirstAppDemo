@@ -38,133 +38,133 @@ public class JavaRoot2 extends FooRoot {
         this.cfg = String.valueOf(this.play) + "/krcfg.txt";
     }
 
-    public static void setI(JavaRoot2 arg) {
+    public static void setI() {
         i = false;
     }
 
-    public int a1(RootLog arg17) {//修改成为test，这个原始的代码
-        int tag = 0;
-        BufferedReader v13;
-        String v9;
-//        Utils.clearThreadLocal();
-        ThreadLocalWeakRef.createThreadLocal();
-        boolean v1 = false;
-        int v3 = 0;
-        boolean v9_1 = true;
-        int v8 = v3;
-        StringBuilder v10 = new StringBuilder();
-        long v11 = System.nanoTime();
-        String v2 = this.entity.getPathByName(new String[]{"play", "krmain"});
-        File v4 = new File(this.play);
-        boolean v2_1;
-        try {
-            this.process = new ProcessBuilder(new String[]{v2, "-k", this.cfg}).redirectErrorStream(true).directory(v4).start();
-            new ExecutThread2(this, process).start();
-            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info", new String[]{solutionHelpers.sindex, "154", "", RootMgr.msg, "0", "1"});
-            arg17.a(" [ onRoot() start sid = " + solutionHelpers.sindex + " ]");
-            v9 = String.valueOf(solutionHelpers.sindex) + ".stdout : ";
-            v13 = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
-            while (true) {
-                v2_1 = v13.ready();
-                if (v2_1) {
-                    LogUtil.d("[ v13.ready() = " + v2_1 + " ] ");
-                    break;
-                } else if (this.i) {//这个值在process.waitFor()完成之后，就会改变为false,那么不会走这个位置
-                    LogUtil.loge("this.url " + this.i);
-                    break;
-                } else {
-                    v8 = v3;
-                    v9_1 = v1;
-                    LogUtil.loge("else ====== ");
-                    //--------
-                }
-
-            }
-            //-----------
-            //if else保留位置
-            if (!v2_1) {
-                long v4_1 = 500;
-                Thread.sleep(v4_1);
-            } else {
-                String v5 = v13.readLine().trim();
-                LogUtil.loge(String.valueOf(v9) + v5);
-                arg17.a(v5);
-                v2 = RootUtils2.a(v5, "[et] KRS|FT PARAMS:");
-                if (v2 != null) {
-                    //写本地文件
-                }
-                v2 = RootUtils2.a(v5, "KRS|STAT|KD:");
-                if (v2 != null) {
-                    LogUtil.d("真实的KD路径：" + v2);
-
-                }
-                String v4_2 = RootUtils2.a(v5, "krerrcode:");
-                if (v4_2 != null) {
-                    String[] v1_2 = v4_2.split(",");
-                    v3 = v1_2 == null || v1_2.length <= 0 || v1_2[0] == null || !"0".equals(v1_2[0].trim()) ? 1 : 0;
-                    SpfUtils.markExploitRet(mContext, v3, v4_2);
-                    LogUtil.loge("catch ::: errCodes = " + v4_2);
-                    if (v3 != 0) {
-                        v9_1 = true;
-                        v8 = v3;
-                        v11 = (System.nanoTime() - v11) / 1000000;
-                        arg17.a("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
-                                + v8 + ", childDuingTime = " + v11);
-                        LogUtil.d("执行完成1！ catchResult = " + v9_1);
-                        String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
-                        SpfUtils.removeMarsRootSharedPreferences(mContext, "EMID_KRSDK_EXReport_Info");
-                        if (v13_1.length >= 5) {
-                            CommonLog commonLog = new CommonLog(mContext);
-                            int v2_3 = 200039;
-                            v3 = !v9_1 || v8 != 0 ? 1 : 0;
-                            commonLog.recordEMID(v2_3, v3, "0", "catchResult=" + v9_1 + ", errCode=" + v8, null, new Object[]{v13_1[0], v13_1[1], v13_1[2], v13_1[3], Long.valueOf(v11), Integer.valueOf(1)});
-                        }
-                        if (v9_1) {
-                            if (v8 == 0) {
-                                tag = 0;
-                            } else {
-                                LogUtil.d("执行完成！");
-                                tag = 1;
-                            }
-                            return tag;
-                        } else {
-                            LogUtil.loge("Exe fail, EOF");
-                            arg17.a("onRoot() not catchResult : ");
-                        }
-                    }
-                }
-            }
-            ///
-            v11 = (System.nanoTime() - v11) / 1000000;
-            arg17.a("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
-                    + v8 + ", childDuingTime = " + v11);
-            LogUtil.loge("执行完成1！ catchResult = " + v9_1);
-            String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
-            SpfUtils.removeMarsRootSharedPreferences(mContext, "EMID_KRSDK_EXReport_Info");
-            if (v13_1.length >= 5) {
-                CommonLog commonLog = new CommonLog(mContext);
-                int v2_3 = 200039;
-                v3 = !v9_1 || v8 != 0 ? 1 : 0;
-                commonLog.recordEMID(v2_3, v3, "0", "catchResult=" + v9_1 + ", errCode=" + v8, null, new Object[]{v13_1[0], v13_1[1], v13_1[2], v13_1[3], Long.valueOf(v11), Integer.valueOf(1)});
-            }
-            if (v9_1) {
-                if (v8 == 0) {
-                    tag = 0;
-                } else {
-                    LogUtil.d("执行完成！");
-                    tag = 1;
-                }
-                return tag;
-            } else {
-                LogUtil.loge("Exe fail, EOF");
-                arg17.a("onRoot() not catchResult : ");
-            }
-            return tag;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return tag;
-    }
+//    public int a1(RootLog arg17) {//修改成为test，这个原始的代码
+//        int tag = 0;
+//        BufferedReader v13;
+//        String v9;
+////        Utils.clearThreadLocal();
+//        ThreadLocalWeakRef.createThreadLocal();
+//        boolean v1 = false;
+//        int v3 = 0;
+//        boolean v9_1 = true;
+//        int v8 = v3;
+//        StringBuilder v10 = new StringBuilder();
+//        long v11 = System.nanoTime();
+//        String v2 = this.entity.getPathByName(new String[]{"play", "krmain"});
+//        File v4 = new File(this.play);
+//        boolean v2_1;
+//        try {
+//            this.process = new ProcessBuilder(new String[]{v2, "-k", this.cfg}).redirectErrorStream(true).directory(v4).start();
+//            new ExecutThread2(this, process).start();
+//            SpfUtils.putMarsRootShareAndSeparator(mContext, "EMID_KRSDK_EXReport_Info", new String[]{solutionHelpers.sindex, "154", "", RootMgr.msg, "0", "1"});
+//            arg17.record(" [ onRoot() start sid = " + solutionHelpers.sindex + " ]");
+//            v9 = String.valueOf(solutionHelpers.sindex) + ".stdout : ";
+//            v13 = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
+//            while (true) {
+//                v2_1 = v13.ready();
+//                if (v2_1) {
+//                    LogUtil.rootProcess("[ v13.ready() = " + v2_1 + " ] ");
+//                    break;
+//                } else if (this.i) {//这个值在process.waitFor()完成之后，就会改变为false,那么不会走这个位置
+//                    LogUtil.loge("this.url " + this.i);
+//                    break;
+//                } else {
+//                    v8 = v3;
+//                    v9_1 = v1;
+//                    LogUtil.loge("else ====== ");
+//                    //--------
+//                }
+//
+//            }
+//            //-----------
+//            //if else保留位置
+//            if (!v2_1) {
+//                long v4_1 = 500;
+//                Thread.sleep(v4_1);
+//            } else {
+//                String v5 = v13.readLine().trim();
+//                LogUtil.loge(String.valueOf(v9) + v5);
+//                arg17.record(v5);
+//                v2 = RootUtils2.isContains(v5, "[et] KRS|FT PARAMS:");
+//                if (v2 != null) {
+//                    //写本地文件
+//                }
+//                v2 = RootUtils2.isContains(v5, "KRS|STAT|KD:");
+//                if (v2 != null) {
+//                    LogUtil.rootProcess("真实的KD路径：" + v2);
+//
+//                }
+//                String v4_2 = RootUtils2.isContains(v5, "krerrcode:");
+//                if (v4_2 != null) {
+//                    String[] v1_2 = v4_2.split(",");
+//                    v3 = v1_2 == null || v1_2.length <= 0 || v1_2[0] == null || !"0".equals(v1_2[0].trim()) ? 1 : 0;
+//                    SpfUtils.markExploitRet(mContext, v3, v4_2);
+//                    LogUtil.loge("catch ::: errCodes = " + v4_2);
+//                    if (v3 != 0) {
+//                        v9_1 = true;
+//                        v8 = v3;
+//                        v11 = (System.nanoTime() - v11) / 1000000;
+//                        arg17.record("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
+//                                + v8 + ", childDuingTime = " + v11);
+//                        LogUtil.rootProcess("执行完成1！ catchResult = " + v9_1);
+//                        String[] v13_1 = SpfUtils.getMarsRootShareAndRemoveSeparator(mContext, "EMID_KRSDK_EXReport_Info");
+//                        SpfUtils.removeMarsRootSharedPreferences(mContext, "EMID_KRSDK_EXReport_Info");
+//                        if (v13_1.length >= 5) {
+//                            CommonLog commonLog = new CommonLog(mContext);
+//                            int v2_3 = 200039;
+//                            v3 = !v9_1 || v8 != 0 ? 1 : 0;
+//                            commonLog.recordEMID(v2_3, v3, "0", "catchResult=" + v9_1 + ", errCode=" + v8, null, new Object[]{v13_1[0], v13_1[1], v13_1[2], v13_1[3], Long.valueOf(v11), Integer.valueOf(1)});
+//                        }
+//                        if (v9_1) {
+//                            if (v8 == 0) {
+//                                tag = 0;
+//                            } else {
+//                                LogUtil.rootProcess("执行完成！");
+//                                tag = 1;
+//                            }
+//                            return tag;
+//                        } else {
+//                            LogUtil.loge("Exe fail, EOF");
+//                            arg17.record("onRoot() not catchResult : ");
+//                        }
+//                    }
+//                }
+//            }
+//            ///
+//            v11 = (System.nanoTime() - v11) / 1000000;
+//            arg17.record("onRoot() end sid = " + solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = "
+//                    + v8 + ", childDuingTime = " + v11);
+//            LogUtil.loge("执行完成1！ catchResult = " + v9_1);
+//            String[] v13_1 = SpfUtils.getMarsRootShareAndRemoveSeparator(mContext, "EMID_KRSDK_EXReport_Info");
+//            SpfUtils.removeMarsRootSharedPreferences(mContext, "EMID_KRSDK_EXReport_Info");
+//            if (v13_1.length >= 5) {
+//                CommonLog commonLog = new CommonLog(mContext);
+//                int v2_3 = 200039;
+//                v3 = !v9_1 || v8 != 0 ? 1 : 0;
+//                commonLog.recordEMID(v2_3, v3, "0", "catchResult=" + v9_1 + ", errCode=" + v8, null, new Object[]{v13_1[0], v13_1[1], v13_1[2], v13_1[3], Long.valueOf(v11), Integer.valueOf(1)});
+//            }
+//            if (v9_1) {
+//                if (v8 == 0) {
+//                    tag = 0;
+//                } else {
+//                    LogUtil.rootProcess("执行完成！");
+//                    tag = 1;
+//                }
+//                return tag;
+//            } else {
+//                LogUtil.loge("Exe fail, EOF");
+//                arg17.record("onRoot() not catchResult : ");
+//            }
+//            return tag;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return tag;
+//    }
 
     /**
      * 重写执行的流程
@@ -256,18 +256,18 @@ public class JavaRoot2 extends FooRoot {
         try {
             String v5 = v13.readLine().trim();
             LogUtil.d(String.valueOf(v9) + v5);
-            rootLog.a(v5);
-            cmd = RootUtils2.a(v5, "[et] KRS|FT PARAMS:");
+            rootLog.record(v5);
+            cmd = RootUtils2.isContains(v5, "[et] KRS|FT PARAMS:");
             if (cmd != null) {
                 LogUtil.d("EMID_KRSDK_EXReport_Info CommLog.record");
             }
 
-            cmd = RootUtils2.a(v5, "KRS|STAT|KD:");
+            cmd = RootUtils2.isContains(v5, "KRS|STAT|KD:");
             if (cmd != null) {
                 LogUtil.d("在JavaRoot2 真实的kd path: " + cmd);
                 SpfUtils.put(mContext, "REAL_KD_PATH", cmd);
             }
-            String v4_2 = RootUtils2.a(v5, "krerrcode:");
+            String v4_2 = RootUtils2.isContains(v5, "krerrcode:");
             if (v4_2 != null) {
                 String[] v1_2 = v4_2.split(",");
                 v3 = v1_2 == null || v1_2.length <= 0 || v1_2[0] == null || !"0".equals(v1_2[0].trim()) ? 1 : 0;
@@ -282,7 +282,7 @@ public class JavaRoot2 extends FooRoot {
                             + v8 + ", childDuingTime = " + time);
                     LogUtil.d("执行完成！ catchResult = " + v9_1);
 
-                    String[] v13_1 = SpfUtils.e(mContext, "EMID_KRSDK_EXReport_Info");
+                    String[] v13_1 = SpfUtils.getMarsRootShareAndRemoveSeparator(mContext, "EMID_KRSDK_EXReport_Info");
 
                     if (v13_1.length >= 5) {
                         LogUtil.d("log need upload ");
@@ -337,7 +337,7 @@ public class JavaRoot2 extends FooRoot {
 //------------
 
     /**
-     * 开始，初始化完成，之后把krcfg.txt文件写好，然后调用a(x arg)的方法，执行准备好的文件
+     * 开始，初始化完成，之后把krcfg.txt文件写好，然后调用a(x arg)的方法，执行准备好的文件,解压前面下载好的文件
      */
     @Override
     public boolean beforeRoot() {
@@ -387,7 +387,7 @@ public class JavaRoot2 extends FooRoot {
      * 2.执行可执行文件krmain 这个文件，主要释放一些文件，包括kd文件，这linux 内部，把kd文件释放，这个是一个守护进程的文件
      * 3.在找到kd文件的路径之后，退出该操作。然后往后执行，根据kd路径在Linux 内部的路径，启用这个文件，
      * 4.在获取到kd文件的响应之后，表示获取root权限，往后就是执行脚本root.sh和installRecovery.sh脚本，
-     *
+     *  -----------------------------------------------执行root
      */
 
     public int a(RootLog arg) {
@@ -408,7 +408,7 @@ public class JavaRoot2 extends FooRoot {
 
             new ExecutThread2(this, process).start();//这里的线程是读取进程中的信息
 
-            SpfUtils.a(mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.sindex, "154", "", RootMgr.msg, "0", "1"});
+            SpfUtils.putMarsRootShareAndSeparator(mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.sindex, "154", "", RootMgr.msg, "0", "1"});
             LogUtil.e("onRoot() start sid = " + this.solutionHelpers.sindex);
             v9 = String.valueOf(this.solutionHelpers.sindex) + ".stdout : ";
             br = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
@@ -418,27 +418,27 @@ public class JavaRoot2 extends FooRoot {
                 {
                     //写
                     try {
-                        String v5 = br.readLine().trim();
-                        LogUtil.e(String.valueOf(v9) + v5);
-//                        LogUtil.fileSize("读取到的信息 ： " + v5);
-                        cmd = RootUtils2.a(v5, "[et] KRS|FT PARAMS:");
+                        String resultLine = br.readLine().trim();
+                        LogUtil.e(String.valueOf(v9) + resultLine);
+//                        LogUtil.fileSize("读取到的信息 ： " + resultLine);
+                        cmd = RootUtils2.isContains(resultLine, "[et] KRS|FT PARAMS:");
                         if (cmd != null)
                         {
-                            SpfUtils.a(this.mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.sindex, "154", cmd, new StringBuilder(String.valueOf(RootMgr.msg)).toString(), "0", "1"});
+                            SpfUtils.putMarsRootShareAndSeparator(this.mContext, "EMID_KRSDK_EXReport_Info", new String[]{this.solutionHelpers.sindex, "154", cmd, new StringBuilder(String.valueOf(RootMgr.msg)).toString(), "0", "1"});
                         }
-                        cmd = RootUtils2.a(v5, "KRS|STAT|KD:");
+                        cmd = RootUtils2.isContains(resultLine, "KRS|STAT|KD:");
                         if (cmd != null)
                         {
                             LogUtil.e("真实的KD路径：" + cmd);
                             SpfUtils.putMarsRootSharedPreferences(this.mContext, "REAL_KD_PATH", cmd);
                         }
-                        String v4_2 = RootUtils2.a(v5, "krerrcode:");
-                        if (v4_2 != null) {
+                        String contains = RootUtils2.isContains(resultLine, "krerrcode:");
+                        if (contains != null) {
 
-                            String[] v1_2 = v4_2.split(",");
+                            String[] v1_2 = contains.split(",");
                             v3 = v1_2 == null || v1_2.length <= 0 || v1_2[0] == null || !"0".equals(v1_2[0].trim()) ? 1 : 0;
-                            SpfUtils.markExploitRet(this.mContext, v3, v4_2);
-                            LogUtil.e("catch ::: errCodes = " + v4_2);
+                            SpfUtils.markExploitRet(this.mContext, v3, contains);
+                            LogUtil.e("catch ::: errCodes = " + contains);
 
                             //写文件，记录下信息，然后让网络上传日志信息
 
@@ -459,7 +459,7 @@ public class JavaRoot2 extends FooRoot {
 
                                     LogUtil.e("执行完成1！ catchResult = " + v9_1);
 
-                                    String[] v13_1 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
+                                    String[] v13_1 = SpfUtils.getMarsRootShareAndRemoveSeparator(this.mContext, "EMID_KRSDK_EXReport_Info");
 
                                     SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
                                     if (v13_1.length >= 5) {
@@ -516,8 +516,8 @@ public class JavaRoot2 extends FooRoot {
                 }
             }
 
-        } catch (IOException v) {
-            LogUtil.exception("javaRoot2 execotion", v);
+        } catch (IOException e1) {
+            LogUtil.exception("javaRoot2 execotion", e1);
         }
         //执行完成函数
         ///-------------------执行完成----------
@@ -526,8 +526,7 @@ public class JavaRoot2 extends FooRoot {
             time = (System.nanoTime() - time) / 1000000;
             LogUtil.e("onRoot() end sid = " + this.solutionHelpers.sindex + ", catchResult = " + v9_1 + ", exploitRet = " + v8 + ", childDuingTime = " + time);
             LogUtil.e("执行完成1！ catchResult = " + v9_1);
-            String[] v13_1 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
-
+            String[] v13_1 = SpfUtils.getMarsRootShareAndRemoveSeparator(this.mContext, "EMID_KRSDK_EXReport_Info");
             SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
             if (v13_1.length >= 5) {
                 LogUtil.e("上报日志信息，2222222222222");

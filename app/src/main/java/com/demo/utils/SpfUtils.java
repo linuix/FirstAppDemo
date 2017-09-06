@@ -37,45 +37,43 @@ public class SpfUtils {
     }
 
 
-    public static void mark(Context arg4, String arg5, int arg6, int arg7) {
-        SharedPreferences.Editor v0 = getPref(arg4).edit();
-        v0.putString("x_sid", arg5);
-        v0.putInt("x_sindex", arg6);
-        v0.putInt("x_stype", arg7);
-        v0.putLong("x_start_time", System.currentTimeMillis());
-        v0.putLong("x_start_nano_time", System.nanoTime());
-        v0.putLong("x_last_nano_time", System.nanoTime());
-        v0.putInt("x_exploit_ret", 7053);
-        v0.putString("x_exploit_errcodes", "7053");
-        v0.commit();
+    public static void mark(Context context, String arg5, int arg6, int arg7) {
+        SharedPreferences.Editor editor = getPref(context).edit();
+        editor.putString("x_sid", arg5);
+        editor.putInt("x_sindex", arg6);
+        editor.putInt("x_stype", arg7);
+        editor.putLong("x_start_time", System.currentTimeMillis());
+        editor.putLong("x_start_nano_time", System.nanoTime());
+        editor.putLong("x_last_nano_time", System.nanoTime());
+        editor.putInt("x_exploit_ret", 7053);
+        editor.putString("x_exploit_errcodes", "7053");
+        editor.commit();
     }
 
-    public static void markExploitRet(Context arg2, int arg3, String arg4) {
-        SharedPreferences.Editor v0 = getPref(arg2).edit();
-        v0.putInt("x_exploit_ret", arg3);
-        v0.putString("x_exploit_errcodes", arg4);
-        v0.commit();
+    public static void markExploitRet(Context context, int retValue, String errcodesValue) {
+        SharedPreferences.Editor editor = getPref(context).edit();
+        editor.putInt("x_exploit_ret", retValue);
+        editor.putString("x_exploit_errcodes", errcodesValue);
+        editor.commit();
     }
 
 
 //--------------------------------------------------------------------------//
-    public static void a(Context arg6, String arg7, String[] arg8) {
-        int v0 = 0;
-        SharedPreferences v1 = arg6.getSharedPreferences("marsroot", 0);
+    public static void putMarsRootShareAndSeparator(Context context, String key, String[] data) {
+        int i = 0;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("marsroot", 0);
         String v2 = "__separator__";
-        StringBuilder v3 = new StringBuilder();
-        int v4 = arg8.length;
-        while(v0 < v4) {
-            v3.append(arg8[v0]);
-            v3.append(v2);
-            ++v0;
+        StringBuilder stringBuilder = new StringBuilder();
+        int v4 = data.length;
+        while(i < v4) {
+            stringBuilder.append(data[i]);
+            stringBuilder.append(v2);
+            ++i;
         }
-
-        if(v3.length() > 0) {
-            v3.delete(v3.length() - v2.length(), v3.length());
+        if(stringBuilder.length() > 0) {
+            stringBuilder.delete(stringBuilder.length() - v2.length(), stringBuilder.length());
         }
-
-        v1.edit().putString(arg7, v3.toString()).commit();
+        sharedPreferences.edit().putString(key, stringBuilder.toString()).commit();
     }
        public static void removeMarsRootSharedPreferences(Context arg2, String arg3) {
         arg2.getSharedPreferences("marsroot", 0).edit().remove(arg3).commit();
@@ -105,11 +103,11 @@ public class SpfUtils {
         return arg3.getSharedPreferences("marsroot", 0).getLong(arg4, 0);
     }
 
-    public static String[] e(Context arg4, String arg5) {
-        String v1 = "__separator__";
-        String v0 = arg4.getSharedPreferences("marsroot", 0).getString(arg5, null);
-        String[] v0_1 = v0 != null ? v0.split(v1) : new String[0];
-        return v0_1;
+    public static String[] getMarsRootShareAndRemoveSeparator(Context context, String key) {
+        String separator = "__separator__";
+        String value = context.getSharedPreferences("marsroot", 0).getString(key, null);
+        String[] result = value != null ? value.split(separator) : new String[0];
+        return result;
     }
 
     /**

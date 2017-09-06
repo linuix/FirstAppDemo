@@ -71,6 +71,7 @@ public class RootThread extends Thread {
                     out.write(buf, 0, len);
                     out.flush();
                     synchronized (lock) {
+
                         lock.notifyAll();
 //                        LogUtil.loge("notitfy 1111 ");
                     }

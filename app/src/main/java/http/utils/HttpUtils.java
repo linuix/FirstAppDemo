@@ -139,6 +139,9 @@ public class HttpUtils {
      */
     public final int execute() {
         int responseCode = 0;
+        if (httpURLConnection == null){
+            return -1;
+        }
         try {
             while (true)
             {

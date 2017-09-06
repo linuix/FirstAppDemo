@@ -2,6 +2,7 @@ package com.demo.solution;
 
 import com.demo.entity.RootExtInfo;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import http.demo.SolutionHelpers;
@@ -10,7 +11,7 @@ import http.demo.SolutionHelpers;
  * Created by Administrator on 2016/10/18.
  */
 
-public class SolutionManager {
+public class SolutionManager implements Serializable{
 
     public int a;
     public SolutionHelpers[] respSolutionHelpers;

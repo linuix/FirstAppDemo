@@ -112,7 +112,7 @@ public abstract class FooRoot {
     /**
      * 设置f值
      */
-    public final void a(boolean arg) {
+    public final void setF(boolean arg) {
         f = arg;
     }
 
@@ -142,9 +142,9 @@ public abstract class FooRoot {
                 {
                     v1.append("___cmd=" + v2 + "___stdout=" + v3.b);
                     if(v0 < 3) {
-                        long v3_1 = 1000;
+                        long time = 1000;
                         try {
-                            Thread.sleep(v3_1);
+                            Thread.sleep(time);
                         }
                         catch(InterruptedException v3_2) {
                         }
@@ -177,13 +177,13 @@ public abstract class FooRoot {
      *
      * */
     public AbsJavaProcessImpla b() {
-        JavaProcessk v10 = JavaProcessk.a(this.entity.getPathByName(new String[]{"kd"}), 5);
-        int v7 = v10 != null ? v10.d() : 0;
+        JavaProcessk javaProcessk = JavaProcessk.a(this.entity.getPathByName(new String[]{"kd"}), 5);
+        int v7 = javaProcessk != null ? javaProcessk.d() : 0;
         //增加日志
         String v1 = "RETRY_KD_SHELL";
-        int v2 = v10 != null ? 0 : 1;
+        int v2 = javaProcessk != null ? 0 : 1;
         LogUtil.d("fooRoot  可以调用CommLog功能，打印出相关信息");
-        return ((AbsJavaProcessImpla)v10);
+        return javaProcessk;
     }
     /**
      *

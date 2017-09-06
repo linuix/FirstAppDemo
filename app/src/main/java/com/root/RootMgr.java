@@ -195,7 +195,6 @@ public class RootMgr {
                 d("next_execte_solution_id indx = len 最后一个 " + indx);
                 SpfUtils.removeMarsRootSharedPreferences(this.mConext, "next_execute_solution_id");
             } else {
-
                 Log.d("tag---","index =" + indx + " " + "next_execte_solution_id " + helperses[indx + 1].sindex);
                 //记录下一个要执行的解决方案
                 SpfUtils.putMarsRootSharedPreferences(this.mConext, "next_execute_solution_id", helperses[indx + 1].sindex);
@@ -209,14 +208,14 @@ public class RootMgr {
                 return resultCode;
             } else {
                 //设置标志位i
-                cracker.a(v14);
+                cracker.setF(v14);
                 d("init solution idx = " + indx + ", sid = " + solutionHelpers.sindex + " 给父类的标志位是：" + v14);
-                boolean flag = cracker.beforeRoot();//准备文件
+                boolean flag = cracker.beforeRoot();//准备文件包括解压jar生成krmain。同时生成krcfg.txt
                 MarsRoot.setEntity(entity);
                 if (flag)
                 {//开始执行
                     d(" 准备文件ok ");
-                    commlog.recordExecutInfo("KRSDK_Solution_Execute_Begin", 0, "", "", handler, new Object[]{solutionHelpers.sindex});
+                    commlog.recordExecutInfo("KRSDK_Solution_Execute_Begin", 0, "", "", new Object[]{solutionHelpers.sindex});
                     RootLog rootLog = new RootLog();
                     startRootThread(mConext, solutionHelpers.sindex, new WeakReference(cracker));
                     //记录执行文件
@@ -228,6 +227,8 @@ public class RootMgr {
                 stopThread();//
                 if (resultCode == 0)
                 {
+                    if (1==1)
+                    return 0;
                     d("resultCode == 0");
                     AbsJavaProcessImpla v18 = cracker.b();//获取解决方案的对象.调用javaprocessk 执行连接kd文件，生成javaprocessk 对象，关键函数1,任然是连接kd文件
                     if (v18 != null)
@@ -388,7 +389,7 @@ public class RootMgr {
      * 完善root功能
      */
     private boolean checkTmpShell() {
-        return AbsJavaProcessImpla.b(JavaProcess.flag);
+        return AbsJavaProcessImpla.checkRoot(JavaProcess.flag);
 
     }
 

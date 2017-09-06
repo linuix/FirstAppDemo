@@ -22,7 +22,7 @@ public class ExecutThread2 extends Thread {
     public void run() {
         try {
             int v0_2 = this.proess.waitFor();
-            JavaRoot2.setI(root2);
+            JavaRoot2.setI();
             LogUtil.d("executThread2:  ExeRootSolution process exit: " + v0_2);
         }
         catch(Throwable v0) {

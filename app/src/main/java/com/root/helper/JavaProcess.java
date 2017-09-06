@@ -20,7 +20,7 @@ public final class JavaProcess extends JavaProcessImplw implements IJavaProcessh
     public  static String flag;
     private JavaProcess(RootProcess arg2, boolean arg3) {
         super();
-        ((JavaProcessImplw) this).d = arg2;
+        ((JavaProcessImplw) this).rootProcess = arg2;
         int v0 = arg3 ? 4 : 3;
         ((JavaProcessImplw) this).a = v0;
     }
@@ -49,7 +49,7 @@ public final class JavaProcess extends JavaProcessImplw implements IJavaProcessh
              *
              * */
 
-            if (v1_1.ret.intValue() == 0 && (AbsJavaProcessImpla.b(v1_1.stdout)))
+            if (v1_1.ret.intValue() == 0 && (AbsJavaProcessImpla.checkRoot(v1_1.stdout)))
             {
                 LogUtil.d(" **************************** ");
                 LogUtil.loge("VirtualTerminal runCommand ret : " + v1_1.ret + ", stdout : " + v1_1.stdout + ", stderr : "

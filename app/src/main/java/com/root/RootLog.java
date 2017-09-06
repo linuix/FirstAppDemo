@@ -20,8 +20,8 @@ import java.util.Date;
 public class RootLog {
     public static String a;
     public static volatile boolean b;
-    private BufferedWriter c;
-    private SimpleDateFormat d;
+    private BufferedWriter bufferedWriter;
+    private SimpleDateFormat simpleDateFormat;
     private File e;
 
     static {
@@ -31,48 +31,47 @@ public class RootLog {
 
     public RootLog() {
         super();
-        this.d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if(Const.CHANNELID.equals(Const.CHANNELID)) {
             RootLog.b = true;
-            File v0 = new File(InitConfig.entity.file, "selog");
-            if(!v0.exists()) {
-                v0.mkdir();
+            File logFileDir = new File(InitConfig.entity.file, "selog");
+            if(!logFileDir.exists()) {
+                logFileDir.mkdir();
             }
 
-            File v2 = new File(v0, "kr_154_" + System.currentTimeMillis() + "_" + Build.BRAND + "_" +
+            File logFile = new File(logFileDir, "kr_154_" + System.currentTimeMillis() + "_" + Build.BRAND + "_" +
                     Build.MODEL + ".log");
             try {
-                this.c = new BufferedWriter(new FileWriter(v2));
+                this.bufferedWriter = new BufferedWriter(new FileWriter(logFile));
 //                this.sdk_gt18(sdk_gt18);
-                this.e = v2;
+                this.e = logFile;
             }
             catch(IOException v0_1) {
 //                fileSize.sdk_gt18(this.chart);
-                Utils.close(c);
-                this.c = null;
+                Utils.close(bufferedWriter);
+                this.bufferedWriter = null;
             }
 
         }
     }
 
 
-    public final void a(String arg4, String arg5) {
-        if((Const.CHANNELID.equals(Const.CHANNELID)) && this.c != null) {
+    public final void record(String arg4, String arg5) {
+        if((Const.CHANNELID.equals(Const.CHANNELID)) && this.bufferedWriter != null) {
             try {
-                this.c.append(this.d.format(new Date())).append(" ").append("[" + arg4 + "]").append(
-                        " ").append(((CharSequence)arg5)).append("\n");
-                this.c.flush();
+                this.bufferedWriter.append(this.simpleDateFormat.format(new Date())).append(" ").append("[" + arg4 + "]").append(" ").append(arg5).append("\n");
+                this.bufferedWriter.flush();
             }
             catch(Exception v0) {
-                Utils.close(this.c);
-                this.c = null;
+                Utils.close(this.bufferedWriter);
+                this.bufferedWriter = null;
             }
         }
     }
 
-    public final void a(String arg3) {
+    public final void record(String arg3) {
         if(Const.CHANNELID.equals(Const.CHANNELID)) {
-            this.a("type", arg3);
+            this.record("type", arg3);
         }
     }
 

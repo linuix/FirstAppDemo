@@ -70,18 +70,18 @@ public class YunRootExcutor {
             v2 = 200043;
             String v4 = "";
             String v5 = "";
-            Object[] v6 = new Object[5];
+            Object[] mobileRootInfoObj = new Object[5];
 
-            v6[0] = Integer.valueOf(this.solutionMgr.mobileRootInfo.canRoot);
-            v6[1] = Integer.valueOf(this.solutionMgr.mobileRootInfo.succRate);
-            v6[2] = Integer.valueOf(this.solutionMgr.mobileRootInfo.useTime);
-            v6[3] = Integer.valueOf(this.solutionMgr.mobileRootInfo.succUsers);
+            mobileRootInfoObj[0] = Integer.valueOf(this.solutionMgr.mobileRootInfo.canRoot);
+            mobileRootInfoObj[1] = Integer.valueOf(this.solutionMgr.mobileRootInfo.succRate);
+            mobileRootInfoObj[2] = Integer.valueOf(this.solutionMgr.mobileRootInfo.useTime);
+            mobileRootInfoObj[3] = Integer.valueOf(this.solutionMgr.mobileRootInfo.succUsers);
 
             int v8 = 4;
-            SolutionManager v7_1 = this.solutionMgr;
-            v1 = v7_1.mobileRootInfo == null || v7_1.mobileRootInfo.canRoot != 1 ? 0 : 1;
+            SolutionManager solutionMgr = this.solutionMgr;
+            v1 = solutionMgr.mobileRootInfo == null || solutionMgr.mobileRootInfo.canRoot != 1 ? 0 : 1;
             //执行之后， v1 =0
-            retTag = v7_1.pcRootInfo == null || v7_1.pcRootInfo.canRoot != 1 ? 0 : 1;
+            retTag = solutionMgr.pcRootInfo == null || solutionMgr.pcRootInfo.canRoot != 1 ? 0 : 1;
             //执行之后。retTag =0
             if (v1 != 0) {
                 v1 = retTag != 0 ? 0 : 1;
@@ -90,38 +90,38 @@ public class YunRootExcutor {
             } else {
                 v1 = 3;
             }
-            v6[v8] = Integer.valueOf(v1);
-            commonLog.recordEMID(v2, 0, v4, v5, handler, v6);
+            mobileRootInfoObj[v8] = Integer.valueOf(v1);
+            commonLog.recordEMID(v2, 0, v4, v5, handler, mobileRootInfoObj);
             String v8_1 = "";
             if (this.solutionMgr != null) {
                 SolutionHelpers[] solutionHelpers = this.solutionMgr.respSolutionHelpers;
                 if (solutionHelpers != null) {
                     int v9 = solutionHelpers.length;
-                    ArrayList v12 = new ArrayList();
+                    ArrayList helperArray = new ArrayList();
                     int v10;
                     for (v10 = 0; v10 < v9; ++v10) {
-                        SolutionHelpers v13 = solutionHelpers[v10];
-                        if (RecordRootSolution.check(this.context, v13, mEntity.f)) {
-                            v12.add(v13);
-                            boolean v1_1 = (this.init_flag) || v13.l == 5 ? true : false;
+                        SolutionHelpers solutionHelper = solutionHelpers[v10];
+                        if (RecordRootSolution.check(this.context, solutionHelper, mEntity.f)) {
+                            helperArray.add(solutionHelper);
+                            boolean v1_1 = (this.init_flag) || solutionHelper.l == 5 ? true : false;
                             this.init_flag = v1_1;
-                            v1_2 = String.valueOf(v8_1) + v13.sindex + "_";
+                            v1_2 = String.valueOf(v8_1) + solutionHelper.sindex + "_";
 
                         } else {
-                            LogUtil.loge("不允许执行, sid = " + v13.sindex + ", KError.code = ");
-                            RecordRootSolution.delete(v13.sindex);
+                            LogUtil.loge("不允许执行, sid = " + solutionHelper.sindex + ", KError.code = ");
+                            RecordRootSolution.delete(solutionHelper.sindex);
                             v1_2 = v8_1;
                         }
                         v8_1 = v1_2;
                     }
 
-                    v2 = v12.size();
+                    v2 = helperArray.size();
                     /**
                      * 准备好download加载的数据源
                      * */
 
                     //在这里写本地数据，为后续读取调用重启手机或者其他时候调用
-                    this.solutionMgr.respSolutionHelpers = (SolutionHelpers[]) v12.toArray(new SolutionHelpers[v2]);
+                    this.solutionMgr.respSolutionHelpers = (SolutionHelpers[]) helperArray.toArray(new SolutionHelpers[v2]);
 //                    retTag = v2;
                     LogUtil.e("准备好下载解决方案jar报的数组 this.solutionMgr.respSolutionHelpers " + this.solutionMgr.respSolutionHelpers + "\n"
 

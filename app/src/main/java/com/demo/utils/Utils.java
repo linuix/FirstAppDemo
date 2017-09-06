@@ -44,30 +44,30 @@ public class Utils {
 
     /**
      * 在执行root的时候会先清除掉指定文件夹下的文件，避免出现混乱
-     * arg7 == 指定文件夹的路径
+     * filePath == 指定文件夹的路径
      */
-    public static boolean clearPlay(String arg7) {
+    public static boolean clearPlay(String filePath) {
         LogUtil.d("[ clear dir start ]");
         boolean v1 = false;
-        if (!arg7.endsWith(File.separator)) {
-            arg7 = String.valueOf(arg7) + File.separator;
+        if (!filePath.endsWith(File.separator)) {
+            filePath = String.valueOf(filePath) + File.separator;
         }
-        File v4 = new File(arg7);
-        if ((v4.exists()) && (v4.isDirectory())) {
-            File[] v5 = v4.listFiles();
-            if (v5 == null) {
+        File fileDir = new File(filePath);
+        if ((fileDir.exists()) && (fileDir.isDirectory())) {
+            File[] files = fileDir.listFiles();
+            if (files == null) {
                 LogUtil.loge("files is NULL");
             } else {
                 int v0 = 0;
                 boolean v2 = true;
-                while (v0 < v5.length) {
-                    if (v5[v0].isFile()) {
-                        v2 = c(v5[v0].getAbsolutePath());
+                while (v0 < files.length) {
+                    if (files[v0].isFile()) {
+                        v2 = c(files[v0].getAbsolutePath());
                         if (!v2) {
                             break;
                         }
                     } else {
-                        v2 = clearPlay(v5[v0].getAbsolutePath());
+                        v2 = clearPlay(files[v0].getAbsolutePath());
                         if (v2) {
                         } else {
                             break;
@@ -81,7 +81,7 @@ public class Utils {
                     return v1;
                 }
 
-                if (!v4.delete()) {
+                if (!fileDir.delete()) {
                     return v1;
                 }
                 v1 = true;
@@ -388,32 +388,34 @@ public class Utils {
 
     /**
      * 写网络解决方案文件
+     * -----------------------------------
+     * 将data中的数据写入指定的文件
      */
-    public static void writeSolutionFiles(File file, String[] arg6) {
+    public static void writeSolutionFiles(File file, String[] data) {
         LogUtil.loge("写网络解决方案文件");
         Closeable v1_1;
-        BufferedWriter v1 = null;
+        BufferedWriter bufferedWriter = null;
         Closeable v2 = null;
         try {
-            v1 = new BufferedWriter(new FileWriter(file));
+            bufferedWriter = new BufferedWriter(new FileWriter(file));
         } catch (Throwable v0) {
             v1_1 = v2;
             close(v1_1);
 
         }
         try {
-            int v2_1 = arg6.length;
-            int v0_1;
-            for (v0_1 = 0; v0_1 < v2_1; ++v0_1) {
-                v1.write(String.valueOf(arg6[v0_1]) + "\n");
+            int v2_1 = data.length;
+            int i;
+            for (i = 0; i < v2_1; ++i) {
+                bufferedWriter.write(String.valueOf(data[i]) + "\n");
             }
 
-            v1.flush();
+            bufferedWriter.flush();
         } catch (Throwable v0) {
 //            goto label_23;
-            close(v1);
+            close(bufferedWriter);
         }
-        close(((Closeable) v1));
+        close(((Closeable) bufferedWriter));
         LogUtil.loge("网络所得的文件 写成功 " + file.getAbsolutePath() + " - " + file.getName());
         return;
     }
@@ -435,13 +437,13 @@ public class Utils {
     /**
      * 记录网络下载文件的方式
      */
-    public static void writeSolutionFiles(byte[] arg2, String arg3) {
-        FileOutputStream v0 = null;
+    public static void writeSolutionFiles(byte[] data, String filePath) {
+        FileOutputStream fileOutputStream = null;
         try {
-            v0 = new FileOutputStream(arg3, false);
-            v0.write(arg2);
-            v0.close();
-            LogUtil.loge("写入网络下发记录方案文件 完成 ！！！！ path =" + arg3);
+            fileOutputStream = new FileOutputStream(filePath, false);
+            fileOutputStream.write(data);
+            fileOutputStream.close();
+            LogUtil.loge("写入网络下发记录方案文件 完成 ！！！！ path =" + filePath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

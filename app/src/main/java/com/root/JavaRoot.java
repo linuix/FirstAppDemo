@@ -153,16 +153,16 @@ public class JavaRoot extends FooRoot {
         str_arr[v5] = new StringBuilder(String.valueOf(RootMgr.msg)).toString();
         str_arr[4] = "0";
         str_arr[v13] = "1";
-        SpfUtils.a(context, "EMID_KRSDK_EXReport_Info", str_arr);
+        SpfUtils.putMarsRootShareAndSeparator(context, "EMID_KRSDK_EXReport_Info", str_arr);
         try {
             LogUtil.e("onRoot() start sid = " + this.solutionHelpers.sindex);
             this.ret = ((Integer) clzz.getMethod(this.rootHelper.root, this.rootHelper.e).invoke(this.obj, this.mContext)).intValue();
             CommonLog log = new CommonLog(context);
             String v1 = "CATCH_SOLUTION_RESULT";
             int v2_1 = this.ret == 0 ? 0 : 1;
-            log.recordExecutInfo(v1, v2_1, new StringBuilder(String.valueOf(this.ret)).toString(), "", this.handler, new Object[]{this.solutionHelpers.sindex});
+            log.recordExecutInfo(v1, v2_1, new StringBuilder(String.valueOf(this.ret)).toString(), "", new Object[]{this.solutionHelpers.sindex});
             SpfUtils.markExploitRet(this.mContext, this.ret, new StringBuilder(String.valueOf(this.ret)).toString());
-            String[] v11 = SpfUtils.e(this.mContext, "EMID_KRSDK_EXReport_Info");
+            String[] v11 = SpfUtils.getMarsRootShareAndRemoveSeparator(this.mContext, "EMID_KRSDK_EXReport_Info");
             SpfUtils.removeMarsRootSharedPreferences(this.mContext, "EMID_KRSDK_EXReport_Info");
             v9 = (System.nanoTime() - v9) / 1000000;
             if (v11.length >= v13) {

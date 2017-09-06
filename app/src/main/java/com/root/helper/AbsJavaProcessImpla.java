@@ -45,60 +45,60 @@ public abstract class AbsJavaProcessImpla implements IJavaProcessh {
  *
  * */
     public JavaSolutionHelpers a(String arg8) {
-        JavaSolutionHelpers v0_1;
+        JavaSolutionHelpers javaSolutionHelpers;
         JavaSolutionHelpers v1 = null;
         int v6 = -1;
         String v2 = this.d(String.valueOf(arg8) + ";echo $?");/**核心实现的工具，主要是子类实现**/
         if (v2 == null) {
-            v0_1 = new JavaSolutionHelpers(v6, ThreadLocalWeakRef.b());
+            javaSolutionHelpers = new JavaSolutionHelpers(v6, ThreadLocalWeakRef.b());
         }
         int v3 = v2.lastIndexOf("\n", v2.length() - 2);
         int v4 = v2.lastIndexOf("\n");
         if (v3 >= 0 && v4 > 0) {
             try {
-                v0_1 = new JavaSolutionHelpers(Integer.parseInt(v2.substring(v3 + 1, v4)), v2.substring(0, v3));
+                javaSolutionHelpers = new JavaSolutionHelpers(Integer.parseInt(v2.substring(v3 + 1, v4)), v2.substring(0, v3));
             } catch (NumberFormatException v0) {
                 LogUtil.exception("executeCommand2 exception.", ((Throwable) v0));
-                v0_1 = v1;
+                javaSolutionHelpers = v1;
             }
-            if (v0_1 != null) {
-                return v0_1;
+            if (javaSolutionHelpers != null) {
+                return javaSolutionHelpers;
             } else {
-                v0_1 = new JavaSolutionHelpers(v6, v2);
-                if (v0_1.a == 0) {
-                    LogUtil.d("cmd: " + arg8 + ", ret: " + v0_1.a + ", stdout = " + v0_1.b);
+                javaSolutionHelpers = new JavaSolutionHelpers(v6, v2);
+                if (javaSolutionHelpers.a == 0) {
+                    LogUtil.d("cmd: " + arg8 + ", ret: " + javaSolutionHelpers.a + ", stdout = " + javaSolutionHelpers.b);
                 } else {
-                    LogUtil.loge("cmd: " + arg8 + ", ret: " + v0_1.a + ", stdout = " + v0_1.b);
+                    LogUtil.loge("cmd: " + arg8 + ", ret: " + javaSolutionHelpers.a + ", stdout = " + javaSolutionHelpers.b);
                 }
 
-                return v0_1;
+                return javaSolutionHelpers;
             }
 
         }
         if (v3 == v6) {
             try {
-                v0_1 = new JavaSolutionHelpers(Integer.parseInt(v2.trim()), "");
+                javaSolutionHelpers = new JavaSolutionHelpers(Integer.parseInt(v2.trim()), "");
             } catch (NumberFormatException v0) {
                 LogUtil.exception("executeCommand2 exception.", ((Throwable) v0));
-                v0_1 = v1;
+                javaSolutionHelpers = v1;
             }
         } else {
-            v0_1 = v1;
+            javaSolutionHelpers = v1;
         }
 
-        return v0_1;
+        return javaSolutionHelpers;
     }
 
     public JavaSolutionHelpers a(String arg2, long arg3) {
         LogUtil.loge("executeCommand2() Not sopport timeout parameter.");
         return this.a(arg2);
     }
-    public static boolean b(String arg4) {
+    public static boolean checkRoot(String arg4) {
         LogUtil.d("AbsJavaProcessImpla v18 检测是否获取root权限 ");
         ThreadLocalWeakRef.createThreadLocal();
         boolean v0 = false;
         LogUtil.d("id = " + arg4);
-        if(!TextUtils.isEmpty(((CharSequence)arg4)) && (arg4.contains("uid=0(root)"))) {
+        if(!TextUtils.isEmpty(arg4) && (arg4.contains("uid=0(root)"))) {
             v0 = true;
         }
        LogUtil.d("isFullyRoot|id: " + arg4 + ", isRoot: " + v0);
@@ -116,7 +116,7 @@ public abstract class AbsJavaProcessImpla implements IJavaProcessh {
 //                RootMgr.setIsSucc(v0);
 //                LogUtil.fileSize("设置完成状态标识，"+v0);
 //            }
-////            v0=true;
+//            v0=true;
 //        }
         return v0;
     }
